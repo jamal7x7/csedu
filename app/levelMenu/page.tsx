@@ -1,15 +1,106 @@
 // app/page.tsx
 import {Button} from "@/components/ui/button"; 
   import Link from 'next/link';
-  import LevelMenu from "./levelMenu/page";
 
 
-export default function Page() {
+export default function LevelMenu() {
   return (
 
-    <div >
-        <LevelMenu/>
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+<div className="flex flex-col gap-8">
+        {/* ============================1 er annee========================== */}
+          <Link href="/dashboard" passHref>
+            <div className='group p-4  flex  items-center justify-start hover:bg-secondary/90 bg-secondary/50 rounded-3xl hover:shadow-[0_0px_50px_10px_rgba(0,0,0,0.3)]  hover:shadow-blue-500/20'>
+            
+                  <div className="relative flex flex-shrink-0 h-20 w-20 items-center justify-center rounded-full  bg-muted  md:h-[72px] md:w-[72px] group-hover:bg-blue-500 ">
+                     <span className="group-hover:animate-ping absolute inline-flex h-full w-full rounded-full bg-muted group-hover:bg-primary  opacity-20 group-hover:transition-all"></span>
+                    <p  className='relative font-bold text-4xl group-hover:text-primary-foreground' >1</p>
+                  </div>
+                  
+                  <div className='p-4 flex flex-col items-start justify-between'>
+
+                    <small className="text-default-500 group-hover:text-blue-950 dark:group-hover:text-blue-200">Niveau 1</small>
+                    <h1 className=" font-black text-2xl group-hover:text-blue-500 ">  Année</h1>
+                  </div>
+
+              </div>
+            </Link>
+        {/* ============================2 eme annee-End============================ */}
+        {/* ============================2 eme annee========================== */}
+          <Link href="/level2Chapters" passHref>
+            <div className='group p-4 pr-40 flex  items-center justify-start hover:bg-secondary/90 bg-secondary/50 rounded-3xl hover:shadow-[0_0px_50px_10px_rgba(0,0,0,0.3)]  hover:shadow-green-500/20'>
+            
+                  <div className="relative flex flex-shrink-0 h-20 w-20 items-center justify-center rounded-full  bg-muted  md:h-[72px] md:w-[72px] group-hover:bg-green-500 ">
+                     <span className="group-hover:animate-ping absolute inline-flex h-full w-full rounded-full bg-muted group-hover:bg-primary  opacity-20 group-hover:transition-all"></span>
+                    <p  className='relative font-bold text-4xl group-hover:text-primary-foreground' >2</p>
+                  </div>
+                  
+                  <div className='p-4 flex flex-col items-start justify-between'>
+
+                    <small className="text-default-500 group-hover:text-green-950 dark:group-hover:text-green-200">Niveau 2</small>
+                    <h1 className=" font-black text-2xl group-hover:text-green-500">  Année</h1>
+                  </div>
+
+              </div>
+            </Link>
+        {/* ============================2 eme annee-End============================ */}
+        {/* ============================2 eme annee========================== */}
+          <Link href="/dashboard" passHref>
+            <div className='group p-4 pr-40 flex  items-center justify-start hover:bg-secondary/90 bg-secondary/50 rounded-3xl hover:shadow-[0_0px_50px_10px_rgba(0,0,0,0.3)]  hover:shadow-orange-500/20'>
+            
+                  <div className="relative flex flex-shrink-0 h-20 w-20 items-center justify-center rounded-full  bg-muted  md:h-[72px] md:w-[72px] group-hover:bg-orange-500 ">
+                     <span className="group-hover:animate-ping absolute inline-flex h-full w-full rounded-full bg-muted group-hover:bg-primary  opacity-20 group-hover:transition-all"></span>
+                    <p  className='relative font-bold text-4xl group-hover:text-primary-foreground' >3</p>
+                  </div>
+                  
+                  <div className='p-4 flex flex-col items-start justify-between'>
+
+                    <small className="text-default-500 group-hover:text-orange-950 dark:group-hover:text-orange-200">Niveau 3</small>
+                    <h1 className=" font-black text-2xl group-hover:text-orange-500">  Année</h1>
+                  </div>
+
+              </div>
+            </Link>
+        {/* ============================2 eme annee-End============================ */}
+
+
+
+
+
+
+
+{/* 
+
+        <div className="p-10 flex flex-col flex-wrap gap-4 items-center">
+          <Link href="/path/to/page" passHref>
+               <div className="flex flex-shrink-0 h-20 w-20 items-center justify-center rounded-full dark:bg-slate-800 bg-slate-100  md:h-[72px] md:w-[72px] p-2">
+                  <p  className='font-bold text-4xl' >1</p>
+               </div>
+      
+            <Button size={'xl'}  className="bg-gradient-to-tr from-cyan-300 to-blue-500 font-bold text-medium text-neutral-700 shadow-lg p-7">
+              <var><em>1</em><sup>er</sup></var>  Annee 
+            </Button>  
+          </Link> 
+         */}
+{/* 
+          <Link href="/dashboard" passHref>
+            <Button  className="bg-gradient-to-tr from-lime-300 to-cyan-300 font-bold text-medium text-neutral-700 shadow-lg p-7 ">
+              <var><em>2</em><sup>ème</sup></var>  Annee 
+            </Button>
+          </Link>  
+        
+          <Link href="/path/to/page" passHref>
+            <Button  className="bg-gradient-to-tr from-orange-300 to-red-500 font-bold text-m text-neutral-700 shadow-lg p-7">
+              <var><em>3</em><sup>ème</sup></var>  Annee 
+            </Button>  
+          </Link>
+        </div> */}
+
+
+
+
     </div>
+    </main>
   )
 }
 
