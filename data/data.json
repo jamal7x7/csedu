@@ -1,0 +1,31 @@
+[
+  {
+    "type": "$$unit title##",
+    "content": {
+      "title": "la configuration materielle d un reseau",
+      "unitNumber": 2,
+      "levelNumber": 2
+    }
+  },
+  {
+    "type": "introduction",
+    "content": {
+      "title": "la configuration materielle d un reseau",
+      "text": "Ce cours vous plongera dans le fascinant monde des réseaux informatiques, qui sont essentiels dans notre vie quotidienne et dans notre monde connecté, facilitant la communication et le partage d'informations entre ordinateurs et périphériques."
+    }
+  },
+  {
+    "type": "section title",
+    "content": {
+      "title": "Le Réseau Informatique",
+      "sectionNumber": 1
+    }
+  },
+  {
+    "type": "text",
+    "content": {
+      "title": "Un réseau désigne souvent un ensemble d'éléments similaires reliés entre eux, que ce soit physiquement ou conceptuellement. Exemple : Le réseau routier est un ensemble de routes interconnectées.",
+      "sectionNumber": 1
+    }
+  }
+]

@@ -1,6 +1,9 @@
 import { Button } from '@/components/ui/button'
 import { Breadcrumbs, BreadcrumbItem } from '@nextui-org/breadcrumbs'
 import Link from 'next/link'
+// import data from '@/data/data'
+import { promises as fs } from 'fs'
+import { headers } from 'next/headers'
 
 // import {Card, CardHeader, CardBody, Image, Textarea, Chip, Avatar, Divider} from "@nextui-org/react";
 import {
@@ -13,13 +16,49 @@ import {
 } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
+import getServerSideProps from '@/components/client-info'
+
 import { ModeToggle } from '@/components/modeToggle'
 
-import LevelsBreadcrumbs from './LevelsBreadcrumbs'
-import { Resume } from './resume/page'
+import { Resume } from '../resume/page'
 import { Separator } from '@/components/ui/separator'
+import { Quiz } from '@/app/quiz/page'
 
-export default function SecondLevelPage() {
+interface ArticleBlockData {
+  type: string
+  content: Content
+}
+interface Content {
+  title: string
+}
+
+export default async function SecondLevelPage() {
+  // const res = await fetch('@/data/data')
+  // const data = await res.json()
+
+  const file = await fs.readFile(process.cwd() + '/data/data.json', 'utf8')
+  const articleBlockData: ArticleBlockData[] = JSON.parse(file)
+  // console.log(articleBlockData)
+
+  const headersList = headers()
+
+  const userAgent = headersList.get('user-agent')
+  const referer = headersList.referer
+
+  const contentType = headersList.get('x-real-ip')
+
+  // let ip
+
+  // const { req } = headersList
+
+  // if (req.headers['x-forwarded-for']) {
+  //   ip = req.headers['x-forwarded-for'].split(',')[0]
+  // } else if (req.headers['x-real-ip']) {
+  //   ip = req.connection.remoteAddress
+  // } else {
+  //   ip = req.connection.remoteAddress
+  // }
+
   return (
     // <main className="flex min-h-screen flex-col items-center justify-between">
     <main className='min-h-screen container mx-auto   '>
@@ -40,7 +79,6 @@ export default function SecondLevelPage() {
             {/* <ModeToggle /> */}
           </div>
         </div>
-
         {/* =============================Title================================  */}
         <div className='p-12 flex  items-center justify-center mt-16'>
           <div className='flex flex-shrink-0 h-20 w-20 items-center justify-center rounded-full dark:bg-slate-800 bg-slate-100  md:h-[72px] md:w-[72px]'>
@@ -54,7 +92,6 @@ export default function SecondLevelPage() {
           </div>
         </div>
         {/* =============================Title-End================================  */}
-
         {/* =============================Intro================================  */}
         <div className='flex flex-col items-center justify-between 2xl:px-24  '>
           <Card className='py-4  bg-transparent  border-neutral-200 dark:border-neutral-800 shadow-sm'>
@@ -71,9 +108,7 @@ export default function SecondLevelPage() {
             </CardContent>
           </Card>
         </div>
-
         {/* =============================intro-End================================  */}
-
         {/* =============================le reseau informatique================================  */}
         <div className='mt-16'>
           <h3 className='flex flex-col items-start justify-between text-xl  p-4 text-slate-800 dark:text-slate-200'>
@@ -86,7 +121,6 @@ export default function SecondLevelPage() {
             Le réseau routier est un ensemble de routes interconnectées.
           </p>
         </div>
-
         <div className='relative   flex flex-col items-center justify-between 2xl:px-24     rounded-3xl border border-muted/80 bg-muted/10 text-card-foreground shadow-sm'>
           {/* <div className='absolute rounded-3xl inset-0 h-full w-full bg-muted/30 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]'></div> */}
           <div className='absolute inset-0 h-full w-full bg-muted/30 bg-[radial-gradient(#80808070_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_10%,transparent_100%)]'></div>
@@ -174,7 +208,6 @@ export default function SecondLevelPage() {
 
           {/* ================================================================ */}
         </div>
-
         <div className='flex flex-col items-center justify-between 2xl:px-24   p-2 pb-8  rounded-3xl border border-muted/5 bg-muted/20 text-card-foreground shadow-sm'>
           {/* <Card   className="py-4 px-4 bg-opacity-20   border-0  bg-green-500 border-opacity-10 border-green-100 dark:border-green-900 "> */}
           {/* <Card   className="pb-4 px-4 pt-6 bg-opacity-80 hover:bg-opacity-100 border-1  border-opacity-10 border-neutral-200 dark:border-neutral-800 hover:drop-shadow-md drop-shadow-sm "> */}
@@ -239,7 +272,7 @@ export default function SecondLevelPage() {
             </CardContent>
           </Card>
         </div>
-
+        <Quiz />
         <div className='mt-16'>
           <h3 className='flex flex-col items-start justify-between text-xl  p-4 text-slate-800 dark:text-slate-200'>
             Objectif des Réseaux
@@ -262,8 +295,56 @@ export default function SecondLevelPage() {
             </li>
           </ul>
         </div>
+        {articleBlockData.map((b) => (
+          <div key={b.type}>
+            <Card className='pb-4 px-4 pt-6 '>
+              <CardHeader className=' pt-0 pb-4 px-2 flex-col items-start'>
+                <Badge variant='outline'>
+                  <p className='flex items-center text-sm uppercase font-bold text-default-600'>
+                    <div className='w-2 h-2 mr-2 rounded-full bg-green-400'></div>
+                    {b.type}
+                  </p>
+                </Badge>
+              </CardHeader>
+              <CardContent className='overflow-visible py-2'>
+                <p className='text-default-500'>{b.content.title}</p>
+              </CardContent>
+            </Card>
+          </div>
+        ))}
+      </div>
+      <div>
+        <pre>{JSON.stringify(headers().get('host'), null, 4)}</pre>
+        <pre>
+          {JSON.stringify(
+            (headers().get('x-forwarded-for') ?? '127.0.0.1').split(',')[0],
+            null,
+            4
+          )}
+        </pre>
       </div>
       <Resume />
     </main>
   )
 }
+
+// export async function getServerSideProps(context) {
+//   let ip
+
+//   const { req } = context
+
+//   if (req.headers['x-forwarded-for']) {
+//     ip = req.headers['x-forwarded-for'].split(',')[0]
+//   } else if (req.headers['x-real-ip']) {
+//     ip = req.connection.remoteAddress
+//   } else {
+//     ip = req.connection.remoteAddress
+//   }
+
+//   console.log(ip)
+//   return {
+//     props: {
+//       ip,
+//     },
+//   }
+// }

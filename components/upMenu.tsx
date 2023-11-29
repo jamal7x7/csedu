@@ -133,8 +133,30 @@ export function UpMenu() {
         </div>
       </div> */}
       {/* ==============================search-end============================== */}
-
-      <DarkLightMode />
+      <NavigationMenu>
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <Link href='/login' legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Se Connecter
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href='/addnewstudent' legacyBehavior passHref>
+              <NavigationMenuLink
+                className={
+                  navigationMenuTriggerStyle() +
+                  'bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground'
+                }
+              >
+                S &apos;inscrire
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+          <DarkLightMode />
+        </NavigationMenuList>
+      </NavigationMenu>
     </header>
   )
 }
