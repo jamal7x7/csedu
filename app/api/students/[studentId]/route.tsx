@@ -1,4 +1,4 @@
-import { students } from '@/app/utils/studentsDB'
+import { students } from '@/app/utils/studentsDB2'
 import { NextResponse } from 'next/server'
 
 // export function GET(_: Request, res: NextResponse) {

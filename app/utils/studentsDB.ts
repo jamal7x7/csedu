@@ -1,16 +1,16 @@
-type Student = {
-  studentId: string
-  level: number
-  classCode: string
-  studentNumber: number
-  firstName: string
-  lastName: string
-  massarNumber: number
-  password: string
-  group: string
-}
+// type Student = {
+//   studentId: string
+//   level: number
+//   classCode: string
+//   studentNumber: number
+//   firstName: string
+//   lastName: string
+//   massarNumber: number
+//   password: string
+//   group: string
+// }
 
-export const students: Student[] = [
+export const students = [
   {
     studentId: '1',
     level: 1,

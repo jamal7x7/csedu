@@ -29,9 +29,9 @@ const AddNewStudent = () => {
   const form = useForm<TLoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      // studentNumber: '1',
-      // password: 'password1',
-      // confirmPassword: 'password1',
+      studentNumber: '1',
+      password: '1111',
+      group: '1',
     },
   })
 

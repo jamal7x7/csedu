@@ -27,18 +27,19 @@ const AddNewStudent = () => {
   const form = useForm<TSignUpSchema>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
-      studentNumber: '10',
-      firstName: 'firstName',
-      lastName: 'lastName',
+      // studentNumber: '1',
+      // firstName: 'firstName',
+      // lastName: 'lastName',
+
+      username: 'p1',
       password: 'password',
       confirmPassword: 'password',
-      group: '1',
     },
   })
 
   // 2. Define a submit handler.
   const onSubmit = async (data: TSignUpSchema) => {
-    console.log(data)
+    console.log('data from addstudent page', data)
     // function onSubmit() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
@@ -50,35 +51,6 @@ const AddNewStudent = () => {
     })
 
     const responseData = await res.json()
-    // users.push(response)
-
-    // if (responseData.errors) {
-    //   const errors = responseData.errors
-
-    //   if (errors.studentNumber) {
-    //     form.setError('studentNumber', {
-    //       type: 'server',
-    //       message: errors.studentNumber,
-    //     })
-    //   } else if (errors.password) {
-    //     form.setError('password', {
-    //       type: 'server',
-    //       message: errors.password,
-    //     })
-    //   } else if (errors.confirmPassword) {
-    //     form.setError('confirmPassword', {
-    //       type: 'server',
-    //       message: errors.confirmPassword,
-    //     })
-    //   } else if (errors.group) {
-    //     form.setError('group', {
-    //       type: 'server',
-    //       message: errors.group,
-    //     })
-    //   } else {
-    //     alert('something went wrong!')
-    //   }
-    // }
 
     if (responseData.ok) {
       toast({
@@ -91,19 +63,11 @@ const AddNewStudent = () => {
       toast({
         variant: 'destructive',
         title: "Error d'Enregistrement",
-        description: 'essai une autre fois ',
+        description: responseData.message,
         action: <ToastAction altText='Goto schedule to undo'>Ok</ToastAction>,
       })
     }
-
-    // form.reset()
   }
-
-  // const [studentNumber, setStudentNumber] = useState('')
-  // const [firstName, setFirstName] = useState('')
-  // const [lastName, setLastName] = useState('')
-  // const [password, setPassword] = useState('')
-  // const [confirmPassword, setConfirmPassword] = useState('')
 
   const { toast } = useToast()
 
@@ -116,20 +80,18 @@ const AddNewStudent = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
               <FormField
                 control={form.control}
-                name='studentNumber'
+                name='username'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor='studentNumber'>
-                      Numero de class
-                    </FormLabel>
+                    <FormLabel htmlFor='username'>Nom d'utilisateur</FormLabel>
                     <FormControl>
                       <div className='min-w-full'>
                         <Input
                           {...field}
                           className=' '
-                          id='studentNumber'
+                          id='username'
                           type='text'
-                          placeholder='numero de class'
+                          placeholder="Nom d'utilisateur"
                         />
                       </div>
                     </FormControl>
@@ -137,27 +99,7 @@ const AddNewStudent = () => {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name='group'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel htmlFor='group'>Binôme</FormLabel>
-                    <FormControl>
-                      <div className='min-w-full'>
-                        <Input
-                          {...field}
-                          className=' '
-                          id='group'
-                          type='text'
-                          placeholder='Binôme'
-                        />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+
               <FormField
                 control={form.control}
                 name='password'
