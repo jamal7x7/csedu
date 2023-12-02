@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label'
 
 import { ToastAction } from '@/components/ui/toast'
 import { useToast } from '@/components/ui/use-toast'
+import { cn } from '@/lib/utils'
 
 import {
   Form,
@@ -21,6 +22,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { TSignUpSchema, signUpSchema } from '@/lib/types'
+import { LevelTabs } from '@/components/level-tabs'
 
 const AddNewStudent = () => {
   // 1. Define your form.
@@ -50,22 +52,25 @@ const AddNewStudent = () => {
       body: JSON.stringify(data),
     })
 
-    const responseData = await res.json()
-
-    if (responseData.ok) {
-      toast({
-        variant: 'success',
-        title: 'Enregistrement fait',
-        description: 'Bien Venue ',
-        action: <ToastAction altText='Goto schedule to undo'>Ok</ToastAction>,
-      })
-    } else {
-      toast({
-        variant: 'destructive',
-        title: "Error d'Enregistrement",
-        description: responseData.message,
-        action: <ToastAction altText='Goto schedule to undo'>Ok</ToastAction>,
-      })
+    try {
+      const responseData = await res.json()
+      if (responseData.ok) {
+        toast({
+          variant: 'success',
+          title: 'Enregistrement fait',
+          description: 'utilisateur cree: ' + responseData.seccess,
+          action: <ToastAction altText='Goto schedule to undo'>Ok</ToastAction>,
+        })
+      } else {
+        toast({
+          variant: 'destructive',
+          title: "Error d'Enregistrement",
+          description: 'Problem: ' + responseData.errors?.err?.name,
+          action: <ToastAction altText='Goto schedule to undo'>Ok</ToastAction>,
+        })
+      }
+    } catch (err: any) {
+      console.log(err.message)
     }
   }
 
@@ -78,6 +83,30 @@ const AddNewStudent = () => {
         <div className='min-w-full'>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+              {/* ==============================================LevelTabs=================================================== */}
+              <FormField
+                control={form.control}
+                name='level'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor='level'>Niveau et Class</FormLabel>
+                    <FormControl>
+                      <div
+                        className={cn(
+                          'min-w-full bord bg-muted/10 border rounded-2xl p-2 '
+                        )}
+                      >
+                        <LevelTabs />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* =================================================================================================== */}
+
+              {/* ==============================================LevelTabs=================================================== */}
               <FormField
                 control={form.control}
                 name='username'
@@ -99,6 +128,8 @@ const AddNewStudent = () => {
                   </FormItem>
                 )}
               />
+
+              {/* =================================================================================================== */}
 
               <FormField
                 control={form.control}

@@ -27,7 +27,11 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/api/admin/route.js"
+    "app/api/admin/route.js",
+    "app/api/auth/[...nextauth]",
+    "app/utils/SetionProvider.ts",
+    "app/utils/SessionProvider.js",
+    "app/utils/SessionProvider.js"
   ],
   "exclude": ["node_modules"]
 }

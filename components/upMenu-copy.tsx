@@ -17,6 +17,11 @@ import {
 import { ModeToggle } from '@/components/modeToggle'
 import { DarkLightMode } from '@/components/darkLightMode'
 
+// import { getSession, signOut, useSession } from 'next-auth/react'
+
+import { Button } from './ui/button'
+import LoginLogout from './LoginLogout'
+
 const components: { title: string; href: string; description: string }[] = [
   {
     title: 'Alert Dialog',
@@ -55,7 +60,7 @@ const components: { title: string; href: string; description: string }[] = [
   },
 ]
 
-export function UpMenu() {
+export const UpMenu = () => {
   return (
     <header className='flex justify-between p-2 sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
       <NavigationMenu>
@@ -133,30 +138,10 @@ export function UpMenu() {
         </div>
       </div> */}
       {/* ==============================search-end============================== */}
-      <NavigationMenu>
-        <NavigationMenuList>
-          <NavigationMenuItem>
-            <Link href='/login' legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Se Connecter
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href='/addnewstudent' legacyBehavior passHref>
-              <NavigationMenuLink
-                className={
-                  navigationMenuTriggerStyle() +
-                  'bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground'
-                }
-              >
-                S &apos;inscrire
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <DarkLightMode />
-        </NavigationMenuList>
-      </NavigationMenu>
+
+      {/* ==============================Login============================== */}
+      <LoginLogout />
+      {/* ==============================Login-end============================== */}
     </header>
   )
 }

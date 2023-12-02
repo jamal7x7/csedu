@@ -44,10 +44,11 @@ export type TSignUpSchema = z.infer<typeof signUpSchema>
 
 export const loginSchema = z.object({
   // studentId: z.string().min(1, { message: 'au moins un caractere' }).optional(),
-  studentNumber: z.string().min(1, { message: 'au moins un caractere' }),
-  group: z.string().min(1, { message: 'au moins un caractere' }),
-  firstName: z.string().min(1, { message: 'this👏is👏too👏big' }).optional(),
-  lastName: z.string().min(1, { message: 'this👏is👏too👏big' }).optional(),
+  // studentNumber: z.string().min(1, { message: 'au moins un caractere' }),
+  username: z.string().min(1, { message: 'au moins un caractere' }),
+  // group: z.string().min(1, { message: 'au moins un caractere' }),
+  // firstName: z.string().min(1, { message: 'this👏is👏too👏big' }).optional(),
+  // lastName: z.string().min(1, { message: 'this👏is👏too👏big' }).optional(),
   password: z.string().min(4, { message: 'au moins 4 caracteres' }),
 })
 // .refine((data) => data.password === data.confirmPassword, {

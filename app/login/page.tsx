@@ -22,38 +22,56 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { TLoginSchema, loginSchema } from '@/lib/types'
 
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+
 // export const studentLoggedIn = { state: false }
 
 const AddNewStudent = () => {
+  const router = useRouter()
   // 1. Define your form.
   const form = useForm<TLoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      studentNumber: '1',
-      password: '1111',
-      group: '1',
+      username: 'jamal',
+      password: 'jamal',
     },
   })
 
   // 2. Define a submit handler.
   const onSubmit = async (data: TLoginSchema) => {
     console.log('from login', data)
+
+    const signInData = await signIn('credentials', {
+      username: data.username,
+      password: data.password,
+      redirect: false,
+    })
+    console.log('signInData error', signInData)
+
+    if (signInData?.error) {
+      console.log('signInData error', signInData.error)
+    } else {
+      router.refresh()
+      router.push('/studentDashboard')
+    }
     // function onSubmit() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
 
-    const res: Response = await fetch('/api/students', {
-      method: 'POST',
-      headers: { 'Centent-Type': 'application/json' },
-      body: JSON.stringify(data),
-    })
-
-    const responseData = await res.json()
+    // const res: Response = await fetch('/api/students', {
+    //   method: 'POST',
+    //   headers: { 'Centent-Type': 'application/json' },
+    //   body: JSON.stringify(data),
+    // })
 
     // const responseData = await res.json()
 
-    if (responseData.ok) {
+    // // const responseData = await res.json()
+
+    if (signInData?.ok) {
       // studentLoggedIn.state = true
+      router.refresh()
       toast({
         variant: 'success',
         title: 'login!',
@@ -64,7 +82,7 @@ const AddNewStudent = () => {
       // studentLoggedIn.state = false
       toast({
         variant: 'destructive',
-        title: "Error d'Enregistrement",
+        title: 'Error!',
         description: 'essai une autre fois ',
         action: <ToastAction altText='Goto schedule to undo'>Ok</ToastAction>,
       })
@@ -90,20 +108,18 @@ const AddNewStudent = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
               <FormField
                 control={form.control}
-                name='studentNumber'
+                name='username'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor='studentNumber'>
-                      Numero de class
-                    </FormLabel>
+                    <FormLabel htmlFor='username'>Nom d'utilisateur</FormLabel>
                     <FormControl>
                       <div className='min-w-full'>
                         <Input
                           {...field}
                           className=' '
-                          id='studentNumber'
+                          id='username'
                           type='text'
-                          placeholder='numero de class'
+                          placeholder="Nom d'utilisateur"
                         />
                       </div>
                     </FormControl>
@@ -111,27 +127,7 @@ const AddNewStudent = () => {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name='group'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel htmlFor='group'>Binôme</FormLabel>
-                    <FormControl>
-                      <div className='min-w-full'>
-                        <Input
-                          {...field}
-                          className=' '
-                          id='group'
-                          type='text'
-                          placeholder='Binôme'
-                        />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+
               <FormField
                 control={form.control}
                 name='password'

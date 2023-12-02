@@ -4,7 +4,8 @@ import fs from 'fs'
 import { signUpSchema, TSignUpSchema } from '@/lib/types'
 import { ZodError } from 'zod'
 import db from '@/lib/db'
-import { PrismaClient } from '@prisma/client'
+
+import { hash } from 'bcrypt'
 
 //get all users
 export async function GET(req: Request, res: NextResponse) {
@@ -41,7 +42,7 @@ export async function POST(req: Request, res: NextResponse) {
       updatedAt,
     } = dataReq
 
-    console.log(dataReq)
+    // console.log(dataReq)
 
     // let studentsArray = students
 
@@ -85,32 +86,39 @@ export async function POST(req: Request, res: NextResponse) {
     //====================================================
 
     const allUsers = await db.student.findMany({})
-    console.dir(allUsers, { depth: null })
-    const user = await db.student.create({
-      data: {
-        studentId,
-        level,
-        classCode,
-        studentNumber,
-        firstName,
-        lastName,
-        email,
-        username,
-        massarNumber,
-        password,
-        group,
-        createdAt,
-        updatedAt,
-      },
-    })
+    // console.dir(allUsers, { depth: null })
 
-    console.log('Created user: ', user)
+    const hashedPassword = await hash(password, 10)
+    const user = await db.student
+      .create({
+        data: {
+          studentId,
+          level,
+          classCode,
+          studentNumber,
+          firstName,
+          lastName,
+          email,
+          username,
+          massarNumber,
+          password: hashedPassword,
+          group,
+          createdAt,
+          updatedAt,
+        },
+      })
+      .catch((err) => {
+        // console.log('err: ', JSON.stringify(err, null, 2))
+        zodErrors = { ...zodErrors, err: err }
+      })
+
+    // console.log('Created user: ', user)
     //====================================================
+    return NextResponse.json(
+      Object.keys(zodErrors).length > 0
+        ? { errors: zodErrors, message: 'error' }
+        : { user, seccess: 'Student created succussfully!', ok: true },
+      { status: 201 }
+    )
   }
-  return NextResponse.json(
-    Object.keys(zodErrors).length > 0
-      ? { errors: zodErrors }
-      : { seccess: 'Student created succussfully!', ok: true },
-    { status: 201 }
-  )
 }

@@ -41,12 +41,12 @@ export default async function SecondLevelPage() {
   const articleBlockData: ArticleBlockData[] = JSON.parse(file)
   // console.log(articleBlockData)
 
-  const headersList = headers()
+  // const headersList = headers()
 
-  const userAgent = headersList.get('user-agent')
-  const referer = headersList.referer
+  // const userAgent = headersList.get('user-agent')
+  // const referer = headersList.referer
 
-  const contentType = headersList.get('x-real-ip')
+  // const contentType = headersList.get('x-real-ip')
 
   // let ip
 
@@ -215,10 +215,10 @@ export default async function SecondLevelPage() {
           <Card className='pb-4 px-4 pt-6 rounded-t-lg '>
             <CardHeader className=' pt-0 pb-4 px-2 flex-col items-start'>
               <Badge variant='outline'>
-                <p className='flex items-center text-sm uppercase font-bold text-default-600'>
+                <div className='flex items-center text-sm uppercase font-bold text-default-600'>
                   <div className='w-2 h-2 mr-2 rounded-full bg-green-400'></div>
                   Definitions
-                </p>
+                </div>
               </Badge>
             </CardHeader>
             {/* <Divider className='my-4'/> */}
@@ -233,10 +233,10 @@ export default async function SecondLevelPage() {
           </Card>
           <div className='flex flex-col items-start justify-between 2xl:px-24 pt-8 ml-20  w-full '>
             <Badge variant='outline'>
-              <p className='flex items-center text-sm uppercase font-bold text-default-600'>
+              <div className='flex items-center text-sm uppercase font-bold text-default-600'>
                 <div className='w-2 h-2 mr-2 rounded-full bg-slate-400'></div>
                 Exemple
-              </p>
+              </div>
             </Badge>
             <Card className='mt-4 py-4  bg-transparent  border-neutral-200 dark:border-neutral-800 shadow-sm'>
               {/* <CardHeader className='pb-0 pt-2 px-4 flex-col items-start'> */}
@@ -255,10 +255,10 @@ export default async function SecondLevelPage() {
           <Card className='pb-4 px-4 pt-6 '>
             <CardHeader className=' pt-0 pb-4 px-2 flex-col items-start'>
               <Badge variant='outline'>
-                <p className='flex items-center text-sm uppercase font-bold text-default-600'>
+                <div className='flex items-center text-sm uppercase font-bold text-default-600'>
                   <div className='w-2 h-2 mr-2 rounded-full bg-green-400'></div>
                   Definitions
-                </p>
+                </div>
               </Badge>
             </CardHeader>
             {/* <Divider className='my-4'/> */}
@@ -302,10 +302,10 @@ export default async function SecondLevelPage() {
             <Card className='pb-4 px-4 pt-6 '>
               <CardHeader className=' pt-0 pb-4 px-2 flex-col items-start'>
                 <Badge variant='outline'>
-                  <p className='flex items-center text-sm uppercase font-bold text-default-600'>
+                  <div className='flex items-center text-sm uppercase font-bold text-default-600'>
                     <div className='w-2 h-2 mr-2 rounded-full bg-green-400'></div>
                     {b.type}
-                  </p>
+                  </div>
                 </Badge>
               </CardHeader>
               <CardContent className='overflow-visible py-2'>
