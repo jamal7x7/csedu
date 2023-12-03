@@ -10,6 +10,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  ADMIN
+  USER
+}
+
 model Student  {
   studentId Int @id @default(autoincrement())
   level Int?
@@ -24,4 +29,6 @@ model Student  {
   group String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  role UserRole @default(USER)
 }

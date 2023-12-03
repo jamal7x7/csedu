@@ -14,29 +14,27 @@ const LoginLogout = async () => {
   const session = await getServerSession(authOptions)
   let isLoggedIn = session?.user
   return (
-    <main className='flex   items-center justify-between p-2'>
-      <div>
-        {isLoggedIn ? (
-          //   <Link href='/' passHref>
-          <LogoutButton>Log out</LogoutButton>
-        ) : (
-          //   </Link>
+    <main className='flex   items-center justify-between gap-2'>
+      {isLoggedIn ? (
+        //   <Link href='/' passHref>
+        <LogoutButton>Log out</LogoutButton>
+      ) : (
+        //   </Link>
 
-          <>
-            <Button variant={'outline'} className=''>
-              <Link href='/login' passHref>
-                Login
-              </Link>
-            </Button>
+        <>
+          <Button variant={'outline'} className=''>
+            <Link href='/login' passHref>
+              Login
+            </Link>
+          </Button>
 
-            <Button className=''>
-              <Link href='/addnewstudent' passHref>
-                Register
-              </Link>
-            </Button>
-          </>
-        )}
-      </div>
+          <Button className=''>
+            <Link href='/addnewstudent' passHref>
+              Register
+            </Link>
+          </Button>
+        </>
+      )}
     </main>
   )
 }

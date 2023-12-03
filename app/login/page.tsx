@@ -74,16 +74,16 @@ const AddNewStudent = () => {
       router.refresh()
       toast({
         variant: 'success',
-        title: 'login!',
-        description: 'Bien Venue!!!!! ',
+        title: 'Oora!',
+        description: 'Bien Venue ' + data.username,
         action: <ToastAction altText='Goto schedule to undo'>Ok</ToastAction>,
       })
     } else {
       // studentLoggedIn.state = false
       toast({
         variant: 'destructive',
-        title: 'Error!',
-        description: 'essai une autre fois ',
+        title: 'Oops!',
+        description: 'Essai une autre fois',
         action: <ToastAction altText='Goto schedule to undo'>Ok</ToastAction>,
       })
     }

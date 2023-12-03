@@ -15,10 +15,13 @@ import LoginLogout from './LoginLogout'
 export const NavBar = () => {
   return (
     <header className='fixed flex justify-between p-2  top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
-      {/* ==============================Login============================== */}
-      <LoginLogout />
-      {/* ==============================Login-end============================== */}
-      <DarkLightMode />
+      <div className='flex justify-center items-center font-extrabold sm:pl-2 md:pl-8 lg:pl-12 '>
+        cslab
+      </div>
+      <div className='flex justify-between gap-2 sm:pr-2 md:pr-8 lg:pr-12'>
+        <LoginLogout />
+        <DarkLightMode />
+      </div>
     </header>
   )
 }

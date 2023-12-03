@@ -61,12 +61,8 @@ export default async function SecondLevelPage() {
   // }
 
   return (
-    // <main className="flex min-h-screen flex-col items-center justify-between">
     <main className='min-h-screen container mx-auto   '>
-      {/* <main className='bg-teal-300'> */}
-      {/* <div className='absolute top-0 z-[-2] h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px]'></div> */}
       <div className='flex flex-col  max-w-3xl  mx-auto gap-12 pb-16'>
-        {/* <LevelsBreadcrumbs/> */}
         <div className='p-10 hidden'>
           <div className=' flex  gap-2 '>
             <Link href='/' passHref>
@@ -76,8 +72,6 @@ export default async function SecondLevelPage() {
               <em>2</em>
               <sup>ème</sup> Annee{' '}
             </var>
-
-            {/* <ModeToggle /> */}
           </div>
         </div>
         {/* =============================Title================================  */}
@@ -141,7 +135,7 @@ export default async function SecondLevelPage() {
               x2='66.5807'
               y2='20.2723'
               stroke='#FF7A00'
-              stroke-opacity='0.5'
+              strokeOpacity='0.5'
             />
             <line
               x1='116.652'
@@ -149,7 +143,7 @@ export default async function SecondLevelPage() {
               x2='182.652'
               y2='32.641'
               stroke='#FF7A00'
-              stroke-opacity='0.5'
+              strokeOpacity='0.5'
             />
             <line
               x1='117.256'
@@ -157,7 +151,7 @@ export default async function SecondLevelPage() {
               x2='194.256'
               y2='142.571'
               stroke='#FF7A00'
-              stroke-opacity='0.5'
+              strokeOpacity='0.5'
             />
             <line
               x1='117.456'
@@ -165,7 +159,7 @@ export default async function SecondLevelPage() {
               x2='76.4559'
               y2='188.205'
               stroke='#FF7A00'
-              stroke-opacity='0.5'
+              strokeOpacity='0.5'
             />
             <line
               x1='117.129'
@@ -173,7 +167,7 @@ export default async function SecondLevelPage() {
               x2='20.1294'
               y2='123.483'
               stroke='#FF7A00'
-              stroke-opacity='0.5'
+              strokeOpacity='0.5'
             />
             <path
               d='M104 77.5H130C134.142 77.5 137.5 80.8579 137.5 85V109C137.5 113.142 134.142 116.5 130 116.5H104C99.8579 116.5 96.5 113.142 96.5 109V85C96.5 80.8579 99.8579 77.5 104 77.5Z'

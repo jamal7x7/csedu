@@ -23,8 +23,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { TSignUpSchema, signUpSchema } from '@/lib/types'
 import { LevelTabs } from '@/components/level-tabs'
+import { useRouter } from 'next/navigation'
 
 const AddNewStudent = () => {
+  const router = useRouter()
   // 1. Define your form.
   const form = useForm<TSignUpSchema>({
     resolver: zodResolver(signUpSchema),
@@ -55,10 +57,12 @@ const AddNewStudent = () => {
     try {
       const responseData = await res.json()
       if (responseData.ok) {
+        // router.refresh()
+        router.push('/login')
         toast({
           variant: 'success',
           title: 'Enregistrement fait',
-          description: 'utilisateur cree: ' + responseData.seccess,
+          description: 'Maintenant, connectez-Vous',
           action: <ToastAction altText='Goto schedule to undo'>Ok</ToastAction>,
         })
       } else {

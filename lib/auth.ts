@@ -14,6 +14,7 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: '/api/auth/sigin',
+    error: '/api/auth/sigin',
   },
   // Configure one or more authentication providers
   providers: [
@@ -69,25 +70,12 @@ export const authOptions: NextAuthOptions = {
           id: `${existingUser.studentId}`,
           // id: existingUser.studentId,
           username: existingUser.username,
+          role: existingUser.role,
         }
 
         //=====================================================++++++++++==========+++++++++++===========
 
         //=====================================================++++++++++==========+++++++++++===========
-
-        //   const res = await fetch(`/app/api/students/${req.params.studentId}`, {
-        //     method: 'POST',
-        //     body: JSON.stringify(credentials),
-        //     headers: { 'Content-Type': 'application/json' },
-        //   })
-        //   const user = await res.json()
-
-        //   // If no error and we have user data, return it
-        //   if (res.ok && user) {
-        //     return user
-        //   }
-        //   // Return null if user data could not be retrieved
-        //   return null
       },
     }),
   ],
@@ -95,14 +83,32 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       // console.log('token and user from auth', token, user)
       if (user) {
-        return { ...token, username: user.username }
+        return { ...token, username: user.username, role: user.role }
       }
       return token
     },
 
     async session({ session, token }) {
-      console.log('session and user from auth', session, token)
-      return { ...session, user: { ...session.user, username: token.username } }
+      // console.log('session and user from auth', session, token)
+
+      return {
+        ...session,
+        user: { ...session.user, username: token.username, role: token.role },
+      }
     },
   },
 }
+
+//   const res = await fetch(`/app/api/students/${req.params.studentId}`, {
+//     method: 'POST',
+//     body: JSON.stringify(credentials),
+//     headers: { 'Content-Type': 'application/json' },
+//   })
+//   const user = await res.json()
+
+//   // If no error and we have user data, return it
+//   if (res.ok && user) {
+//     return user
+//   }
+//   // Return null if user data could not be retrieved
+//   return null
