@@ -9,8 +9,10 @@ import { ModeToggle } from '@/components/modeToggle'
 import { Toaster } from '@/components/ui/toaster'
 
 import { Button, Breadcrumbs, BreadcrumbItem } from '@nextui-org/react'
-import Provider from '@/components/provider'
+import { default as SProvider } from '@/components/provider'
 import { isLoggedIn } from '@/lib/isloggedin'
+
+import { Provider } from 'jotai'
 
 // const inter = Inter({ subsets: ['latin'] })
 export const fontSans = FontSans({
@@ -39,19 +41,21 @@ export default async function RootLayout({
           fontSans.variable
         )}
       >
-        <Provider>
+        <SProvider>
           <ThemeProvider
             attribute='class'
             defaultTheme='system'
             enableSystem
             disableTransitionOnChange
           >
-            <NavBar />
+            <Provider>
+              <NavBar />
 
-            {children}
-            <Toaster />
+              {children}
+              <Toaster />
+            </Provider>
           </ThemeProvider>
-        </Provider>
+        </SProvider>
       </body>
     </html>
   )

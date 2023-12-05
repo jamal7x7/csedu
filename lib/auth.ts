@@ -67,7 +67,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         return {
-          id: `${existingUser.studentId}`,
+          id: `${existingUser.id}`,
           // id: existingUser.studentId,
           username: existingUser.username,
           role: existingUser.role,

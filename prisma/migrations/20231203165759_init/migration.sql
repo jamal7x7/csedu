@@ -1,6 +1,9 @@
+-- CreateEnum
+CREATE TYPE "UserRole" AS ENUM ('ADMIN', 'USER');
+
 -- CreateTable
 CREATE TABLE "Student" (
-    "studentId" SERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "level" INTEGER,
     "classCode" TEXT,
     "studentNumber" INTEGER,
@@ -13,8 +16,22 @@ CREATE TABLE "Student" (
     "group" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "role" "UserRole" NOT NULL DEFAULT 'USER',
 
-    CONSTRAINT "Student_pkey" PRIMARY KEY ("studentId")
+    CONSTRAINT "Student_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "UnitTitle" (
+    "id" SERIAL NOT NULL,
+    "level" INTEGER,
+    "title" TEXT NOT NULL DEFAULT 'Title',
+    "subtitle" TEXT DEFAULT 'Subtitle',
+    "description" TEXT DEFAULT 'Description',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "UnitTitle_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex

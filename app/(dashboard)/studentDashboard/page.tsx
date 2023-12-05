@@ -6,31 +6,35 @@ import Link from 'next/link'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth'
 import LoginLogout from '@/components/LoginLogout'
+import Levels from '@/app/levels/page'
 
 export default async function Dashboard() {
   const session = await getServerSession(authOptions)
-  console.log('session from student Dashboard: ', session)
+  // console.log('session from student Dashboard: ', session)
 
   return (
-    <main className='flex min-h-screen flex-col items-center justify-between p-24'>
+    <main className='flex min-h-screen flex-col items-center justify-between '>
       <div className='flex flex-col gap-8'>
         {session?.user ? (
           <>
             <div className='p-12 flex  items-center justify-center mt-16'>
-              <div className='flex flex-shrink-0 h-20 w-20 items-center justify-center rounded-full dark:bg-slate-800 bg-slate-100  md:h-[72px] md:w-[72px]'>
+              <div className='  flex flex-shrink-0 h-20 w-20 items-center justify-center rounded-full dark:bg-slate-800 bg-slate-100  md:h-[72px] md:w-[72px]'>
                 {/* <p className='font-bold text-4xl'>2</p> */}
               </div>
 
               <div className='p-4 flex flex-col items-start justify-between'>
                 <small className='text-default-500'>
-                  Bien venue <b> {' ' + session?.user.username}</b>
+                  Bien venue{' [' + session?.user.role + '] '}
+                  <b> {session?.user.username}</b>
                 </small>
                 <h1 className=' font-black text-4xl '>Mon Compte</h1>
                 {/* <h1 className=' font-black text-4xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>Le Réseau Informatique</h1> */}
+                E
               </div>
             </div>
+            <Levels />
 
-            <Link href='/levels/units' passHref>
+            {/* <Link href='/levels/1' passHref>
               <div className='group p-4  flex  items-center justify-start hover:bg-secondary/90 bg-secondary/50 rounded-3xl hover:shadow-[0_0px_50px_10px_rgba(0,0,0,0.3)]  hover:shadow-blue-500/20'>
                 <div className='relative flex flex-shrink-0 h-20 w-20 items-center justify-center rounded-full  bg-muted  md:h-[72px] md:w-[72px] group-hover:bg-blue-500 '>
                   <span className='group-hover:animate-ping absolute inline-flex h-full w-full rounded-full bg-muted group-hover:bg-primary  opacity-20 group-hover:transition-all'></span>
@@ -51,7 +55,7 @@ export default async function Dashboard() {
               </div>
             </Link>
 
-            <Link href='/levels/units' passHref>
+            <Link href='/levels/2' passHref>
               <div className='group p-4 pr-40 flex  items-center justify-start hover:bg-secondary/90 bg-secondary/50 rounded-3xl hover:shadow-[0_0px_50px_10px_rgba(0,0,0,0.3)]  hover:shadow-green-500/20'>
                 <div className='relative flex flex-shrink-0 h-20 w-20 items-center justify-center rounded-full  bg-muted  md:h-[72px] md:w-[72px] group-hover:bg-green-500 '>
                   <span className='group-hover:animate-ping absolute inline-flex h-full w-full rounded-full bg-muted group-hover:bg-primary  opacity-20 group-hover:transition-all'></span>
@@ -72,7 +76,7 @@ export default async function Dashboard() {
               </div>
             </Link>
 
-            <Link href='/levels/units' passHref>
+            <Link href='/levels/3' passHref>
               <div className='group p-4 pr-40 flex  items-center justify-start hover:bg-secondary/90 bg-secondary/50 rounded-3xl hover:shadow-[0_0px_50px_10px_rgba(0,0,0,0.3)]  hover:shadow-orange-500/20'>
                 <div className='relative flex flex-shrink-0 h-20 w-20 items-center justify-center rounded-full  bg-muted  md:h-[72px] md:w-[72px] group-hover:bg-orange-500 '>
                   <span className='group-hover:animate-ping absolute inline-flex h-full w-full rounded-full bg-muted group-hover:bg-primary  opacity-20 group-hover:transition-all'></span>
@@ -91,7 +95,7 @@ export default async function Dashboard() {
                   </h1>
                 </div>
               </div>
-            </Link>
+            </Link> */}
           </>
         ) : (
           <div className='p-12 flex  items-center justify-center mt-16'>

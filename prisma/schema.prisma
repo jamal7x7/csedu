@@ -16,7 +16,7 @@ enum UserRole {
 }
 
 model Student  {
-  studentId Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   level Int?
   classCode String?
   studentNumber Int? 
@@ -32,3 +32,32 @@ model Student  {
 
   role UserRole @default(USER)
 }
+model Chapter  {
+  id Int @id @default(autoincrement())
+  level Int?
+  unitId Int
+  unit Unit?  @relation(fields: [unitId], references: [id])
+  
+  title String @default("Title of Chapter")
+  subtitle String? @default("Subtitle")
+  description String? @default("Description")
+
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Unit  {
+  id Int @id @default(autoincrement())
+  level Int?
+  code String?
+  
+  resources Chapter[] 
+  name String @default("Title")
+  subtitle String? @default("Subtitle")
+  description String? @default("Description")
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+

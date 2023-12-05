@@ -42,47 +42,43 @@ export async function POST(req: Request, res: NextResponse) {
       updatedAt,
     } = dataReq
 
-    // console.log(dataReq)
-
-    // let studentsArray = students
-
-    // const existingStudent = studentsArray?.find((s) => s.username == username)
-
-    // if (existingStudent?.username == username) {
-    //   return NextResponse.json(
-    //     { message: "nom d'utilisateur deja pris!", ok: false },
-    //     { status: 400 }
-    //   )
-    // }
-
-    // studentsArray.push({
-    //   studentId,
-    //   level,
-    //   classCode,
-    //   studentNumber,
-    //   firstName,
-    //   lastName,
-    //   email,
-    //   username,
-    //   massarNumber,
-    //   password,
-    //   group,
-    //   createdAt,
-    //   updatedAt,
-    // })
-
-    // // extract just the student array from the updated data
-    // const updatedstudentsArray = studentsArray
-    // //convert updated data to JSON string
-    // const updatedData = JSON.stringify(updatedstudentsArray, null, 2)
-    // // return NextResponse.json({ updatedData }, { status: 200 })
-    // // write the updated data to a JSON string
-    // fs.writeFileSync(
-    //   './app/utils/studentsDB2.ts',
-    //   `export const students = ${updatedData}`,
-    //   'utf-8'
-    // )
-
+    {
+      // console.log(dataReq)
+      // let studentsArray = students
+      // const existingStudent = studentsArray?.find((s) => s.username == username)
+      // if (existingStudent?.username == username) {
+      //   return NextResponse.json(
+      //     { message: "nom d'utilisateur deja pris!", ok: false },
+      //     { status: 400 }
+      //   )
+      // }
+      // studentsArray.push({
+      //   studentId,
+      //   level,
+      //   classCode,
+      //   studentNumber,
+      //   firstName,
+      //   lastName,
+      //   email,
+      //   username,
+      //   massarNumber,
+      //   password,
+      //   group,
+      //   createdAt,
+      //   updatedAt,
+      // })
+      // // extract just the student array from the updated data
+      // const updatedstudentsArray = studentsArray
+      // //convert updated data to JSON string
+      // const updatedData = JSON.stringify(updatedstudentsArray, null, 2)
+      // // return NextResponse.json({ updatedData }, { status: 200 })
+      // // write the updated data to a JSON string
+      // fs.writeFileSync(
+      //   './app/utils/studentsDB2.ts',
+      //   `export const students = ${updatedData}`,
+      //   'utf-8'
+      // )
+    }
     //====================================================
 
     const allUsers = await db.student.findMany({})
