@@ -23,6 +23,7 @@ export function DarkLightMode() {
 
   return (
     <Toggle
+      size='sm'
       className=''
       pressed={false}
       defaultPressed

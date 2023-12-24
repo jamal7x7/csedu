@@ -25,7 +25,7 @@ import { TSignUpSchema, signUpSchema } from '@/lib/types'
 import { LevelTabs } from '@/components/level-tabs'
 import { useRouter } from 'next/navigation'
 
-const AddNewStudent = () => {
+const AddNewUser = () => {
   const router = useRouter()
   // 1. Define your form.
   const form = useForm<TSignUpSchema>({
@@ -35,7 +35,7 @@ const AddNewStudent = () => {
       // firstName: 'firstName',
       // lastName: 'lastName',
 
-      username: 'p1',
+      username: 'username',
       password: 'password',
       confirmPassword: 'password',
     },
@@ -48,7 +48,7 @@ const AddNewStudent = () => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
 
-    const res = await fetch('/api/students', {
+    const res = await fetch('/api/users', {
       method: 'POST',
       headers: { 'Centent-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -88,7 +88,7 @@ const AddNewStudent = () => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
               {/* ==============================================LevelTabs=================================================== */}
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name='level'
                 render={({ field }) => (
@@ -106,7 +106,7 @@ const AddNewStudent = () => {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
 
               {/* =================================================================================================== */}
 
@@ -198,7 +198,7 @@ const AddNewStudent = () => {
   )
 }
 
-export default AddNewStudent
+export default AddNewUser
 
 // from: https://github.com/ByteGrad/react-hook-form-with-zod-and-server-side/blob/main/components/form-with-rhf-and-zod-and-server.tsx
 

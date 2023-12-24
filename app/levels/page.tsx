@@ -16,9 +16,9 @@ export default function Levels() {
                   <p className='relative font-bold text-4xl group-hover:text-primary-foreground'>
                     {level}
                   </p>
-                </div>
+                  </div> 
 
-                <div className='p-4 flex flex-col items-start justify-between'>
+                <div className='p-4 flex  flex-col items-start justify-between'>
                   <small className='text-default-500 group-hover:text-blue-950 dark:group-hover:text-blue-200'>
                     Niveau {level}
                   </small>

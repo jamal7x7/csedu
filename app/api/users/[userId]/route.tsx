@@ -11,11 +11,11 @@ import db from '@/lib/db'
 
 // get specific user
 export async function GET(req: Request, res: any) {
-  const { studentId: sId } = await res.params
+  const { userId: sId } = await res.params
   // console.log('students', students)
-  const allUsers = await db.student.findUnique({
+  const allUsers = await db.user.findUnique({
     where: {
-      studentId: sId,
+      id: sId,
     },
   })
   // const student = students.filter((s) => s.studentId == sId)
@@ -28,22 +28,22 @@ export async function GET(req: Request, res: any) {
 //login student
 export async function POST(req: Response, res: any) {
   let { username, password } = await req.json()
-  const { studentId: sId } = await res.params
+  const { userId: sId } = await res.params
 
-  const studentDB = await db.student.findUnique({
+  const userDB = await db.user.findUnique({
     where: {
-      studentId: Number(sId),
+      id: Number(sId),
     },
   })
 
-  const { username: sUsername, password: sPassword } = studentDB
+  const { username: uUsername, password: uPassword } = userDB
 
   // const { username: sUsername, password: sPassword } = allUsers?.find(
   //   (s) => s.studentId == sId
   // )
-  if (username == sUsername && password == sPassword) {
+  if (username == uUsername && password == uPassword) {
     return NextResponse.json({ result: 'Successfully logged in!!!' })
-  } else if (!sUsername || !password) {
+  } else if (!uUsername || !password) {
     return NextResponse.json({ result: 'please fill all the input fileds' })
   } else {
     return NextResponse.json({ result: 'Invalid Credentials' })

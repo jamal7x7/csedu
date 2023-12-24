@@ -27,7 +27,7 @@ import { useRouter } from 'next/navigation'
 
 // export const studentLoggedIn = { state: false }
 
-const AddNewStudent = () => {
+const LoginForm = () => {
   const router = useRouter()
   // 1. Define your form.
   const form = useForm<TLoginSchema>({
@@ -91,18 +91,12 @@ const AddNewStudent = () => {
     // form.reset()
   }
 
-  // const [studentNumber, setStudentNumber] = useState('')
-  // const [firstName, setFirstName] = useState('')
-  // const [lastName, setLastName] = useState('')
-  // const [password, setPassword] = useState('')
-  // const [confirmPassword, setConfirmPassword] = useState('')
-
   const { toast } = useToast()
 
   return (
     <div className='min-h-screen  flex flex-col items-center justify-center border '>
       <div className='sm:w-1/3 flex flex-col items-center justify-center border p-10 rounded-xl  bg-muted/30'>
-        <h1 className=' font-black text-4xl mb-8 '>Se Connecter</h1>
+        <h1 className=' font-black text-4xl mb-8 '>Se Connecter!</h1>
         <div className='min-w-full'>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
@@ -168,7 +162,7 @@ const AddNewStudent = () => {
   )
 }
 
-export default AddNewStudent
+export default LoginForm
 
 // from: https://github.com/ByteGrad/react-hook-form-with-zod-and-server-side/blob/main/components/form-with-rhf-and-zod-and-server.tsx
 

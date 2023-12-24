@@ -10,54 +10,210 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum UserRole {
+enum Role {
+  STUDENT
+  TEACHER
   ADMIN
-  USER
 }
 
-model Student  {
-  id Int @id @default(autoincrement())
-  level Int?
-  classCode String?
-  studentNumber Int? 
+model User {
+  id   Int  @id @default(autoincrement())
+  role Role @default(STUDENT)
+
   firstName String?
-  lastName String?
-  email String? @unique
-  username String @unique
-  massarNumber String? @unique
-  password String
+  lastName  String?
+  email     String? @unique
+  username  String  @unique
+  password  String
+
+  profile Profile?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Profile {
+  id Int @id @default(autoincrement())
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @unique
+
+  student Student?
+  teacher Teacher?
+  admin   Admin?
+}
+
+model Student {
+  id Int @id @default(autoincrement())
+
+  profile   Profile @relation(fields: [profileId], references: [id])
+  profileId Int     @unique
+
+  level         Int?
+  classCode     String?
+  studentNumber Int?
+  massarNumber  String? @unique
+
   group String?
+}
+
+model Teacher {
+  id  Int     @id @default(autoincrement())
+  bio String?
+
+  profile   Profile @relation(fields: [profileId], references: [id])
+  profileId Int     @unique
+}
+
+model Admin {
+  id  Int     @id @default(autoincrement())
+  bio String?
+
+  profile   Profile @relation(fields: [profileId], references: [id])
+  profileId Int     @unique
+}
+
+model Unit {
+  id    Int     @id @default(autoincrement())
+  level Int?
+  code  String?
+
+   order Int? @default(autoincrement())
+
+  resources   Chapter[]
+  name        String    @default("Title")
+  subtitle    String?   @default("Subtitle")
+  description String?   @default("Description")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  role UserRole @default(USER)
 }
-model Chapter  {
-  id Int @id @default(autoincrement())
-  level Int?
-  unitId Int
-  unit Unit?  @relation(fields: [unitId], references: [id])
-  
-  title String @default("Title of Chapter")
-  subtitle String? @default("Subtitle")
+
+model Chapter {
+  id     Int   @id @default(autoincrement())
+  level  Int?
+  unitId Int @default(1)
+  unit   Unit? @relation(fields: [unitId], references: [id])
+
+  testId Int?
+  // test Test?  @relation(fields: [testId], references: [id])
+   order Int? @default(autoincrement())
+
+  sections Section[]
+
+  number      Int?    @default(autoincrement())
+  title       String  @default("Title of Chapter")
+  subtitle    String? @default("Subtitle")
   description String? @default("Description")
 
-  
+  published Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Unit  {
-  id Int @id @default(autoincrement())
-  level Int?
-  code String?
-  
-  resources Chapter[] 
-  name String @default("Title")
-  subtitle String? @default("Subtitle")
+model Section {
+  id          Int          @id @default(autoincrement())
+  chapter     Chapter      @relation(fields: [chapterId], references: [id])
+  chapterId   Int
+  content     String
+  order       Int          @default(autoincrement())
+  objectives  Objective[]
+  blocks      Block[]
+  assessments Assessment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum BlockType {
+  CHAPTER_TITLE
+  INTRO
+  H1
+  H2
+  H3
+  H4
+  H5
+  FIGURE
+  DEF
+  EXEMPLE
+  P
+  LIST
+}
+
+model Objective {
+  id          Int     @id @default(autoincrement())
+  order       Int     @default(autoincrement())
+  section     Section @relation(fields: [sectionId], references: [id])
+  sectionId   Int
+  description String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Block {
+  id    Int @id @default(autoincrement())
+  order Int @default(autoincrement())
+
+  section   Section    @relation(fields: [sectionId], references: [id])
+  sectionId Int
+  type      BlockType? @default(P)
+  content   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Assessment {
+  id    Int @id @default(autoincrement())
+  order Int @default(autoincrement())
+
+  section   Section   @relation(fields: [sectionId], references: [id])
+  sectionId Int
+  type      QuizType? @default(TEXT)
+  content   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum QuizType {
+  MULTI
+  YESNO
+  TEXT
+}
+
+model Quiz {
+  id        Int  @id @default(autoincrement())
+  number    Int  @default(1)
+  order     Int  @default(autoincrement())
+  points    Int  @default(1)
+  level     Int?
+  chapterId Int?
+
+  type QuizType? @default(MULTI)
+
+  question    String  @default("Title")
+  subtitle    String? @default("Subtitle")
   description String? @default("Description")
-  
+  hint        String? @default("Hint!")
+
+  options Option[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
+model Option {
+  id          Int      @id @default(autoincrement())
+  order       Int      @default(autoincrement())
+  content     String   @default("True")
+  description String?  @default("Option description")
+  correct     Boolean? @default(false)
+
+  quizId Int
+  quiz   Quiz @relation(fields: [quizId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

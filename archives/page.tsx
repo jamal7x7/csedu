@@ -20,7 +20,7 @@ import getServerSideProps from '@/components/client-info'
 
 import { ModeToggle } from '@/components/modeToggle'
 
-import { Resume } from './resume/page'
+import { Resume } from '../app/(dashboard)/studentDashboard/levels/[levelId]/chapters/[chapterId]/resume/page'
 import { Separator } from '@/components/ui/separator'
 import { Quiz } from '@/app/quiz/page'
 
@@ -32,7 +32,7 @@ interface Content {
   title: string
 }
 
-export default async function SecondLevelPage({ params }) {
+export default async function SecondLevelPage() {
   // const res = await fetch('@/data/data')
   // const data = await res.json()
 
@@ -40,12 +40,12 @@ export default async function SecondLevelPage({ params }) {
   const articleBlockData: ArticleBlockData[] = JSON.parse(file)
   // console.log(articleBlockData)
 
-  const headersList = headers()
+  // const headersList = headers()
 
-  const userAgent = headersList.get('user-agent')
-  const referer = headersList.referer
+  // const userAgent = headersList.get('user-agent')
+  // const referer = headersList.referer
 
-  const contentType = headersList.get('x-real-ip')
+  // const contentType = headersList.get('x-real-ip')
 
   // let ip
 
@@ -60,12 +60,8 @@ export default async function SecondLevelPage({ params }) {
   // }
 
   return (
-    // <main className="flex min-h-screen flex-col items-center justify-between">
     <main className='min-h-screen container mx-auto   '>
-      {/* <main className='bg-teal-300'> */}
-      {/* <div className='absolute top-0 z-[-2] h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px]'></div> */}
       <div className='flex flex-col  max-w-3xl  mx-auto gap-12 pb-16'>
-        {/* <LevelsBreadcrumbs/> */}
         <div className='p-10 hidden'>
           <div className=' flex  gap-2 '>
             <Link href='/' passHref>
@@ -75,8 +71,6 @@ export default async function SecondLevelPage({ params }) {
               <em>2</em>
               <sup>ème</sup> Annee{' '}
             </var>
-
-            {/* <ModeToggle /> */}
           </div>
         </div>
         {/* =============================Title================================  */}
@@ -88,7 +82,7 @@ export default async function SecondLevelPage({ params }) {
           <div className='p-4 flex flex-col items-start justify-between'>
             <small className='text-default-500'>Chapitre 2</small>
             <h1 className=' font-black text-4xl '>
-              Le Réseau Informatique from [unitId] {params.unitId}
+              Le Réseau Informatique from Units
             </h1>
             {/* <h1 className=' font-black text-4xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>Le Réseau Informatique</h1> */}
           </div>
@@ -142,7 +136,7 @@ export default async function SecondLevelPage({ params }) {
               x2='66.5807'
               y2='20.2723'
               stroke='#FF7A00'
-              stroke-opacity='0.5'
+              strokeOpacity='0.5'
             />
             <line
               x1='116.652'
@@ -150,7 +144,7 @@ export default async function SecondLevelPage({ params }) {
               x2='182.652'
               y2='32.641'
               stroke='#FF7A00'
-              stroke-opacity='0.5'
+              strokeOpacity='0.5'
             />
             <line
               x1='117.256'
@@ -158,7 +152,7 @@ export default async function SecondLevelPage({ params }) {
               x2='194.256'
               y2='142.571'
               stroke='#FF7A00'
-              stroke-opacity='0.5'
+              strokeOpacity='0.5'
             />
             <line
               x1='117.456'
@@ -166,7 +160,7 @@ export default async function SecondLevelPage({ params }) {
               x2='76.4559'
               y2='188.205'
               stroke='#FF7A00'
-              stroke-opacity='0.5'
+              strokeOpacity='0.5'
             />
             <line
               x1='117.129'
@@ -174,7 +168,7 @@ export default async function SecondLevelPage({ params }) {
               x2='20.1294'
               y2='123.483'
               stroke='#FF7A00'
-              stroke-opacity='0.5'
+              strokeOpacity='0.5'
             />
             <path
               d='M104 77.5H130C134.142 77.5 137.5 80.8579 137.5 85V109C137.5 113.142 134.142 116.5 130 116.5H104C99.8579 116.5 96.5 113.142 96.5 109V85C96.5 80.8579 99.8579 77.5 104 77.5Z'
@@ -216,10 +210,10 @@ export default async function SecondLevelPage({ params }) {
           <Card className='pb-4 px-4 pt-6 rounded-t-lg '>
             <CardHeader className=' pt-0 pb-4 px-2 flex-col items-start'>
               <Badge variant='outline'>
-                <p className='flex items-center text-sm uppercase font-bold text-default-600'>
+                <div className='flex items-center text-sm uppercase font-bold text-default-600'>
                   <div className='w-2 h-2 mr-2 rounded-full bg-green-400'></div>
                   Definitions
-                </p>
+                </div>
               </Badge>
             </CardHeader>
             {/* <Divider className='my-4'/> */}
@@ -234,10 +228,10 @@ export default async function SecondLevelPage({ params }) {
           </Card>
           <div className='flex flex-col items-start justify-between 2xl:px-24 pt-8 ml-20  w-full '>
             <Badge variant='outline'>
-              <p className='flex items-center text-sm uppercase font-bold text-default-600'>
+              <div className='flex items-center text-sm uppercase font-bold text-default-600'>
                 <div className='w-2 h-2 mr-2 rounded-full bg-slate-400'></div>
                 Exemple
-              </p>
+              </div>
             </Badge>
             <Card className='mt-4 py-4  bg-transparent  border-neutral-200 dark:border-neutral-800 shadow-sm'>
               {/* <CardHeader className='pb-0 pt-2 px-4 flex-col items-start'> */}
@@ -256,10 +250,10 @@ export default async function SecondLevelPage({ params }) {
           <Card className='pb-4 px-4 pt-6 '>
             <CardHeader className=' pt-0 pb-4 px-2 flex-col items-start'>
               <Badge variant='outline'>
-                <p className='flex items-center text-sm uppercase font-bold text-default-600'>
+                <div className='flex items-center text-sm uppercase font-bold text-default-600'>
                   <div className='w-2 h-2 mr-2 rounded-full bg-green-400'></div>
                   Definitions
-                </p>
+                </div>
               </Badge>
             </CardHeader>
             {/* <Divider className='my-4'/> */}
@@ -275,6 +269,7 @@ export default async function SecondLevelPage({ params }) {
           </Card>
         </div>
         <Quiz />
+
         <div className='mt-16'>
           <h3 className='flex flex-col items-start justify-between text-xl  p-4 text-slate-800 dark:text-slate-200'>
             Objectif des Réseaux
@@ -302,10 +297,10 @@ export default async function SecondLevelPage({ params }) {
             <Card className='pb-4 px-4 pt-6 '>
               <CardHeader className=' pt-0 pb-4 px-2 flex-col items-start'>
                 <Badge variant='outline'>
-                  <p className='flex items-center text-sm uppercase font-bold text-default-600'>
+                  <div className='flex items-center text-sm uppercase font-bold text-default-600'>
                     <div className='w-2 h-2 mr-2 rounded-full bg-green-400'></div>
                     {b.type}
-                  </p>
+                  </div>
                 </Badge>
               </CardHeader>
               <CardContent className='overflow-visible py-2'>
@@ -315,16 +310,7 @@ export default async function SecondLevelPage({ params }) {
           </div>
         ))}
       </div>
-      <div>
-        <pre>{JSON.stringify(headers().get('host'), null, 4)}</pre>
-        <pre>
-          {JSON.stringify(
-            (headers().get('x-forwarded-for') ?? '127.0.0.1').split(',')[0],
-            null,
-            4
-          )}
-        </pre>
-      </div>
+
       <Resume />
     </main>
   )

@@ -20,7 +20,7 @@ import getServerSideProps from '@/components/client-info'
 
 import { ModeToggle } from '@/components/modeToggle'
 
-import { Resume } from './[unitId]/resume/page'
+import { Resume } from './[chapterId]/resume/page'
 import { Separator } from '@/components/ui/separator'
 import { Quiz } from '@/app/quiz/page'
 import { DemoPaymentMethod } from '@/components/payMethod'

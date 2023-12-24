@@ -6,32 +6,37 @@ import Link from 'next/link'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth'
 import LoginLogout from '@/components/LoginLogout'
-import Levels from '@/app/levels/page'
+import Levels from '@/app/(dashboard)/studentDashboard/levels/page'
+import { H1, Small } from '@/components/Typography/Typography'
+import TimeTable from '@/components/timeTable'
 
 export default async function Dashboard() {
   const session = await getServerSession(authOptions)
   // console.log('session from student Dashboard: ', session)
 
   return (
-    <main className='flex min-h-screen flex-col items-center justify-between '>
-      <div className='flex flex-col gap-8'>
+    <main className='flex min-h-screen flex-col items-center justify-between  w-full mt-16'>
+      <div className='flex flex-col gap-8  w-full'>
         {session?.user ? (
           <>
-            <div className='p-12 flex  items-center justify-center mt-16'>
+            <div className='p-12 bg-slate-900 flex  items-center justify-center '>
+              <TimeTable />
+            </div>
+            <div className='p-12 flex  items-center justify-center '>
               <div className='  flex flex-shrink-0 h-20 w-20 items-center justify-center rounded-full dark:bg-slate-800 bg-slate-100  md:h-[72px] md:w-[72px]'>
                 {/* <p className='font-bold text-4xl'>2</p> */}
               </div>
 
               <div className='p-4 flex flex-col items-start justify-between'>
-                <small className='text-default-500'>
+                <Small>
                   Bien venue{' [' + session?.user.role + '] '}
                   <b> {session?.user.username}</b>
-                </small>
-                <h1 className=' font-black text-4xl '>Mon Compte</h1>
+                </Small>
+                <H1 className='  '>Mon Compte</H1>
                 {/* <h1 className=' font-black text-4xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>Le Réseau Informatique</h1> */}
-                E
               </div>
             </div>
+
             <Levels />
 
             {/* <Link href='/levels/1' passHref>

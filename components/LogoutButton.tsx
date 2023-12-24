@@ -7,6 +7,7 @@ import { signOut } from 'next-auth/react'
 const LogoutButton = ({ children }: { children: React.ReactNode }) => {
   return (
     <Button
+      size='sm'
       onClick={() =>
         signOut({
           redirect: true,

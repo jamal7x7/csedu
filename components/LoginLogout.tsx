@@ -9,6 +9,7 @@ import { authOptions } from '@/lib/auth'
 
 import { Button } from '@/components/ui/button'
 import LogoutButton from '@/components/LogoutButton'
+import { deleteAllTitleAction } from '@/actions/actions'
 
 const LoginLogout = async () => {
   const session = await getServerSession(authOptions)
@@ -17,19 +18,21 @@ const LoginLogout = async () => {
     <main className='flex   items-center justify-between gap-2'>
       {isLoggedIn ? (
         //   <Link href='/' passHref>
-        <LogoutButton>Log out</LogoutButton>
+        <>
+          <LogoutButton>Log out</LogoutButton>
+        </>
       ) : (
         //   </Link>
 
         <>
-          <Button variant={'outline'} className=''>
+          <Button size='sm' variant={'outline'} className=''>
             <Link href='/login' passHref>
               Login
             </Link>
           </Button>
 
-          <Button className=''>
-            <Link href='/addnewstudent' passHref>
+          <Button size='sm' className=''>
+            <Link href='/addnewuser' passHref>
               Register
             </Link>
           </Button>

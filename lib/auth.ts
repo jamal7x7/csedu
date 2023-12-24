@@ -47,7 +47,7 @@ export const authOptions: NextAuthOptions = {
           return null
         }
 
-        const existingUser = await db.student.findUnique({
+        const existingUser = await db.user.findUnique({
           where: {
             username: credentials?.username,
           },

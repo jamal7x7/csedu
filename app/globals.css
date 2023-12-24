@@ -82,3 +82,188 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* ======================grad border effect====================== */
+@property --rotate {
+  syntax: '<angle>';
+  initial-value: 132deg;
+  inherits: false;
+}
+
+:root {
+  --card-height: 65vh;
+  --card-width: calc(var(--card-height) / 1.5);
+  --col1: #5ddcff;
+  --col2: #0000ff;
+  --col3: #0042a5;
+  --col4: #ffffffc0;
+  --col5: #5e5e5e88;
+  --col6: #101010;
+}
+
+/* body {
+  min-height: 100vh;
+  background: #212534;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  box-sizing: border-box;
+} */
+
+.card {
+  /* background: #191c29; */
+  /* width: var(--card-width); */
+  /* height: var(--card-height); */
+  /* padding: 3px; */
+  /* position: relative; */
+  /* border-radius: 6px; */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  /* font-size: 1.5em; */
+  /* color: rgb(88 199 250 / 0%); */
+  cursor: pointer;
+  /* font-family: cursive; */
+}
+
+.card:hover {
+  /* color: rgb(88 199 250 / 100%); */
+  transition: color 1s;
+}
+.card:hover:before {
+  opacity: 0.3;
+}
+.card:hover:after {
+  /* animation: none; */
+  opacity: 0.7;
+}
+
+.card2::before {
+  content: '';
+  height: 100.8%;
+  width: 100.6%;
+  border-radius: calc(var(--radius) * 1.25);
+  background-image: linear-gradient(
+    var(--rotate),
+    var(--col4),
+    var(--col5) 43%,
+    var(--col6)
+  );
+  position: absolute;
+  z-index: -1;
+  top: -0.4%;
+  left: -0.3%;
+  animation: spin 10s linear infinite;
+  opacity: 0.3;
+}
+
+.card::after {
+  position: absolute;
+  content: '';
+  top: calc(var(--card-height) / 15);
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  transform: scale(0.7);
+  filter: blur(calc(var(--card-height) / 4));
+  background-image: linear-gradient(
+    var(--rotate),
+    var(--col1),
+    var(--col2) 43%,
+    var(--col3)
+  );
+  opacity: 1;
+  transition: opacity 0.5s;
+  animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+  100% {
+    --rotate: 360deg;
+  }
+}
+
+/* a {
+  color: #212534;
+  text-decoration: none;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 2rem;
+} */
+.card::before {
+  --line-width: 1px;
+  --duration: 10s;
+  /* --line-color: rgba(194, 204, 255, 0.7); */
+  --line-color: rgba(100, 116, 139, 0.8);
+  --start-angle: 0deg;
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: var(--line-width);
+  background: conic-gradient(
+    from calc(var(--rotate) + var(--start-angle)),
+    transparent 0,
+    var(--line-color) 40%,
+    transparent 45%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: xor;
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.5;
+  transition: opacity 0.2s ease-in-out;
+  animation: spin var(--duration, 6s) linear infinite;
+}
+
+.scroll-watcher {
+  scale: 0 1;
+  animation: scroll-watcher linear;
+  animation-timeline: scroll();
+}
+
+@keyframes scroll-watcher {
+  to {
+    scale: 1 1;
+  }
+}
+.\[\&\>h3\]\:step > .large:before {
+  position: absolute;
+  display: inline-flex;
+  height: 2.25rem;
+  width: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border-width: 4px;
+  border-color: hsl(var(--background));
+  background-color: hsl(var(--muted));
+  text-align: center;
+  text-indent: -1px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    Liberation Mono, Courier New, monospace;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+  margin-left: -50px;
+  margin-top: -4px;
+  content: counter(step);
+}
+
+.\[\&\>h3\]\:step > .large {
+  counter-increment: step;
+}
+.\[counter-reset\:step\] {
+  counter-reset: step;
+}
