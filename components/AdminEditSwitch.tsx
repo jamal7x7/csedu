@@ -17,7 +17,8 @@ import { redirect } from 'next/navigation'
 
 const FormSchema = z.boolean().default(false)
 
-export const AdminEditSwitch = () => {
+export const AdminEditSwitch = (levelId: any) => {
+  const deleteAllTitleActionWithID = deleteAllTitleAction.bind(null, levelId)
   // const form = useForm<z.infer<typeof FormSchema>>({
   //   resolver: zodResolver(FormSchema),
   //   defaultValues: {
@@ -26,8 +27,10 @@ export const AdminEditSwitch = () => {
   // })
 
   const handleDeleteAllTitleAction = () => {
-    deleteAllTitleAction()
-    // redirect('/levels/1')
+    const clientAddBlockAction = async (formData: FormData) => {
+      const errorResponse = await deleteAllTitleActionWithID(formData)
+      // redirect('/levels/1')
+    }
   }
 
   const [editOnOff, setEditOnOff] = useAtom(editSwitch)

@@ -234,13 +234,23 @@ export default async function Page({
     },
   ]
 
-  const allBlocks = await db.block?.findMany()
-  // {
-  // where: {
-  // level: Number(params.levelId),
-  // sectionId: 1,
-  // },
-  // }
+  const thisChapter = await db.chapter?.findFirst({
+    where: {
+      level: Number(params.levelId),
+    },
+  })
+
+  console.log('params', params)
+  const allBlocks = await db.block?.findMany({
+    where: {
+      section: {
+        chapterId: Number(params.chapterId),
+        chapter: {
+          level: Number(params.levelId),
+        },
+      },
+    },
+  })
 
   const allQuizes = await db.quiz?.findMany({
     where: {
@@ -331,7 +341,7 @@ export default async function Page({
 
         <ChapterTitle chapterNumber={params.chapterId}>
           {' '}
-          Le Réseau Informatique !!!
+          {thisChapter?.title}
         </ChapterTitle>
 
         {/* =============================Title-End=============================  */}

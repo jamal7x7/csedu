@@ -56,7 +56,12 @@ export const NavBar = async (params: any) => {
           )}
         </div>
         <div className='flex justify-between gap-2 sm:pr-2 md:pr-8 lg:pr-12'>
-          {isLoggedIn && session?.user.role == 'ADMIN' && <AdminEditSwitch />}
+          {isLoggedIn && session?.user.role == 'ADMIN' && (
+            <AdminEditSwitch
+              levelId={params.levelId}
+              // chapterId={params.chapterId}
+            />
+          )}
 
           <LoginLogout />
           <DarkLightMode />

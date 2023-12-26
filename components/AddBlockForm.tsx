@@ -86,9 +86,9 @@ const AddBlockForm = ({
 
   return (
     <>
-      {allBlocks?.map((content: any) => (
+      {/* {allBlocks?.map((content: any) => (
         <Block content={content} chapterId={chapterId} />
-      ))}
+      ))} */}
       {showAddHideForm && (
         <Form {...form}>
           <form action={clientAddBlockAction} className='space-y-8'>

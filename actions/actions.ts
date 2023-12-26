@@ -132,7 +132,7 @@ export const addTitleAction2 = async (levelId: string, formData: unknown) => {
   // return { message: 'All Done!' }
 }
 
-export const addBlockAction = async (chapterId: string, formData: unknown) => {
+export const addBlockAction = async (chapterId: any, formData: unknown) => {
   console.log('formData =========>', formData)
 
   //first we extract the { title: 'your title' } data object form formData
@@ -167,8 +167,13 @@ export const addBlockAction = async (chapterId: string, formData: unknown) => {
   // console.log('=========>', JSON.stringify(title, null, 2))
 
   const allBlocks = await db.block?.findMany({
+    // where: {
+    //   // id: 1,
+    // },
+  })
+  const theChapter = await db.chapter?.findMany({
     where: {
-      id: 1,
+      id: chapter,
     },
   })
 
@@ -178,8 +183,12 @@ export const addBlockAction = async (chapterId: string, formData: unknown) => {
         content: content,
         sectionId: 1,
         // type: 'DEF',
-
         order: allBlocks.length + 1,
+        // section: {
+        //   connect: {
+        //     id: chapter,
+        //   },
+        // },
       },
     })
     .catch((err) => {
@@ -191,22 +200,32 @@ export const addBlockAction = async (chapterId: string, formData: unknown) => {
   // return { message: 'All Done!' }
 }
 
-export const deleteAllTitleAction = async () =>
+export const deleteAllTitleAction = async (levelId: any, formData: unknown) => {
   // levelId: string,
   // formData: FormData
-  {
-    const allTitles = await db.chapter
-      ?.deleteMany({
-        // where: {
-        //   level: Number(levelId),
-        // },
-      })
-      .then(() => console.log('All Titles are Deleted'))
-      .catch((err) => {
-        console.log('error from Prisma db: ', JSON.stringify(err, null, 2))
-        // zodErrors = { ...zodErrors, err: err }
-      })
+  //first we extract the { title: 'your title' } data object form formData
+  const extractedFormData = Object.fromEntries(formData.entries())
+  // console.log('extractedFormData =========>', extractedFormData)
 
-    revalidatePath('/')
-    return { message: 'All Titles are Deleted', allTitles: allTitles }
-  }
+  const formAndLevelIdData = { ...extractedFormData, levelId }
+  console.log('formAndLevelIdData to  delete =========>', formAndLevelIdData)
+
+  //then we pass the { title: 'your title' }  object through zod applying the formSchema
+  // const result = formBlockSchema.safeParse(formAndLevelIdData)
+  // console.log('result of zoding ------>', JSON.stringify(result, null, 2))
+
+  const allTitles = await db.chapter
+    ?.deleteMany({
+      where: {
+        level: Number(levelId),
+      },
+    })
+    .then(() => console.log('All Titles are Deleted'))
+    .catch((err) => {
+      console.log('error from Prisma db: ', JSON.stringify(err, null, 2))
+      // zodErrors = { ...zodErrors, err: err }
+    })
+
+  revalidatePath('/')
+  return { message: 'All Titles are Deleted', allTitles: allTitles }
+}
