@@ -34,6 +34,13 @@ import db from '@/lib/db'
 import Toc from '@/components/toc'
 import AddBlockForm from '@/components/AddBlockForm'
 
+// import * as schema from '@/db/schema'
+// import { drizzle } from 'drizzle-orm/postgres-js'
+import { user } from '@/db/schema'
+import { ddb } from '@/db'
+
+// const ddb = drizzle(user, { schema })
+
 interface ArticleBlockData {
   type: string
   content: Content
@@ -234,6 +241,8 @@ export default async function Page({
     },
   ]
 
+  const result = await ddb.select().from(user)
+
   const thisChapter = await db.chapter?.findFirst({
     where: {
       level: Number(params.levelId),
@@ -343,6 +352,10 @@ export default async function Page({
           {' '}
           {thisChapter?.title}
         </ChapterTitle>
+
+        {result.map((user) => (
+          <h2>{user.password}</h2>
+        ))}
 
         {/* =============================Title-End=============================  */}
 
