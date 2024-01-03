@@ -1,0 +1,1 @@
+ALTER TABLE "Chapter" ALTER COLUMN "order" SET DEFAULT 0;

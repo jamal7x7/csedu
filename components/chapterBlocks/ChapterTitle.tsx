@@ -11,7 +11,8 @@ const ChapterTitle = ({ ...props }) => {
       <div className='p-4 flex flex-col items-start justify-between'>
         <Small>Chapitre {props.chapterNumber}</Small>
         {/* <h1 className=' font-black text-4xl '>{props.children}</h1> */}
-        <H1>{props.children}</H1>
+        <H1>{props.chapterTitle}</H1>
+        {props.children}
         {/* <h1 className=' font-black text-4xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>Le Réseau Informatique</h1> */}
       </div>
     </div>

@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth'
 import LoginLogout from '@/components/LoginLogout'
-import Levels from '@/app/(dashboard)/studentDashboard/levels/page'
+import Levels from '@/app/levels/page'
 import { H1, Small } from '@/components/Typography/Typography'
 import TimeTable from '@/components/timeTable'
 

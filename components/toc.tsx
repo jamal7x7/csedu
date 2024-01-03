@@ -9,7 +9,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible'
-import { Resume } from '@/app/(dashboard)/studentDashboard/levels/[levelId]/chapters/[chapterId]/resume/page'
+import { Resume } from '@/app/levels/[levelId]/chapters/[chapterId]/resume/page'
 
 function Toc() {
   const [isOpen, setIsOpen] = React.useState(false)

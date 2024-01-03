@@ -1,13 +1,18 @@
+import { eq } from 'drizzle-orm'
 import { PrismaClientInitializationError } from '@prisma/client/runtime/library'
 import { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 // import GithubProvider from 'next-auth/providers/github'
 import { PrismaAdapter } from '@auth/prisma-adapter'
-import db from './db'
+import { DrizzleAdapter } from '@auth/drizzle-adapter'
+// import db from './db'
+import { db } from '@/db'
 import { compare } from 'bcrypt'
+import { User, user } from '@/db/schema/user'
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db),
+  // adapter: PrismaAdapter(db),
+  adapter: DrizzleAdapter(db),
   session: {
     strategy: 'jwt',
   },
@@ -47,10 +52,8 @@ export const authOptions: NextAuthOptions = {
           return null
         }
 
-        const existingUser = await db.user.findUnique({
-          where: {
-            username: credentials?.username,
-          },
+        const existingUser = await db.query.user.findFirst({
+          where: eq(user.username, credentials?.username),
         })
 
         if (!existingUser) {

@@ -33,10 +33,10 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
             pathname === item.href
               ? 'bg-muted hover:bg-muted'
               : 'hover:bg-transparent hover:underline',
-            'justify-start'
+            'justify-start '
           )}
         >
-          {item.title}
+          <div className='  overflow-hidden text-ellipsis'>{item.title}</div>
         </Link>
       ))}
     </nav>

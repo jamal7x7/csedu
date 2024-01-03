@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useTransition } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -24,6 +24,10 @@ import { TLoginSchema, loginSchema } from '@/lib/types'
 
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import FormError from '@/components/form-error'
+import FormSuccuss from '@/components/form-success'
+import { loginAction } from '@/actions/loginAction'
+import Link from 'next/link'
 
 // export const studentLoggedIn = { state: false }
 
@@ -38,22 +42,35 @@ const LoginForm = () => {
     },
   })
 
+  const [error, setError] = useState<string | undefined>('')
+  const [success, setSuccess] = useState<string | undefined>('')
+  const [isPending, startTransition] = useTransition()
+
   // 2. Define a submit handler.
   const onSubmit = async (data: TLoginSchema) => {
-    console.log('from login', data)
+    // console.log('from login', data)
+
+    setError('')
+    setSuccess('')
+    startTransition(() => {
+      loginAction(data).then((data) => {
+        setError(data?.error)
+        setSuccess(data?.success)
+      })
+    })
 
     const signInData = await signIn('credentials', {
       username: data.username,
       password: data.password,
       redirect: false,
     })
-    console.log('signInData error', signInData)
+    // console.log('signInData error', signInData)
 
     if (signInData?.error) {
       console.log('signInData error', signInData.error)
     } else {
       router.refresh()
-      router.push('/studentDashboard')
+      router.push('/')
     }
     // function onSubmit() {
     // Do something with the form values.
@@ -95,7 +112,7 @@ const LoginForm = () => {
 
   return (
     <div className='min-h-screen  flex flex-col items-center justify-center border '>
-      <div className='sm:w-1/3 flex flex-col items-center justify-center border p-10 rounded-xl  bg-muted/30'>
+      <div className='w-full  sm:w-[28rem] flex flex-col items-center justify-center border p-10 rounded-xl  bg-muted/30'>
         <h1 className=' font-black text-4xl mb-8 '>Se Connecter!</h1>
         <div className='min-w-full'>
           <Form {...form}>
@@ -114,6 +131,7 @@ const LoginForm = () => {
                           id='username'
                           type='text'
                           placeholder="Nom d'utilisateur"
+                          disabled={isPending}
                         />
                       </div>
                     </FormControl>
@@ -136,6 +154,7 @@ const LoginForm = () => {
                           id='password'
                           type='password'
                           placeholder='Mot de pass'
+                          disabled={isPending}
                         />
                       </div>
                     </FormControl>
@@ -145,16 +164,26 @@ const LoginForm = () => {
               />
 
               {/* <Button type='submit'>Submit</Button> */}
+              <FormError message={error} />
+              <FormSuccuss message={success} />
               <Button
                 type='submit'
-                // disabled
-                className=' '
+                disabled={isPending}
+                className='w-full mt-16'
                 // onClick={addNewStudentHandler}
               >
                 Se Connecter
               </Button>
             </form>
           </Form>
+
+          <p className='mt-8 text-center text-xs text-muted-foreground'>
+            Pas de compte,{' '}
+            <Link href='/addnewuser' className='underline font-bold'>
+              {' '}
+              Créer un!
+            </Link>
+          </p>
         </div>
       </div>
     </div>

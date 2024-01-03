@@ -1,0 +1,1 @@
+ALTER TABLE "Block" ALTER COLUMN "updatedAt" SET DEFAULT now();

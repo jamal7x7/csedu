@@ -1,28 +1,22 @@
 // app/page.tsx
-import TimeTable from '@/components/timeTable'
 import { Button } from '@/components/ui/button'
-import { ParticlesPage } from '@/lib/Confetti'
 import Link from 'next/link'
 
 export default function Levels() {
   const levelsArray = [1, 2, 3]
   return (
-    <main className='flex min-h-screen  flex-col items-center justify-between w-full'>
-      <div className='flex flex-col gap-8 sm:w-96 w-5/6'>
+    <main className='flex min-h-screen  flex-col items-center justify-between'>
+      <div className='flex flex-col gap-8 w-full'>
         {levelsArray.map((level) => (
           <>
-            <Link
-              href={`/studentDashboard/levels/${level}`}
-              key={level}
-              passHref
-            >
+            <Link href={`/levels/${level}`} key={level} passHref>
               <div className='group p-4   flex  items-center justify-start hover:bg-secondary/90 bg-secondary/50 rounded-3xl hover:shadow-[0_0px_50px_10px_rgba(0,0,0,0.3)]  hover:shadow-blue-500/20'>
                 <div className='relative flex flex-shrink-0 h-20 w-20 items-center justify-center rounded-full  bg-muted  md:h-[72px] md:w-[72px] group-hover:bg-blue-500 '>
                   <span className='group-hover:animate-ping absolute inline-flex h-full w-full rounded-full bg-muted group-hover:bg-primary  opacity-20 group-hover:transition-all'></span>
                   <p className='relative font-bold text-4xl group-hover:text-primary-foreground'>
                     {level}
                   </p>
-                </div>
+                  </div> 
 
                 <div className='p-4 flex  flex-col items-start justify-between'>
                   <small className='text-default-500 group-hover:text-blue-950 dark:group-hover:text-blue-200'>
@@ -30,7 +24,7 @@ export default function Levels() {
                   </small>
                   <h1 className=' font-black text-2xl group-hover:text-blue-500 '>
                     {' '}
-                    Année hello
+                    Année
                   </h1>
                 </div>
               </div>
@@ -38,7 +32,6 @@ export default function Levels() {
           </>
         ))}
       </div>
-      <ParticlesPage />
     </main>
   )
 }

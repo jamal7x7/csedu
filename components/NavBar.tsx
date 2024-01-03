@@ -22,16 +22,42 @@ import { Small } from './Typography/Typography'
 export const NavBar = async (params: any) => {
   const session = await getServerSession(authOptions)
   let isLoggedIn = session?.user
+  const isAdmin = session?.user.role == ('ADMIN' || 'TEACHER')
+  // const isStudent = session?.user.role == 'STUDENT'
+
   return (
     <header className=' w-full '>
       <div className='fixed flex justify-between p-2  top-0 z-20 w-full  border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
         <div className='flex justify-center items-center   sm:pl-2 md:pl-8 lg:pl-12 '>
           {/* <SidebarToggle /> */}
-          <Link className='font-extrabold mr-8' href='/studentDashboard'>
+          <Link className='font-extrabold mr-8' href='/'>
             cslab
           </Link>
           {/* <Separator className='mx-4' orientation='vertical' /> */}
-          {isLoggedIn && session?.user.role == ('ADMIN' || 'USER') && (
+          {isLoggedIn && isAdmin && (
+            <>
+              <Link className=' mx-4    ' href='/teacherDashboard'>
+                <Small className='font-semibold hover:text-foreground'>
+                  Dashboard
+                </Small>
+              </Link>
+              <Link
+                className=' mx-4    '
+                href={
+                  '/studentDashboard/levels/' +
+                  params.levelId +
+                  '/chapters/1/test'
+
+                  // t.number
+                }
+              >
+                <Small className='font-semibold hover:text-foreground'>
+                  Test
+                </Small>
+              </Link>
+            </>
+          )}
+          {isLoggedIn && !isAdmin && (
             <>
               <Link className=' mx-4    ' href='/studentDashboard'>
                 <Small className='font-semibold hover:text-foreground'>
@@ -56,7 +82,7 @@ export const NavBar = async (params: any) => {
           )}
         </div>
         <div className='flex justify-between gap-2 sm:pr-2 md:pr-8 lg:pr-12'>
-          {isLoggedIn && session?.user.role == 'ADMIN' && (
+          {isLoggedIn && session?.user.role == ('ADMIN' || 'TEACHER') && (
             <AdminEditSwitch
               levelId={params.levelId}
               // chapterId={params.chapterId}

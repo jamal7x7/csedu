@@ -1,0 +1,1 @@
+ALTER TABLE "Chapter" DROP COLUMN IF EXISTS "number";

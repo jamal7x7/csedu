@@ -31,27 +31,30 @@ import AddChapterButton from '@/components/addChapterButton'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { formSchema, TformSchema } from '@/lib/types'
+import { formChapterTitleSchema, TFormChapterTitleSchema } from '@/lib/types'
 
 import { addTitleAction, addTitleAction2 } from '@/actions/actions'
+import { addChapterAction } from '@/actions/chapterActions'
 import { Skeleton } from './ui/skeleton'
 import { H1, H3 } from './Typography/Typography'
 import ChapterLink from './ChapterLink'
+import { Chapter } from '@/db/schema/unit'
 
 const AddChapterLinkForm = ({
-  allTitles,
+  allChapters,
   levelId,
 }: {
-  allTitles: any
+  allChapters: Partial<Chapter>[]
   levelId: string
 }) => {
-  const addTitleActionWithLevelId = addTitleAction.bind(null, levelId)
+  const addTitleActionWithLevelId = addChapterAction.bind(null, levelId)
   const addTitleActionWithLevelId2 = addTitleAction2.bind(null, levelId)
 
-  const [optimisticAllTitles, addOptimisticAllTitles] = useOptimistic(
-    allTitles,
-    (state, newTitle) => {
-      return [...state, newTitle]
+  const [optimisticAllChapters, addOptimisticAllChapters] = useOptimistic(
+    allChapters,
+    (state: Partial<Chapter>[], newChapter: Partial<Chapter>) => {
+      console.log(state)
+      return [...state, newChapter]
     }
   )
 
@@ -60,24 +63,24 @@ const AddChapterLinkForm = ({
 
   const [zodErrors, setZodErrors] = useState({})
 
-  const form = useForm<TformSchema>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<TFormChapterTitleSchema>({
+    resolver: zodResolver(formChapterTitleSchema),
     defaultValues: {
       title: '',
     },
   })
-  const clientAddTitleAction = async (formData: FormData) => {
+  const clientAddTitleAction: () => void = form.handleSubmit(async (data) => {
     form.reset()
-    addOptimisticAllTitles({
-      title: formData.get('title'),
+    addOptimisticAllChapters({
+      title: data.title,
       level: Number(levelId),
-      number: optimisticAllTitles ? optimisticAllTitles.length + 1 : 1,
+      order: optimisticAllChapters ? optimisticAllChapters.length + 1 : 1,
     })
-    const errorResponse = await addTitleActionWithLevelId(formData)
+    const errorResponse = await addTitleActionWithLevelId(data)
     // console.log(errorResponse)
-    const result = formSchema.safeParse(errorResponse)
+    const result = formChapterTitleSchema.safeParse(errorResponse)
 
-    console.log(JSON.stringify(result, null, 2))
+    console.log('sssssucess : ', JSON.stringify(result, null, 2))
     if (!result.success) {
       //output error message
       // console.log(result.error.issues)
@@ -87,11 +90,11 @@ const AddChapterLinkForm = ({
         // console.log(JSON.stringify(zodErrors, null, 2))
       })
     }
-  }
+  })
   const onSubmit = async (formData: FormData) => {
     const errorResponse = await addTitleActionWithLevelId2(formData)
     // console.log(errorResponse)
-    const result = formSchema.safeParse(errorResponse)
+    const result = formChapterTitleSchema.safeParse(errorResponse)
 
     // console.log(JSON.stringify(result, null, 2))
     // if (!result.success) {
@@ -132,13 +135,8 @@ const AddChapterLinkForm = ({
 
   return (
     <>
-      {/* <AddChapterForm levelId={levelId} form={form} /> */}
-      {/* <div className=' bg-slate-400/25 p-4' ref={h3Ref}>
-        {' '}
-        <h1 contentEditable> </h1>
-      </div> */}
-      {optimisticAllTitles?.map((title) => (
-        <ChapterLink title={title} levelId={levelId} />
+      {optimisticAllChapters?.map((chapter) => (
+        <ChapterLink chapter={chapter} levelId={levelId} />
       ))}
       {showAddHideForm && (
         <Form {...form}>
@@ -163,10 +161,10 @@ const AddChapterLinkForm = ({
 
                   <FormDescription></FormDescription>
                   <FormMessage />
-                  <FormMessage>
+                  {/* <FormMessage>
                     {Object.keys(zodErrors).length !== 0 && zodErrors?.title}
                     {JSON.stringify(form.formState.errors.title, null, 2)}
-                  </FormMessage>
+                  </FormMessage> */}
                 </FormItem>
               )}
             />

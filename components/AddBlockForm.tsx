@@ -23,6 +23,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 
 import { Input } from '@/components/ui/input'
 
@@ -38,19 +39,20 @@ import {
   addTitleAction,
   addTitleAction2,
 } from '@/actions/actions'
+import { addBlockActionNew } from '@/actions/blockActions'
 import { Skeleton } from './ui/skeleton'
 import { H1, H3 } from './Typography/Typography'
 import ChapterLink from './ChapterLink'
 
 const AddBlockForm = ({
-  allBlocks,
+  thisChapter,
   chapterId,
 }: {
-  allBlocks: any
+  thisChapter: any
   chapterId: string
 }) => {
   // const addTitleActionWithLevelId = addTitleAction.bind(null, chapterId)
-  const addBlockActionWithChapterId = addBlockAction.bind(null, chapterId)
+  const addBlockActionWithChapterId = addBlockActionNew.bind(null, thisChapter)
 
   const [showAddTitle, setShowAddTitle] = useState(false)
   const [editOnOff] = useAtom(editSwitch)
@@ -61,10 +63,36 @@ const AddBlockForm = ({
     resolver: zodResolver(formBlockSchema),
     defaultValues: {
       content: '',
+      type: 'P',
     },
   })
-  const clientAddBlockAction = async (formData: FormData) => {
+  // console.log(JSON.stringify(form.control._formValues, null, 2))
+
+  const blockTypes = [
+    // 'CHAPTER_TITLE',
+    'INTRO',
+    'P',
+    'H1',
+    'H2',
+    'H3',
+    'H4',
+    'H5',
+    'H6',
+    'DEF',
+    'EXEMPLE',
+    'LIST',
+    'FIGURE',
+    // 'Blockquote',
+    // 'InlineCode',
+    // 'Lead',
+    // 'Large',
+    // 'Small',
+    // 'Muted',
+  ]
+
+  const onSubmit = async (formData: TformBlockSchema) => {
     form.reset()
+    console.log('hello!', JSON.stringify(formData, null, 2))
 
     const errorResponse = await addBlockActionWithChapterId(formData)
     // console.log(errorResponse)
@@ -82,6 +110,26 @@ const AddBlockForm = ({
     }
   }
 
+  const clientAddBlockAction: () => void = form.handleSubmit(async (data) => {
+    console.log('hello!', JSON.stringify(data, null, 2))
+    form.reset()
+
+    const errorResponse = await addBlockActionWithChapterId(data)
+    // console.log(errorResponse)
+    const result = formBlockSchema.safeParse(errorResponse)
+
+    console.log(JSON.stringify(result, null, 2))
+    if (!result.success) {
+      //output error message
+      // console.log(result.error.issues)
+
+      result.error.issues.forEach((issue) => {
+        setZodErrors({ [issue.path[0]]: issue.message })
+        // console.log(JSON.stringify(zodErrors, null, 2))
+      })
+    }
+  })
+
   const showAddHideForm = editOnOff && showAddTitle
 
   return (
@@ -89,33 +137,72 @@ const AddBlockForm = ({
       {/* {allBlocks?.map((content: any) => (
         <Block content={content} chapterId={chapterId} />
       ))} */}
-      {showAddHideForm && (
+      {editOnOff && (
         <Form {...form}>
-          <form action={clientAddBlockAction} className='space-y-8'>
+          <form
+            action={clientAddBlockAction}
+            // onSubmit={form.handleSubmit(onSubmit)}
+            className='space-y-8'
+          >
             <FormField
               control={form.control}
               name='content'
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder='Contenue' {...field} />
+                    <Input autoFocus placeholder='Contenue' {...field} />
                   </FormControl>
 
                   <FormDescription></FormDescription>
                   <FormMessage />
-                  <FormMessage>
+                  {/* <FormMessage>
                     {Object.keys(zodErrors).length !== 0 && zodErrors?.content}
                     {JSON.stringify(form.formState.errors.content, null, 2)}
-                  </FormMessage>
+                  </FormMessage> */}
                 </FormItem>
               )}
             />
-            <AddChapterButton />
+            <FormField
+              control={form.control}
+              name='type'
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <ToggleGroup
+                      onValueChange={field.onChange}
+                      // onClick={() => field.value}
+                      value={field.value}
+                      // onValueChange={(value) => {
+                      //   if (value) setValue(value)
+                      // }}
+                      // defaultValue='DEF'
+                      type='single'
+                      className='flex flex-wrap   relative w-full   p-2 border-[1px] border-muted rounded-xl mt-4 dark:after:opacity-100 after:opacity-60   bg-card/90 shadow-xl '
+                    >
+                      {blockTypes.map((b, i) => (
+                        <FormItem className='z-[2]' key={i}>
+                          <FormControl>
+                            <ToggleGroupItem
+                              variant={'default'}
+                              className=' relative data-[state=on]:bg-accent/50 data-[state=on]:border-[1px] border-accent-foreground/20 dark:border-accent-foreground/10'
+                              value={b}
+                            >
+                              {b}
+                            </ToggleGroupItem>
+                          </FormControl>
+                        </FormItem>
+                      ))}
+                    </ToggleGroup>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            {/* <AddChapterButton /> */}
           </form>
         </Form>
       )}
 
-      {editOnOff && (
+      {/* {editOnOff && (
         <Button
           onClick={() => setShowAddTitle(!showAddTitle)}
           size={'lg'}
@@ -124,7 +211,7 @@ const AddBlockForm = ({
           {!showAddTitle && <PlusCircle className='mr-2 h-4 w-4' />}
           {!showAddTitle ? 'Ajouter un block' : 'Cancel'}
         </Button>
-      )}
+      )} */}
     </>
   )
 }

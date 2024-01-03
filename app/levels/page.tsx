@@ -1,12 +1,14 @@
 // app/page.tsx
+import TimeTable from '@/components/timeTable'
 import { Button } from '@/components/ui/button'
+import { ParticlesPage } from '@/lib/Confetti'
 import Link from 'next/link'
 
 export default function Levels() {
   const levelsArray = [1, 2, 3]
   return (
-    <main className='flex min-h-screen  flex-col items-center justify-between'>
-      <div className='flex flex-col gap-8 w-full'>
+    <main className='flex  flex-col items-center justify-between w-full'>
+      <div className='flex flex-col gap-8 sm:w-96 w-5/6'>
         {levelsArray.map((level) => (
           <>
             <Link href={`/levels/${level}`} key={level} passHref>
@@ -16,7 +18,7 @@ export default function Levels() {
                   <p className='relative font-bold text-4xl group-hover:text-primary-foreground'>
                     {level}
                   </p>
-                  </div> 
+                </div>
 
                 <div className='p-4 flex  flex-col items-start justify-between'>
                   <small className='text-default-500 group-hover:text-blue-950 dark:group-hover:text-blue-200'>
@@ -32,6 +34,7 @@ export default function Levels() {
           </>
         ))}
       </div>
+      <ParticlesPage />
     </main>
   )
 }

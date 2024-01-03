@@ -37,7 +37,7 @@ export default async function RootLayout({
       </header> */}
       <body
         className={cn(
-          'min-h-screen bg-background font-sans antialiased',
+          'min-h-screen w-full  bg-background font-sans antialiased',
           fontSans.variable
         )}
       >
@@ -50,8 +50,7 @@ export default async function RootLayout({
           >
             <Provider>
               <NavBar />
-
-              {children}
+              <div className='overflow-y-scroll'>{children}</div>
               <Toaster />
             </Provider>
           </ThemeProvider>

@@ -105,7 +105,7 @@ export const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
 
     const isMobile = useMediaQuery('(max-width: 43em)')
 
-    const orientation = isMobile && responsive ? 'vertical' : orientationProp
+    const orientation = isMobile && responsive ? 'horizontal' : orientationProp
 
     return (
       <StepperProvider
@@ -127,7 +127,7 @@ export const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
           {...props}
           ref={ref}
           className={cn(
-            'flex w-full flex-1 justify-between gap-4 text-center',
+            'flex w-full flex-1 justify-between gap-4 text-center ',
             orientation === 'vertical' ? 'flex-col' : 'flex-row',
             className
           )}
@@ -163,15 +163,15 @@ Stepper.displayName = 'Stepper'
 
 /********** StepperItem **********/
 
-const stepperItemVariants = cva('relative flex flex-row gap-0', {
+const stepperItemVariants = cva('relative flex flex-row gap-0 ', {
   variants: {
     isLastStep: {
       true: 'flex-[0_0_auto] justify-end',
-      false: 'flex-[1_0_auto] justify-start',
+      false: 'flex-[1_0_auto] justify-start ',
     },
     isVertical: {
       true: 'flex-col',
-      false: 'items-center',
+      false: 'items-start',
     },
     isClickable: {
       true: 'cursor-pointer',
@@ -181,7 +181,7 @@ const stepperItemVariants = cva('relative flex flex-row gap-0', {
     {
       isVertical: true,
       isLastStep: true,
-      class: 'w-full flex-[1_0_auto] flex-col items-start justify-start',
+      class: 'w-full flex-[1_0_auto] flex-col items-start justify-start ',
     },
   ],
 })
@@ -297,7 +297,7 @@ export const StepperItem = React.forwardRef<HTMLDivElement, StepperItemProps>(
       >
         <div
           className={cn(
-            'flex items-center gap-4',
+            'flex items-start gap-4 w-8',
             isLabelVertical ? 'flex-col' : ''
           )}
         >
@@ -308,10 +308,10 @@ export const StepperItem = React.forwardRef<HTMLDivElement, StepperItemProps>(
             data-clickable={isClickable}
             disabled={!hasVisited}
             className={cn(
-              'aspect-square h-8 w-8 rounded-full data-[highlighted=true]:bg-green-700 data-[highlighted=true]:text-white',
+              'z-10 aspect-square h-8 w-8 rounded-full data-[highlighted=true]:bg-green-700 disabled:px-0 disabled:bg-card disabled:border-[2px]  disabled:opacity-100 data-[highlighted=true]:text-white',
               isCompletedStep || typeof RenderIcon !== 'number'
-                ? 'px-3 py-2'
-                : '',
+                ? 'px-[0.6rem] py-2'
+                : ' ',
               additionalClassName?.button
             )}
             variant={isCurrentStep && isError ? 'destructive' : variant}
@@ -367,6 +367,8 @@ const StepperItemLabel = ({
 }) => {
   const { isLabelVertical } = useStepperContext()
 
+  const isMobile = useMediaQuery('(max-width: 43em)')
+
   const shouldRender = !!label || !!description
 
   const renderOptionalLabel = !!optional && !!optionalLabel
@@ -376,20 +378,25 @@ const StepperItemLabel = ({
       aria-current={isCurrentStep ? 'step' : undefined}
       className={cn(
         'flex w-max flex-col justify-center ',
-        isLabelVertical ? 'items-center text-center' : 'items-start text-left'
+        isLabelVertical ? 'items-start text-center' : 'items-start text-left'
       )}
     >
-      {!!label && (
-        <p className={labelClassName}>
+      {!!label && !isMobile && (
+        <p
+          className={cn(
+            labelClassName,
+            'text-[10px] font-bold text-muted-foreground/70'
+          )}
+        >
           {label}
           {renderOptionalLabel && (
-            <span className='ml-1 text-xs text-muted-foreground'>
+            <span className='ml-1 text-xs text-muted-foreground '>
               ({optionalLabel})
             </span>
           )}
         </p>
       )}
-      {!!description && (
+      {!!description && !isMobile && (
         <p
           className={cn('text-sm text-muted-foreground', descriptionClassName)}
         >
@@ -440,7 +447,7 @@ const StepperItemConnector = React.memo(
     return (
       <Separator
         data-highlighted={isCompletedStep}
-        className='flex h-[2px] min-h-[auto] flex-1 self-auto data-[highlighted=true]:bg-green-700'
+        className='mt-4 ml-1 mr-1 flex h-[2px] min-h-[auto] flex-1 self-auto data-[highlighted=true]:bg-green-700'
         orientation={isVertical ? 'vertical' : 'horizontal'}
       />
     )

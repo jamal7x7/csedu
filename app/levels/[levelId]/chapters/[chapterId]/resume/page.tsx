@@ -27,8 +27,8 @@ export function Resume() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className=' fixed  bottom-4 right-4  z-50'>
-          <Button className=' mb-8 mr-8 float-right ' variant='outline'>
+        <div className=' '>
+          <Button className=' ' variant='outline' size='sm'>
             <BookOpenText className='mr-2 h-4 w-4' /> Resume
           </Button>
         </div>
@@ -54,7 +54,7 @@ export function Resume() {
                 <small className='text-default-500'>Chapitre 2</small>
                 {/* <h1 className=' font-black text-4xl '>Le Réseau Informatique</h1> */}
                 <h1 className=' font-black text-4xl bg-clip-text text-transparent bg-gradient-to-r from-pink-700 to-red-500'>
-                  Le Réseau Informatique
+                  Le Réseau Informatique!!!
                 </h1>
               </div>
             </div>
@@ -82,7 +82,7 @@ export function Resume() {
             {/* =============================le reseau informatique================================  */}
             <div className=''>
               <h1 className='flex flex-col items-start justify-between text-2xl font-semibold  p-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-700 to-red-500'>
-                I- Le Réseau Informatique
+                I- Le Réseau Informatique !
               </h1>
 
               <p className='text-default-500'>
