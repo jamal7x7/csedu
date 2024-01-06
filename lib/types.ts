@@ -5,7 +5,7 @@ import { chapter } from '@/db/schema/unit'
 export const signUpSchema = z
   .object({
     userId: z.number().min(1, { message: 'au moins un caractère' }).optional(),
-    // level: z.number().min(1, { message: 'au moins un caractère' }).optional(),
+    level: z.number().min(1, { message: 'au moins un caractère' }).optional(),
     classCode: z
       .string()
       // .min(1, { message: 'au moins un caractère' })

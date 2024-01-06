@@ -22,7 +22,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { UseFormReturn, useForm } from 'react-hook-form'
 import { TSignUpSchema, signUpSchema } from '@/lib/types'
-import { LevelTabs } from '@/components/level-tabs'
+import { LevelTabs } from '@/app/addnewuser/level-tabs'
 import { useRouter } from 'next/navigation'
 
 type UseFormProps = UseFormReturn<
@@ -48,7 +48,7 @@ const UserAccount = ({ form }: { form: UseFormProps }) => {
 
   return (
     <>
-      <FormField
+      {/* <FormField
         control={form.control}
         name='email'
         render={({ field }) => (
@@ -68,7 +68,7 @@ const UserAccount = ({ form }: { form: UseFormProps }) => {
             <FormMessage />
           </FormItem>
         )}
-      />
+      /> */}
       <FormField
         control={form.control}
         name='username'

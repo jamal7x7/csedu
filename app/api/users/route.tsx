@@ -37,6 +37,7 @@ export async function POST(req: Request, res: NextResponse) {
       createdAt,
       updatedAt,
       classCode,
+
       studentNumber,
     } = dataReq
 
@@ -79,6 +80,7 @@ export async function POST(req: Request, res: NextResponse) {
         profileId: newProfile[0]?.id,
         studentNumber: Number(studentNumber),
         classCode,
+        level: Number(classCode.at(0)),
       })
       .returning()
       .catch((err: any) => {

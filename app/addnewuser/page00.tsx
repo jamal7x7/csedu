@@ -22,7 +22,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { TSignUpSchema, signUpSchema } from '@/lib/types'
-import { LevelTabs } from '@/components/level-tabs'
+import { LevelTabs } from '@/app/addnewuser/level-tabs'
 import { useRouter } from 'next/navigation'
 
 const AddNewUser = () => {

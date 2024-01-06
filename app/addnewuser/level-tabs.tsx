@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { cn } from '@/lib/utils'
+import { FormControl, FormItem, FormLabel } from '@/components/ui/form'
 
 export function LevelTabs(field: any) {
   // const form = useForm<z.infer<typeof FormSchema>>({
@@ -71,24 +72,32 @@ export function LevelTabs(field: any) {
               </CardHeader>
 
               <CardContent className='space-y-2p-2'>
-                <RadioGroup
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  className='relative grid w-full grid-cols-4 '
-                >
-                  {level.levelAndClass.map((c) => (
-                    <div>
-                      <RadioGroupItem
-                        value={c}
-                        id={c}
-                        className='peer sr-only'
-                      />
-                      <div className='mt-0 text-xs flex items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary'>
-                        <Label htmlFor={c}>{c}</Label>
-                      </div>
-                    </div>
-                  ))}
-                </RadioGroup>
+                <FormItem>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className='relative grid w-full grid-cols-4 '
+                    >
+                      {level.levelAndClass.map((c) => (
+                        <FormItem>
+                          <FormControl>
+                            <RadioGroupItem
+                              // onClick={() => console.log(c)}
+
+                              value={c}
+                              id={c}
+                              className='peer sr-only'
+                            />
+                          </FormControl>
+                          <div className='mt-0 text-xs flex items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary'>
+                            <Label htmlFor={c}>{c}</Label>
+                          </div>
+                        </FormItem>
+                      ))}
+                    </RadioGroup>
+                  </FormControl>
+                </FormItem>
               </CardContent>
             </Card>
           </TabsContent>

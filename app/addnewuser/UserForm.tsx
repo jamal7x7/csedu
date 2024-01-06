@@ -22,9 +22,9 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, UseFormReturn } from 'react-hook-form'
 import { TSignUpSchema, signUpSchema } from '@/lib/types'
-import { LevelTabs } from '@/components/level-tabs'
+import { LevelTabs } from '@/app/addnewuser/level-tabs'
 import { useRouter } from 'next/navigation'
-import { H1, H2, H3 } from '@/components/Typography/Typography'
+import { H1, H2, H3, Muted } from '@/components/Typography/Typography'
 
 import { Stepper, StepperConfig, StepperItem } from '@/components/ui/stepper'
 
@@ -41,9 +41,9 @@ import FormSuccuss from '@/components/form-success'
 
 const steps = [
   { label: 'ETAPE 1', description: 'Infos du Classe' },
-  { label: 'ETAPE 2', description: 'Premier Étudiant' },
+  { label: 'ETAPE 2', description: 'Infos Personnel' },
   // { label: 'ETAPE 3', description: 'Deuxième Étudiant' },
-  { label: 'ETAPE 4', description: 'Compte du binôme' },
+  { label: 'ETAPE 4', description: 'Créer Mon Compte' },
 ] satisfies StepperConfig[]
 
 type UseFormProps = UseFormReturn<
@@ -86,10 +86,22 @@ const UserForm = () => {
   const [isPending, startTransition] = useTransition()
 
   const stepContent = [
-    { component: <UserClass form={form} />, title: 'Classe' },
-    { component: <UserInfo form={form} />, title: 'Étudiant 1' },
-    // { component: <UserInfo />, title: 'Étudiant 2' },
-    { component: <UserAccount form={form} />, title: 'Compte du binôme' },
+    {
+      component: <UserClass form={form} />,
+      title: steps[0].description,
+      instructions: 'Choisissez votre année et classe',
+    },
+    {
+      component: <UserInfo form={form} />,
+      title: steps[1].description,
+      instructions: 'Tapez votre Prénom, Nom et Numéro de classe',
+    },
+
+    {
+      component: <UserAccount form={form} />,
+      title: steps[2].description,
+      instructions: "Créer un Nom d'utilisateur unique a vous",
+    },
   ]
 
   const {
@@ -108,6 +120,7 @@ const UserForm = () => {
 
   // 2. Define a submit handler.
   const onSubmit = async (data: TSignUpSchema) => {
+    console.log(data)
     setError('')
     setSuccess('')
     startTransition(() => {
@@ -172,9 +185,12 @@ const UserForm = () => {
 
                     {/* ======================================================================================================= */}
 
-                    <H3 className=' border-0 font-bold  mb-16 '>
+                    <H3 className=' border-0 font-bold mb-4  '>
                       {stepContent[index].title}
                     </H3>
+                    <Muted className=' border-0   mb-16 '>
+                      {stepContent[index].instructions}
+                    </Muted>
                     <div className='min-w-full space-y-8'>
                       {/* <Form {...form}>
                         <form
