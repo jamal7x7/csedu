@@ -23,24 +23,24 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 
 const sidebarNavItems = [
   {
-    title: 'Profile',
-    href: '/teacherDashboard',
+    title: 'Main',
+    href: '/teacherDashboard/mainDashView',
   },
   {
-    title: 'Account',
-    href: '/levels/1/chapters/1',
+    title: 'All Levels',
+    href: '/levels',
   },
   {
-    title: 'Appearance',
-    href: '/levels/1',
+    title: 'My Time Table',
+    href: '/teacherDashboard/myTimeTable',
   },
   {
-    title: 'Notifications',
-    href: '/levels/2',
+    title: 'Level 2',
+    href: '/teacherDashboard/levels/2',
   },
   {
-    title: 'Display',
-    href: '/levels/3',
+    title: 'Level 3',
+    href: '/teacherDashboard/levels/3',
   },
 ]
 
@@ -54,7 +54,7 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
   return (
     <ResizablePanelGroup
       direction='horizontal'
-      className='min-h-[200px] w-full mt-[52px] '
+      className='min-h-full w-full mt-[52px] fixed '
     >
       <ResizablePanel
         collapsible
@@ -64,17 +64,15 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
         defaultSize={15}
         className='      '
       >
-        <div className='top-8   p-4 h-full   mt-16  '>
+        <div className='top-8   p-4 min-h-full   mt-16  '>
           <SidebarNav items={sidebarNavItems} />
         </div>
       </ResizablePanel>
       <ResizableHandle />
-      <ResizablePanel defaultSize={85}>
-        {/* <ScrollArea> */}
-        <div className='flex min-h-fit  items-center justify-center  '>
-          {children}
-        </div>
-        {/* </ScrollArea> */}
+      <ResizablePanel defaultSize={85} className='overflow-y-auto'>
+        <ScrollArea>
+          <div className='flex   items-center justify-center '>{children}</div>
+        </ScrollArea>
       </ResizablePanel>
     </ResizablePanelGroup>
   )

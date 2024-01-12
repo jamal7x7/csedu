@@ -79,7 +79,8 @@ const H4 = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLElement>>(
     <h4
       ref={ref}
       className={cn(
-        'scroll-m-20 text-xl font-semibold tracking-tight [&:not(:first-child)]:mt-16',
+        'scroll-m-20 text-xl font-semibold tracking-tight ',
+        // 'scroll-m-20 text-xl font-semibold tracking-tight [&:not(:first-child)]:mt-16',
         className
       )}
       {...props}

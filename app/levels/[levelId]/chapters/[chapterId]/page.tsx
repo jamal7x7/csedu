@@ -39,6 +39,7 @@ import AddBlockForm from '@/components/AddBlockForm'
 import { user, chapter } from '@/db/schema/unit'
 import { db } from '@/db'
 import { eq, ne, isNull, and } from 'drizzle-orm'
+import { DoorClosed, GripVertical, Plus, X } from 'lucide-react'
 
 // const ddb = drizzle(user, { schema })
 
@@ -298,42 +299,101 @@ export default async function Page({
     switch (b.type) {
       case 'DEF':
         return (
-          <Def className='mt-8'>
-            <DefContent>{b.content}</DefContent>
-            {b.examples?.length > 0 && (
-              <Exemple>
-                {b.examples.map((e: any, index: number) => (
-                  <ExempleContent key={index} className=''>
-                    {e.title}
-                  </ExempleContent>
-                ))}
-              </Exemple>
-            )}
-          </Def>
+          <div className='hover:bg-muted mt-8 rounded-lg'>
+            <Def className=''>
+              <DefContent>{b.content}</DefContent>
+              {b.examples?.length > 0 && (
+                <Exemple>
+                  {b.examples.map((e: any, index: number) => (
+                    <ExempleContent key={index} className=''>
+                      {e.title}
+                    </ExempleContent>
+                  ))}
+                </Exemple>
+              )}
+            </Def>
+          </div>
         )
       case 'H1':
-        return <H1 className=' mt-16 first:mt-40'>{b.content}</H1>
+        return (
+          <div className='hover:bg-muted mt-16 first:mt-40 rounded-lg'>
+            <H1>{b.content}</H1>
+          </div>
+        )
       case 'H2':
-        return <H2 className=' mt-16 first:mt-40'>{b.content}</H2>
+        return (
+          <div className='hover:bg-muted mt-16 first:mt-40 rounded-lg'>
+            <H2 className=' '>{b.content}</H2>{' '}
+          </div>
+        )
       case 'H3':
-        return <H3 className=' mt-16 first:mt-40'>{b.content}</H3>
+        return (
+          <div className='hover:bg-muted mt-16 first:mt-40 rounded-lg'>
+            <H3 className=' '>{b.content}</H3>{' '}
+          </div>
+        )
       case 'H4':
-        return <H4 className=' mt-16 first:mt-40'>{b.content}</H4>
+        return (
+          <div className='hover:bg-muted mt-16 first:mt-40 rounded-lg'>
+            <H4 className=''>{b.content}</H4>{' '}
+          </div>
+        )
       case 'H5':
-        return <H4 className=' mt-16 first:mt-40'>{b.content}</H4>
+        return (
+          <div className='hover:bg-muted mt-16 first:mt-40 rounded-lg'>
+            <H4 className=' '>{b.content}</H4>{' '}
+          </div>
+        )
       case 'TEXT':
-        return <P className=''>{b.content}</P>
+        return (
+          <div className='hover:bg-muted rounded-lg '>
+            <P className=''>{b.content}</P>{' '}
+          </div>
+        )
       case 'P':
-        return <P className=''>{b.content}</P>
+        return (
+          <div className='hover:bg-muted rounded-lg '>
+            <P className=''>{b.content}</P>
+          </div>
+        )
       case 'MUTED':
-        return <Muted className=''>{b.content}</Muted>
+        return (
+          <div className='hover:bg-muted rounded-lg'>
+            <Muted className=''>{b.content}</Muted>
+          </div>
+        )
       case 'INTRO':
-        return <Intro className='my-16'> {b.content}</Intro>
+        return (
+          <div className=' my-16 rounded-sm relative z-20     transition-transform transform hover:scale-[1.003] group overflow-visible '>
+            <div className='stroke-muted-foreground/50 absolute rounded-3xl z-1   overflow-visible inset-0 border-4 border-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity flex justify-between items-center'>
+              <div className='flex justify-between items-center -ml-24 '>
+                <Button size={'sm'} variant={'ghost'} className=' p-[0.6rem] '>
+                  <Plus className='stroke-inherit  h-4 w-4 ' />
+                </Button>
+                <Button size={'sm'} variant={'ghost'} className=' p-2  '>
+                  <GripVertical className='stroke-inherit h-4 w-4 ' />
+                </Button>
+              </div>
+              <Button
+                size={'sm'}
+                variant={'ghost'}
+                className=' p-[0.6rem] -mr-14 '
+              >
+                <X className='stroke-inherit h-4 w-4 ' />
+              </Button>
+            </div>
+            <Intro className=''> {b.content}</Intro>
+          </div>
+        )
       case 'FIGURE':
-        return <Figure className='mt-16 mb-8'> {b.content}</Figure>
+        return (
+          <div className='hover:bg-muted mt-16 mb-8 rounded-lg'>
+            <Figure className=''> {b.content}</Figure>
+          </div>
+        )
       case 'STEPS':
         return (
-          <NumSteps className='mt-8'>
+          <NumSteps className='mt-8 rounded-lg'>
             {b.content.map((s: any, index: number) => (
               <NumStepItem key={index} step={s.step}>
                 {s.content}
@@ -376,7 +436,7 @@ export default async function Page({
         {thisChapter?.sections.map((section) =>
           section?.blocks
             ?.toSorted((a, b) => a.order - b.order)
-            .map((block) => renderBlock(block))
+            .map((block) => <div>{renderBlock(block)}</div>)
         )}
 
         {/* {allBlocks[0].sections

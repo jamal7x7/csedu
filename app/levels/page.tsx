@@ -1,5 +1,5 @@
 // app/page.tsx
-import TimeTable from '@/components/timeTable'
+import TimeTable from '@/app/(dashboard)/teacherDashboard/mainDashView/timeTable'
 import { Button } from '@/components/ui/button'
 import { ParticlesPage } from '@/lib/Confetti'
 import Link from 'next/link'

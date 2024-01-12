@@ -252,7 +252,7 @@ export const StepperItem = React.forwardRef<HTMLDivElement, StepperItemProps>(
     const Icon = React.useMemo(() => CustomIcon ?? null, [CustomIcon])
 
     const Success = React.useMemo(
-      () => CustomSuccessIcon ?? <Check />,
+      () => CustomSuccessIcon ?? <Check strokeWidth={3} />,
       [CustomSuccessIcon]
     )
 
@@ -308,7 +308,7 @@ export const StepperItem = React.forwardRef<HTMLDivElement, StepperItemProps>(
             data-clickable={isClickable}
             disabled={!hasVisited}
             className={cn(
-              'z-10 aspect-square h-8 w-8 rounded-full data-[highlighted=true]:bg-green-700 disabled:px-0 disabled:bg-card disabled:border-[2px]  disabled:opacity-100 data-[highlighted=true]:text-white',
+              'z-10 aspect-square h-8 w-8 rounded-full data-[highlighted=true]:bg-teal-500/20 disabled:px-0 disabled:bg-card disabled:border-[2px]  disabled:opacity-100 data-[highlighted=true]:text-teal-500',
               isCompletedStep || typeof RenderIcon !== 'number'
                 ? 'px-[0.6rem] py-2'
                 : ' ',
@@ -430,7 +430,7 @@ const StepperItemConnector = React.memo(
           className={cn(
             'ms-4 mt-1 flex h-auto min-h-[2rem] flex-1 self-stretch border-l-2 ps-8',
             isLastStep ? 'min-h-0 border-transparent' : '',
-            isCompletedStep ? 'border-green-700' : ''
+            isCompletedStep ? 'border-teal-700' : ''
           )}
         >
           {!isCompletedStep && (
@@ -447,7 +447,7 @@ const StepperItemConnector = React.memo(
     return (
       <Separator
         data-highlighted={isCompletedStep}
-        className='mt-4 ml-1 mr-1 flex h-[2px] min-h-[auto] flex-1 self-auto data-[highlighted=true]:bg-green-700'
+        className='mt-4 ml-1 mr-1 flex h-[2px] min-h-[auto] flex-1 self-auto data-[highlighted=true]:bg-teal-500 dark:data-[highlighted=true]:bg-teal-700'
         orientation={isVertical ? 'vertical' : 'horizontal'}
       />
     )

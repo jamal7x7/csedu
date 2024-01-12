@@ -73,7 +73,7 @@ export type TFormChapterTitleSchema = z.infer<typeof formChapterTitleSchema>
 
 export const formBlockSchema = z.object({
   chapterId: z.coerce.number().optional(),
-  content: z.string().min(4, { message: 'au moins 4 caractères' }).trim(),
+  content: z.string().min(0, { message: 'au moins 0 caractères' }).trim(),
   type: z.enum([
     'CHAPTER_TITLE',
     'INTRO',
