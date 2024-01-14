@@ -19,9 +19,9 @@ export default async function Dashboard() {
       <div className='flex flex-col gap-8  w-full'>
         {session?.user ? (
           <>
-            <div className='p-12 bg-slate-900 flex  items-center justify-center '>
+            {/* <div className='p-12 bg-slate-900 flex  items-center justify-center '>
               <TimeTable />
-            </div>
+            </div> */}
             <div className='p-12 flex  items-center justify-center '>
               <div className='  flex flex-shrink-0 h-20 w-20 items-center justify-center rounded-full dark:bg-slate-800 bg-slate-100  md:h-[72px] md:w-[72px]'>
                 {/* <p className='font-bold text-4xl'>2</p> */}

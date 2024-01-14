@@ -35,4 +35,6 @@ export { default } from 'next-auth/middleware'
 //   }
 // )
 
-export const config = { matcher: ['/levels/units0'] }
+export const config = {
+  matcher: ['/teacherDashboard', '/levels', '/quiz'],
+}

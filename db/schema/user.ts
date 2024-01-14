@@ -13,9 +13,36 @@ import {
 
 import { relations, sql } from 'drizzle-orm'
 
-export const role = pgEnum('Role', ['STUDENT', 'TEACHER', 'ADMIN'])
+export const role = pgEnum('Role', [
+  'STUDENT',
+  'TEACHER',
+  'ADMIN',
+  'STUDENTSPAIR',
+])
 
 export type User = typeof user.$inferSelect
+
+export const pair = pgTable('Pair', {
+  id: serial('id').primaryKey().notNull(),
+
+  pairname: text('pairname'),
+
+  password: text('password').notNull(),
+  score: integer('score').default(0),
+  createdAt: timestamp('createdAt', {
+    precision: 3,
+    mode: 'string',
+  }).defaultNow(),
+  updatedAt: timestamp('updatedAt', {
+    precision: 3,
+    mode: 'string',
+  }).defaultNow(),
+})
+
+export const PairRelations = relations(pair, ({ one, many }) => ({
+  //   role: one(role),
+  user: many(user),
+}))
 
 export const user = pgTable(
   'User',
@@ -28,6 +55,14 @@ export const user = pgTable(
     username: text('username').notNull(),
     password: text('password').notNull(),
     score: integer('score').default(0),
+
+    pairId: integer('pairId')
+      // .notNull()
+      .references(() => pair.id, {
+        onDelete: 'restrict',
+        onUpdate: 'cascade',
+      }),
+
     createdAt: timestamp('createdAt', {
       precision: 3,
       mode: 'string',

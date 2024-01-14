@@ -44,9 +44,11 @@ export const NavBar = async (params: any) => {
               <Link
                 className=' mx-4    '
                 href={
-                  '/studentDashboard/levels/' +
-                  params.levelId +
-                  '/chapters/1/test'
+                  // '/studentDashboard/levels/' +
+                  // params.levelId +
+                  // '/chapters/1/test'
+
+                  '/quiz'
 
                   // t.number
                 }
