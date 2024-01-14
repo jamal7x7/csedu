@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, MouseEvent } from 'react'
 import { MyCalendar } from '@/app/(dashboard)/teacherDashboard/mainDashView/my-calendar'
 import { H2, H3, H4, Muted, Small } from '@/components/Typography/Typography'
 import {
@@ -18,6 +18,7 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './tabs2'
 import { stringify } from '@/app/utils'
+import { Card, CardContent } from '@/components/ui/card'
 
 const TimeTable = () => {
   const ref = useRef(null)
@@ -69,8 +70,9 @@ const TimeTable = () => {
       </div> */}
 
       {/* ========================================================================= */}
-      <div className='p-12 dark:bg-slate-900/40 bg-slate-50 flex  items-center justify-center '>
-        <div className=''>
+      {/* <div className='p-12 dark:bg-accent bg-slate-50 flex  items-center justify-center '> */}
+      <Card className='bg-card/20'>
+        <CardContent className=''>
           <Tabs defaultValue={todayNumber} className='w-full '>
             <TabsList className='bg-transparent p-12  flex  items-center justify-center gap-4 overflow-x-auto'>
               {getDaysOfWeek({ locale: fr, date: date }).map((d, i) => (
@@ -112,8 +114,9 @@ const TimeTable = () => {
               </>
             ))}
           </Tabs>
-        </div>
-      </div>
+          {/* </div> */}
+        </CardContent>
+      </Card>
     </div>
   )
 }

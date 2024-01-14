@@ -53,7 +53,7 @@ export const SidebarToggle = () => {
           variant='default'
           aria-label='Toggle italic'
         >
-          {!sidebarOnOff ? (
+          {!!sidebarOnOff ? (
             <ArrowLeftToLine className='h-[1.2rem] w-[1.2rem]  p-[0.2rem] transition-all ' />
           ) : (
             // <SidebarCloseIcon className='h-[1.2rem] w-[1.2rem]   transition-all ' />

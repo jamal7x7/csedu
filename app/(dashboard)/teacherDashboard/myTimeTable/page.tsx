@@ -44,11 +44,26 @@ import {
 import { stringify } from '@/app/utils'
 import { cn } from '@/lib/utils'
 import { DivEvent } from '@tsparticles/engine'
+import { addHours, addMinutes, eachHourOfInterval, format } from 'date-fns'
+import { now } from 'next-auth/client/_utils'
 
-const duration: Hours[] = Array.from({ length: 10 }).map((_, ind) => ({
+import { Label } from '@/components/ui/label'
+import {
+  Popover,
+  PopoverArrow,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+import { wait } from '@/app/utils/wait'
+
+const workHours = eachHourOfInterval({
+  start: new Date(2023, 1, 1, 8, 0),
+  end: addHours(new Date(2023, 1, 1, 8, 0), 10),
+})
+const duration: Hours[] = workHours.map((h, ind) => ({
   id: ind,
-  start: `${8 + ind} :00`,
-  end: `${8 + ind + 1} :00`,
+  start: h,
+  end: addHours(h, 1),
 }))
 
 const dropdown = (
@@ -81,18 +96,18 @@ const dropdown = (
     return newArray.map((x, i) => ({ ...x, id: i }))
   }
 }
-const a = Array.from({ length: 10 }).map((x, i) => i)
-const b = a.map((x) => ({ id: x, value: x }))
+// const a = Array.from({ length: 10 }).map((x, i) => i)
+// const b = a.map((x) => ({ id: x, value: x }))
 
-console.log('array', b)
-const nb = dropdown(b, 2, 5)
-const nb2 = dropdown(nb, 5, 2)
-console.log('New Array =====>', nb, nb2)
+// console.log('array', b)
+// const nb = dropdown(b, 2, 5)
+// const nb2 = dropdown(nb, 5, 2)
+// console.log('New Array =====>', nb, nb2)
 
 export type Hours = {
   id: number
-  start: string
-  end: string
+  start: Date
+  end: Date
 }
 export type Event = {
   id: number
@@ -109,15 +124,15 @@ export default function MyTimeTable() {
   const [data, setData] = useState([
     {
       id: 1,
-      start: '8:00',
-      end: '9:00',
+      start: '08:00',
+      end: '09:00',
       type: 'official',
       content: '1APIC2',
       description: '',
     },
     {
       id: 2,
-      start: '9:00',
+      start: '09:00',
       end: '10:00',
       type: 'official',
       content: '2APIC5',
@@ -149,22 +164,13 @@ export default function MyTimeTable() {
     setData(newData)
   }
   const ref = useRef(null)
-  function handleOnDragOver(index: number, e): void {
+  function handleOnDragOver(index: number, e: React.MouseEvent): void {
     e.preventDefault()
     console.log('ON DRAG OVER', index)
     setIndexAtDragOver(index)
   }
-  function handleOnDragEnter(index: number): void {
-    console.log('ON DRAG ENTER', index)
 
-    // const newData = dropdown(data, indexAtDragStart, index)
-
-    // if (newData) {
-    //   setData(newData)
-    // }
-    // newData.map((d) => console.log(d.content))
-  }
-  function handleOnDrop(event): void {
+  function handleOnDrop(event: React.MouseEvent): void {
     // console.log('ON DROP', index)
     event.preventDefault()
 
@@ -177,64 +183,147 @@ export default function MyTimeTable() {
   }
 
   function handleOnDragStart(index: number): void {
-    console.log('ON DRAG START', index)
+    // console.log('ON DRAG START', index)
     setIndexAtDragStart(index)
   }
 
+  function handleOnDragEnter(index: number): void {
+    // console.log('ON DRAG ENTER', index)
+    // const newData = dropdown(data, indexAtDragStart, index)
+    // if (newData) {
+    //   setData(newData)
+    // }
+    // newData.map((d) => console.log(d.content))
+  }
+
   function handleOnDragLeave(index: number): void {
-    console.log('ON DRAG LEAVE', index)
+    // console.log('ON DRAG LEAVE', index)
+    // const newData = dropdown(data, indexAtDragStart, index)
+    // if (newData) {
+    //   setData(newData)
+    // }
   }
   function handleOnDragExit(index: number): void {
     console.log('ON DRAG EXIT', index)
   }
 
   return (
-    <Table>
+    <Table className='w-auto'>
       {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
-      <TableHeader>
-        <TableRow>
+
+      <TableHeader className=''>
+        <TableRow className=''>
           {duration.map((d) => (
-            <TableHead key={d.id} className='font-medium relative '>
-              <div className='absolute  -left-2'>{d.start}</div>
+            <TableHead
+              key={d.id}
+              className='font-medium text-xs text-muted-foreground/50 relative  '
+            >
+              <div className='absolute  -left-4'>
+                {format(addMinutes(d.start, 30), 'hh:mm')}
+              </div>
             </TableHead>
           ))}
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow key={1}>
-          {duration.map((d, index) => (
-            <TableCell
-              onClick={() => handleAddEvents(index)}
-              // onDragExit={() => handleOnDragExit(index)}
-              onDragEnter={() => handleOnDragEnter(index)}
-              onDrop={handleOnDrop}
-              // onDragLeave={() => handleOnDragLeave(index)}
-              key={d.id}
-              className='p-1 font-medium border-[1px] border-muted-foreground/30   '
-            >
-              <div
-                // onResize={}
-                // key={d.id}
-                // contentEditable
-                onDragStart={() => handleOnDragStart(index)}
-                onDragOver={(e) => handleOnDragOver(index, e)}
-                ref={ref}
-                draggable={
-                  data.find((d, i) => d.id == index)?.type == 'official'
-                }
-                className={cn(
-                  'p-4 w-20 resize-x rounded-sm',
-                  data.find((d, i) => d.id == index)?.type == 'official'
-                    ? 'bg-muted cursor-grab'
-                    : ''
-                )}
+        {Array.from({ length: 6 }).map((d) => (
+          <TableRow key={1}>
+            {duration.map((d, index) => (
+              <TableCell
+                onClick={() => handleAddEvents(index)}
+                // onDragExit={() => handleOnDragExit(index)}
+                onDragEnter={() => handleOnDragEnter(index)}
+                onDrop={handleOnDrop}
+                onDragLeave={() => handleOnDragLeave(index)}
+                key={d.id}
+                className='p-1 font-medium border-[1px] border-muted-foreground/30   '
               >
-                {data.find((d, i) => d.id == index)?.content}
-              </div>
-            </TableCell>
-          ))}
-        </TableRow>
+                <AddEventPopover>
+                  <div
+                    // onResize={}
+                    // key={d.id}
+                    // contentEditable
+                    role='button'
+                    onDragStart={() => handleOnDragStart(index)}
+                    onDragOver={(e) => handleOnDragOver(index, e)}
+                    ref={ref}
+                    draggable={
+                      data.find((d, i) => d.id == index)?.type == 'official'
+                    }
+                    className={cn(
+                      'p-4 w-20 resize-x rounded-sm ',
+                      data.find((d, i) => d.id == index)?.type == 'official' &&
+                        data.find((d, i) => d.id == index)?.content[0] == '1' &&
+                        `cursor-grab bg-blue-500/20 text-blue-500 hover:bg-blue-500 dark:bg-blue-800/40 hover:text-blue-100 dark:hover:text-blue-300 dark:hover:bg-blue-800`,
+                      data.find((d, i) => d.id == index)?.type == 'official' &&
+                        data.find((d, i) => d.id == index)?.content[0] == '2' &&
+                        `cursor-grab bg-teal-500/20 text-teal-500  hover:bg-teal-500 dark:bg-teal-800/40 hover:text-teal-100 dark:hover:text-teal-300 dark:hover:bg-teal-800`,
+                      data.find((d, i) => d.id == index)?.type == 'official' &&
+                        data.find((d, i) => d.id == index)?.content[0] == '3' &&
+                        `cursor-grab bg-amber-500/20 text-amber-600 dark:text-amber-600  hover:bg-amber-500 dark:bg-amber-800/30 hover:text-amber-100 dark:hover:text-amber-300 dark:hover:bg-amber-800 `
+                    )}
+                  >
+                    {data.find((d, i) => d.id == index)?.content}
+                  </div>
+                </AddEventPopover>
+              </TableCell>
+            ))}
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
+  )
+}
+
+export function AddEventPopover({ children }: { children: React.ReactNode }) {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>{children}</PopoverTrigger>
+      <PopoverContent className='w-80 rounded-xl'>
+        {/* <PopoverArrow height='8' width='24' /> */}
+        <div className='grid gap-4'>
+          <div className='space-y-2'>
+            <h4 className='font-medium leading-none'>Dimensions</h4>
+            <p className='text-sm text-muted-foreground'>
+              Set the dimensions for the layer.
+            </p>
+          </div>
+          <div className='grid gap-2'>
+            <div className='grid grid-cols-3 items-center gap-4'>
+              <Label htmlFor='width'>Width</Label>
+              <Input
+                id='width'
+                defaultValue='100%'
+                className='col-span-2 h-8'
+              />
+            </div>
+            <div className='grid grid-cols-3 items-center gap-4'>
+              <Label htmlFor='maxWidth'>Max. width</Label>
+              <Input
+                id='maxWidth'
+                defaultValue='300px'
+                className='col-span-2 h-8'
+              />
+            </div>
+            <div className='grid grid-cols-3 items-center gap-4'>
+              <Label htmlFor='height'>Height</Label>
+              <Input
+                id='height'
+                defaultValue='25px'
+                className='col-span-2 h-8'
+              />
+            </div>
+            <div className='grid grid-cols-3 items-center gap-4'>
+              <Label htmlFor='maxHeight'>Max. height</Label>
+              <Input
+                id='maxHeight'
+                defaultValue='none'
+                className='col-span-2 h-8'
+              />
+            </div>
+          </div>
+        </div>
+      </PopoverContent>
+    </Popover>
   )
 }

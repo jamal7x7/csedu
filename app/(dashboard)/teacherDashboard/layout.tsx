@@ -9,12 +9,15 @@ import { useAtom } from 'jotai'
 import { SidebarToggle } from '@/components/SidebarToggle'
 import { AnimatePresence, motion, useCycle } from 'framer-motion'
 
+import { ImperativePanelGroupHandle } from 'react-resizable-panels'
+
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from '@/components/ui/resizable'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { useEffect, useRef } from 'react'
 
 // export const metadata: Metadata = {
 //   title: 'Teacher Dashboard',
@@ -49,27 +52,60 @@ interface SettingsLayoutProps {
 }
 
 export default function SettingsLayout({ children }: SettingsLayoutProps) {
-  const [sidebarOnOff] = useAtom(showSidebar)
+  const [showLeftPanel] = useAtom(showSidebar)
   const [onOff, setOnOff] = useCycle(false, true)
+  const ref = useRef<ImperativePanelGroupHandle>(null)
+  const resetLayout = () => {
+    const panelGroup = ref.current
+    if (panelGroup) {
+      // Reset each Panel to 50% of the group's width
+      panelGroup.setLayout([30, 70])
+    }
+  }
+  // ref.current?.setLayout([30, 70])
+  useEffect(() => {
+    // resetLayout()
+    // ref.current?.setLayout([15, 85])
+  }, [])
+
+  // if (showLeftPanel) {
+  //   resetLayout()
+  // }
+
   return (
     <ResizablePanelGroup
+      // ref={ref}
+      autoSaveId='conditional'
       direction='horizontal'
       className='min-h-full w-full mt-[52px] fixed '
     >
+      <AnimatePresence>
+        {showLeftPanel && (
+          <>
+            <ResizablePanel
+              id='left'
+              order={1}
+              collapsible
+              // maxSize={15}
+              // minSize={10}
+              // collapsedSize={15}
+              defaultSize={15}
+              className=''
+            >
+              <div className='top-8   p-4 min-h-full   mt-16  '>
+                <SidebarNav items={sidebarNavItems} />
+              </div>
+            </ResizablePanel>
+            <ResizableHandle />
+          </>
+        )}
+      </AnimatePresence>
       <ResizablePanel
-        collapsible
-        // maxSize={100}
-        // minSize={10}
-        // collapsedSize={15}
-        defaultSize={15}
-        className='      '
+        id='center'
+        order={2}
+        defaultSize={85}
+        className='overflow-y-auto'
       >
-        <div className='top-8   p-4 min-h-full   mt-16  '>
-          <SidebarNav items={sidebarNavItems} />
-        </div>
-      </ResizablePanel>
-      <ResizableHandle />
-      <ResizablePanel defaultSize={85} className='overflow-y-auto'>
         <ScrollArea>
           <div className='flex   items-center justify-center '>{children}</div>
         </ScrollArea>

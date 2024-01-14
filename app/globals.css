@@ -11,6 +11,9 @@
     --card: 210 40% 98%;
     --card-foreground: 222.2 84% 4.9%;
 
+    /* --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%; */
+
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
@@ -44,7 +47,10 @@
     --foreground: 210 40% 98%;
 
     /* --card: 222.2 84% 4.9%; */
-    --card: 217.2 32.6% 10.5%;
+    /* --card: 217.2 32.6% 10.5%;
+    --card-foreground: 210 40% 98%; */
+
+    --card: 217.2 32.6% 17.5%;
     --card-foreground: 210 40% 98%;
 
     --popover: 222.2 84% 4.9%;
@@ -159,7 +165,7 @@
   z-index: -1;
   top: -0.4%;
   left: -0.3%;
-  animation: spin 10s linear infinite;
+  animation: spins 10s linear infinite;
   opacity: 0.3;
 }
 
@@ -183,10 +189,10 @@
   );
   opacity: 1;
   transition: opacity 0.5s;
-  animation: spin 10s linear infinite;
+  animation: spins 10s linear infinite;
 }
 
-@keyframes spin {
+@keyframes spins {
   0% {
     --rotate: 0deg;
   }
@@ -226,7 +232,7 @@
   mask-composite: exclude;
   opacity: 0.5;
   transition: opacity 0.2s ease-in-out;
-  animation: spin var(--duration, 6s) linear infinite;
+  animation: spins var(--duration, 6s) linear infinite;
 }
 
 :root {
@@ -334,7 +340,7 @@
   mask-composite: exclude;
   opacity: 0.5;
   transition: opacity 0.2s ease-in-out;
-  animation: spin var(--duration, 10s) linear infinite;
+  animation: spins var(--duration, 10s) linear infinite;
 }
 
 .scroll-watcher {

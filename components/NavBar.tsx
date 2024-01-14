@@ -36,7 +36,7 @@ export const NavBar = async (params: any) => {
           {/* <Separator className='mx-4' orientation='vertical' /> */}
           {isLoggedIn && isAdmin && (
             <>
-              <Link className=' mx-4    ' href='/teacherDashboard'>
+              <Link className=' mx-4    ' href='/teacherDashboard/mainDashView'>
                 <Small className='font-semibold hover:text-foreground'>
                   Dashboard
                 </Small>
