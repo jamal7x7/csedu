@@ -4,7 +4,6 @@ export default {
   out: './drizzle',
   driver: 'pg',
   dbCredentials: {
-    connectionString:
-      'postgresql://newmac@localhost:5432/jamal?search_path=public',
+    connectionString: process.env.DATABASE_URL || '',
   },
 } satisfies Config

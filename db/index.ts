@@ -10,8 +10,7 @@ import { env } from 'process'
 // import { env } from '~/env.mjs'
 
 const schema = { ...user, ...unit }
-const connectionString =
-  'postgresql://newmac@localhost:5432/jamal?search_path=public'
+const connectionString = process.env.DATABASE_URL || ''
 
 // for migrations
 const migrationClient = postgres(connectionString, { max: 1, onnotice() {} })

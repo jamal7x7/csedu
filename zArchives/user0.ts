@@ -13,47 +13,9 @@ import {
 
 import { relations, sql } from 'drizzle-orm'
 
-export const role = pgEnum('Role', [
-  'STUDENT',
-  'TEACHER',
-  'ADMIN',
-  'STUDENTS_PAIR',
-])
+export const role = pgEnum('Role', ['STUDENT', 'TEACHER', 'ADMIN'])
 
 export type User = typeof user.$inferSelect
-export type Profile = typeof profile.$inferSelect
-export type Student = typeof student.$inferSelect
-export type Pair = typeof pair.$inferSelect
-
-export const pair = pgTable(
-  'Pair',
-  {
-    id: serial('id').primaryKey().notNull(),
-
-    pairname: text('pairname'),
-
-    password: text('password').notNull().default('0000'),
-    score: integer('score').default(0),
-    createdAt: timestamp('createdAt', {
-      precision: 3,
-      mode: 'string',
-    }).defaultNow(),
-    updatedAt: timestamp('updatedAt', {
-      precision: 3,
-      mode: 'string',
-    }).defaultNow(),
-  },
-  (table) => {
-    return {
-      pairnameKey: uniqueIndex('Pair_pairname_key').on(table.pairname),
-    }
-  }
-)
-
-export const PairRelations = relations(pair, ({ one, many }) => ({
-  //   role: one(role),
-  user: many(user),
-}))
 
 export const user = pgTable(
   'User',
@@ -66,15 +28,6 @@ export const user = pgTable(
     username: text('username').notNull(),
     password: text('password').notNull(),
     score: integer('score').default(0),
-
-    pairId: integer('pairId')
-      // .notNull()
-      .default(0)
-      .references(() => pair.id, {
-        onDelete: 'restrict',
-        onUpdate: 'cascade',
-      }),
-
     createdAt: timestamp('createdAt', {
       precision: 3,
       mode: 'string',
@@ -94,7 +47,6 @@ export const user = pgTable(
 
 export const userRelations = relations(user, ({ one }) => ({
   //   role: one(role),
-  pair: one(pair, { fields: [user.pairId], references: [pair.id] }),
   profile: one(profile, {
     fields: [user.id],
     references: [profile.userId],
