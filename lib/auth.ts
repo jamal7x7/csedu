@@ -9,17 +9,17 @@ import { DrizzleAdapter } from '@auth/drizzle-adapter'
 import { db } from '@/db'
 import { compare } from 'bcrypt'
 import { User, user } from '@/db/schema/user'
+import { Adapter } from 'next-auth/adapters'
 
 export const authOptions: NextAuthOptions = {
-  // adapter: PrismaAdapter(db),
-  adapter: DrizzleAdapter(db),
+  adapter: DrizzleAdapter(db) as Adapter,
   session: {
     strategy: 'jwt',
   },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: '/api/auth/sigin',
-    error: '/api/auth/sigin',
+    signIn: '/api/auth/signin',
+    error: '/api/auth/signin',
   },
   // Configure one or more authentication providers
   providers: [
@@ -38,9 +38,14 @@ export const authOptions: NextAuthOptions = {
       credentials: {
         username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
         password: { label: 'Password', type: 'password' },
+        role: { label: 'Role', type: 'text', placeholder: 'jsmith' },
+
+        pair1: { label: 'Pair1', type: 'text', placeholder: 'jamal' },
+        pair2: { label: 'Pair2', type: 'text', placeholder: 'kamal' },
+        pairpass: { label: 'PairPass', type: 'password' },
       },
 
-      async authorize(credentials) {
+      async authorize(credentials): Promise<any> {
         // You need to provide your own logic here that takes the credentials
         // submitted and returns either a object representing a user or value
         // that is false/null if the credentials are invalid.
@@ -71,7 +76,6 @@ export const authOptions: NextAuthOptions = {
 
         return {
           id: `${existingUser.id}`,
-          // id: existingUser.studentId,
           username: existingUser.username,
           role: existingUser.role,
         }

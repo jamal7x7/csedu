@@ -29,10 +29,9 @@ export const pair = pgTable(
   'Pair',
   {
     id: serial('id').primaryKey().notNull(),
-
     pairname: text('pairname'),
+    pairpass: text('pairpass').notNull().default('0000'),
 
-    password: text('password').notNull().default('0000'),
     score: integer('score').default(0),
     createdAt: timestamp('createdAt', {
       precision: 3,

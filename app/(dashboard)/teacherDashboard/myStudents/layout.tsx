@@ -24,9 +24,9 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
   const [sidebarOnOff] = useAtom(showSidebar)
   const [onOff, setOnOff] = useCycle(false, true)
   return (
-    //<ScrollArea>
-    <div className=' mt-20 flex   items-center justify-center '>{children}</div>
+    // <ScrollArea>
+    <div className=' mt-20 flex flex-col  p-12 '>{children}</div>
     // <ScrollBar orientation='horizontal' />
-    //</ScrollArea>
+    // </ScrollArea>
   )
 }

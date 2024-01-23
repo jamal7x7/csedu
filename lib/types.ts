@@ -42,20 +42,19 @@ export const signUpSchema = z
 export type TSignUpSchema = z.infer<typeof signUpSchema>
 
 export const loginSchema = z.object({
-  // studentId: z.string().min(1, { message: 'au moins un caractère' }).optional(),
-  // studentNumber: z.string().min(1, { message: 'au moins un caractère' }),
   username: z.string().min(1, { message: 'au moins un caractère' }),
-  // group: z.string().min(1, { message: 'au moins un caractère' }),
-  // firstName: z.string().min(1, { message: 'this👏is👏too👏big' }).optional(),
-  // lastName: z.string().min(1, { message: 'this👏is👏too👏big' }).optional(),
   password: z.string().min(4, { message: 'au moins 4 caractères' }),
 })
-// .refine((data) => data.password === data.confirmPassword, {
-//   message: 'le mot de pass doit être le meme',
-//   path: ['confirmPassword'],
-// })
 
 export type TLoginSchema = z.infer<typeof loginSchema>
+
+export const pairSignInSchema = z.object({
+  pair1: z.string().min(1, { message: 'au moins un caractère' }),
+  pair2: z.string().min(1, { message: 'au moins un caractère' }),
+  pairpass: z.string().min(4, { message: 'au moins 4 caractères' }),
+})
+
+export type TPairSignInSchema = z.infer<typeof pairSignInSchema>
 
 export const formChapterTitleSchema = z.object({
   order: z.number().optional(),
@@ -106,3 +105,20 @@ export type TformBlockSchema = z.infer<typeof formBlockSchema>
 
 // export const formChapterTitleSchema = createSelectSchema(chapter)
 // export type TFormChapterTitleSchema = z.infer<typeof formChapterTitleSchema>
+export const excelformSchema = z.object({
+  files: z.array(
+    // z.instanceof(File)
+    z.object({
+      name: z.string(),
+      //   type: z.string().refine((value) => /\.(doc|docx|pdf)$/i.test(value), {
+      type: z.string().refine((value) => /\.(xlsx|xls)$/i.test(value), {
+        message: 'File must be an xlsx document',
+      }),
+    })
+  ),
+})
+// const formSchema = z.object({
+//   files: z.array(z.instanceof(FileList)),
+// })
+
+export type TExcelformSchema = z.infer<typeof excelformSchema>

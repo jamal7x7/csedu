@@ -13,6 +13,7 @@ import { default as SProvider } from '@/components/provider'
 import { isLoggedIn } from '@/lib/isloggedin'
 
 import { Provider } from 'jotai'
+import { NextRequest } from 'next/server'
 
 // const inter = Inter({ subsets: ['latin'] })
 export const fontSans = FontSans({
@@ -29,6 +30,7 @@ export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
+  req: NextRequest
 }) {
   return (
     <html lang='en'>
@@ -50,6 +52,7 @@ export default async function RootLayout({
           >
             <Provider>
               <NavBar />
+
               <div className='overflow-y-scroll'>{children}</div>
               <Toaster />
             </Provider>

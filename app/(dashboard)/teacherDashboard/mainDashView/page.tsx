@@ -1,6 +1,10 @@
 import Levels from '@/app/levels/page'
 import TimeTable from '@/app/(dashboard)/teacherDashboard/mainDashView/timeTable'
 import React from 'react'
+import { getServerSideProps } from '@/components/client-info'
+import { GetServerSidePropsContext, PreviewData } from 'next'
+import { ParsedUrlQuery } from 'querystring'
+import { NextResponse } from 'next/server'
 
 const MainDashView = () => {
   return (

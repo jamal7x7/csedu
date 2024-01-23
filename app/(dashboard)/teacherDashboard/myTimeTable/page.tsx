@@ -226,7 +226,7 @@ export default function MyTimeTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {Array.from({ length: 6 }).map((d) => (
+        {Array.from({ length: 60 }).map((d) => (
           <TableRow key={1}>
             {duration.map((d, index) => (
               <TableCell

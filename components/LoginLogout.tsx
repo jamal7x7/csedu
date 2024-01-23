@@ -26,6 +26,11 @@ const LoginLogout = async () => {
 
         <>
           <Button size='sm' variant={'outline'} className=''>
+            <Link href='/pairSignIn' passHref>
+              Poste
+            </Link>
+          </Button>
+          <Button size='sm' variant={'outline'} className=''>
             <Link href='/login' passHref>
               Login
             </Link>

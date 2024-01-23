@@ -19,6 +19,8 @@ import { cn } from '@/lib/utils'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './tabs2'
 import { stringify } from '@/app/utils'
 import { Card, CardContent } from '@/components/ui/card'
+import { NextRequest } from 'next/server'
+import ClientInfo from '@/components/ClientInfo'
 
 const TimeTable = () => {
   const ref = useRef(null)

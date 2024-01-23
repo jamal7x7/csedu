@@ -16,7 +16,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from '@/components/ui/resizable'
-import { ScrollArea } from '@/components/ui/scroll-area'
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { useEffect, useRef } from 'react'
 
 // export const metadata: Metadata = {
@@ -38,8 +38,8 @@ const sidebarNavItems = [
     href: '/teacherDashboard/myTimeTable',
   },
   {
-    title: 'Level 2',
-    href: '/teacherDashboard/levels/2',
+    title: 'Mes Élèves',
+    href: '/teacherDashboard/myStudents',
   },
   {
     title: 'Level 3',
@@ -79,36 +79,38 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
       direction='horizontal'
       className='min-h-full w-full mt-[52px] fixed '
     >
-      <AnimatePresence>
-        {showLeftPanel && (
-          <>
-            <ResizablePanel
-              id='left'
-              order={1}
-              collapsible
-              // maxSize={15}
-              // minSize={10}
-              // collapsedSize={15}
-              defaultSize={15}
-              className=''
-            >
-              <div className='top-8   p-4 min-h-full   mt-16  '>
-                <SidebarNav items={sidebarNavItems} />
-              </div>
-            </ResizablePanel>
-            <ResizableHandle />
-          </>
-        )}
-      </AnimatePresence>
+      {/* <AnimatePresence> */}
+      {showLeftPanel && (
+        <>
+          <ResizablePanel
+            id='left'
+            order={1}
+            collapsible
+            // maxSize={15}
+            // minSize={10}
+            // collapsedSize={15}
+            defaultSize={15}
+            className=''
+          >
+            <div className='top-8   p-4 min-h-full   mt-16  '>
+              <SidebarNav items={sidebarNavItems} />
+            </div>
+          </ResizablePanel>
+          <ResizableHandle />
+        </>
+      )}
+      {/* </AnimatePresence> */}
       <ResizablePanel
         id='center'
         order={2}
         defaultSize={85}
-        className='overflow-y-auto'
+        // className='overflow-y-auto'
       >
-        <ScrollArea>
-          <div className='flex   items-center justify-center '>{children}</div>
-        </ScrollArea>
+        {/* <ScrollArea> */}
+        <div className='flex    justify-center left-0 top-0 overflow-scroll h-full '>
+          {children}
+        </div>
+        {/* </ScrollArea> */}
       </ResizablePanel>
     </ResizablePanelGroup>
   )
