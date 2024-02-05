@@ -80,6 +80,7 @@ const TimeTable = () => {
               {getDaysOfWeek({ locale: fr, date: date }).map((d, i) => (
                 <TabsTrigger
                   // autoFocus
+                  key={i}
                   value={d.number}
                   onClick={() => setDayIndex(i)}
                   className={cn(
@@ -101,7 +102,10 @@ const TimeTable = () => {
                   {d.number + ' ' + d.name}
                   <div className='grid grid-cols-8 -ml-2'>
                     {Array.from({ length: 8 }).map((_, ind) => (
-                      <div className='w-full border-muted-foreground/20 border-[1px] '>
+                      <div
+                        key={ind}
+                        className='w-full border-muted-foreground/20 border-[1px] '
+                      >
                         <div
                           ref={ref}
                           onClick={handleAddEvents}

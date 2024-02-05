@@ -11,7 +11,7 @@ import {
 import { Input } from '@/components/ui/input'
 
 import { Button } from '@/components/ui/button'
-import { fileAction } from '@/actions/fileAction'
+import { addStudentsListfileAction } from '@/actions/fileActions'
 
 import { useState } from 'react'
 import { FileText, Frown, UploadCloud, XCircle } from 'lucide-react'
@@ -63,7 +63,7 @@ const AddFiles = () => {
   //   console.log(fileNames)
   const readUploadFileActionHandler: () => void = form.handleSubmit(
     async (values) => {
-      const d = await fileAction(values)
+      const d = await addStudentsListfileAction(values)
       console.log('form!', JSON.stringify(form, null, 2))
       console.log('data!', JSON.stringify(d, null, 2))
 

@@ -16,7 +16,7 @@ const ChapterLink = ({
       <Link
         key={chapter.id}
         href={'/levels/' + levelId + '/chapters/' + chapter.order}
-        passHref
+        // passHref
       >
         <div className='group  p-4  flex  items-center justify-start hover:bg-secondary/90 bg-secondary/50 rounded-3xl  w-full '>
           <div className='relative flex flex-shrink-0 h-20 w-20 items-center justify-center rounded-full  bg-muted  md:h-[72px] md:w-[72px] group-hover:bg-primary '>

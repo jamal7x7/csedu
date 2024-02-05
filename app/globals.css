@@ -383,3 +383,73 @@
 .\[counter-reset\:step\] {
   counter-reset: step;
 }
+/* ================================scroll bar============================== */
+
+/* body::-webkit-scrollbar {
+  width: 1.25rem;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #68676b84;
+} */
+
+/* th :has([role='checkbox']) {
+  background: red;
+  
+} */
+/* {flex !p-0 items-center justify-center } */
+/* thead {
+  position: sticky;
+  top: 0;
+  background: red;
+} */
+
+/* table.StickyHeader thead th {
+  position: sticky;
+  top: 0px;
+
+  z-index: 100;
+} */
+/* 
+table,
+thead {
+  position: relative;
+  z-index: 100;
+}
+
+th {
+  position: sticky;
+  height: 100px;
+  top: 0;
+  background-color: red;
+} */
+
+table.StickyHeader {
+  text-align: left;
+  position: relative;
+  border-collapse: collapse;
+}
+th,
+td {
+  padding: 0.25rem;
+}
+tr.red th {
+  background: red;
+  color: white;
+}
+tr.green th {
+  background: green;
+  color: white;
+}
+tr.purple th {
+  background: purple;
+  color: white;
+}
+th {
+  z-index: 100;
+  /* background: red; */
+
+  position: sticky;
+  top: 0; /* Don't forget this, required for the stickiness */
+  /* box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4); */
+}

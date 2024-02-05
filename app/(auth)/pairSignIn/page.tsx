@@ -23,8 +23,10 @@ import { useForm } from 'react-hook-form'
 import {
   TLoginSchema,
   TPairSignInSchema,
+  TPairSignUpSchema,
   loginSchema,
   pairSignInSchema,
+  pairSignUpSchema,
 } from '@/lib/types'
 
 import { signIn } from 'next-auth/react'
@@ -33,17 +35,19 @@ import FormError from '@/components/form-error'
 import FormSuccuss from '@/components/form-success'
 import { loginAction, pairSignInAction } from '@/actions/loginAction'
 import Link from 'next/link'
+import { PasswordInput } from '@/components/password-input'
+import { Combobox } from '../pairSignUp/page'
 
 const PairSignInForm = () => {
   const router = useRouter()
   // 1. Define your form.
-  const form = useForm<TPairSignInSchema>({
-    resolver: zodResolver(pairSignInSchema),
-    defaultValues: {
-      pair1: 'jamal',
-      pair2: 'kamal',
-      pairpass: 'jamal',
-    },
+  const form = useForm<TPairSignUpSchema>({
+    resolver: zodResolver(pairSignUpSchema),
+    // defaultValues: {
+    //   pair1: 'jamal',
+    //   pair2: 'kamal',
+    //   pairpass: 'jamal',
+    // },
   })
 
   const [error, setError] = useState<string | undefined>('')
@@ -52,7 +56,7 @@ const PairSignInForm = () => {
 
   // 2. Define a submit handler.
   const onSubmit = async (data: TPairSignInSchema) => {
-    // console.log('from login', data)
+    console.log('from login', data)
 
     setError('')
     setSuccess('')
@@ -114,50 +118,8 @@ const PairSignInForm = () => {
         <div className='min-w-full'>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-              <FormField
-                control={form.control}
-                name='pair1'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel htmlFor='username'>Numero du binôme 1</FormLabel>
-                    <FormControl>
-                      <div className='min-w-full'>
-                        <Input
-                          {...field}
-                          className=' '
-                          id='username'
-                          type='text'
-                          placeholder="Nom d'utilisateur"
-                          disabled={isPending}
-                        />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name='pair2'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel htmlFor='username'>Numero du binôme 2</FormLabel>
-                    <FormControl>
-                      <div className='min-w-full'>
-                        <Input
-                          {...field}
-                          className=' '
-                          id='username'
-                          type='text'
-                          placeholder="Nom d'utilisateur"
-                          disabled={isPending}
-                        />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <Combobox pairname='pair1' form={form} />
+              <Combobox pairname='pair2' form={form} />
 
               <FormField
                 control={form.control}
@@ -167,7 +129,7 @@ const PairSignInForm = () => {
                     <FormLabel htmlFor='pairpass'>Mot de Pass</FormLabel>
                     <FormControl>
                       <div className='min-w-full'>
-                        <Input
+                        <PasswordInput
                           {...field}
                           className=' '
                           id='pairpass'
@@ -197,16 +159,15 @@ const PairSignInForm = () => {
           </Form>
 
           <p className='mt-8 text-center text-xs text-muted-foreground'>
-            Pas de compte,{' '}
-            <Link href='/addnewuser' className='underline font-bold'>
+            Vous avez déjà un compte ?{' '}
+            <Link href='/pairSignUp' className='underline font-bold'>
               {' '}
-              Créer un!
+              register
             </Link>
           </p>
         </div>
       </div>
     </div>
-    // </div>
   )
 }
 

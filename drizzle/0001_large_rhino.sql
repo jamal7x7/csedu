@@ -1,0 +1,1 @@
+ALTER TABLE "Student" RENAME COLUMN "studentNumber" TO "StudentClassNumber";

@@ -36,7 +36,7 @@ import AddBlockForm from '@/components/AddBlockForm'
 
 // import * as schema from '@/db/schema'
 // import { drizzle } from 'drizzle-orm/postgres-js'
-import { user, chapter } from '@/db/schema/unit'
+import { chapter } from '@/db/schema/unit'
 import { db } from '@/db'
 import { eq, ne, isNull, and } from 'drizzle-orm'
 import { DoorClosed, GripVertical, Plus, X } from 'lucide-react'
@@ -433,10 +433,10 @@ export default async function Page({
 
         {/* =============================Title-End=============================  */}
 
-        {thisChapter?.sections.map((section) =>
+        {thisChapter?.sections?.map((section) =>
           section?.blocks
             ?.toSorted((a, b) => a.order - b.order)
-            .map((block) => <div>{renderBlock(block)}</div>)
+            .map((block, i) => <div key={i}>{renderBlock(block)}</div>)
         )}
 
         {/* {allBlocks[0].sections

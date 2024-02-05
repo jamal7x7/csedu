@@ -1,0 +1,55 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1705744932707,
+      "tag": "0000_sharp_wilson_fisk",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1706296028203,
+      "tag": "0001_unique_piledriver",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1706296674914,
+      "tag": "0002_luxuriant_karen_page",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1706300672154,
+      "tag": "0003_tired_george_stacy",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1706302269989,
+      "tag": "0004_spotty_marvel_zombies",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1706302864764,
+      "tag": "0005_fluffy_tyrannus",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1706304132168,
+      "tag": "0006_happy_spitfire",
+      "breakpoints": true
+    }
+  ]
+}

@@ -7,6 +7,7 @@ import { db } from '@/db'
 import { profile, student, user, User } from '@/db/schema/user'
 
 import { hash } from 'bcrypt'
+import { Placeholder, SQL } from 'drizzle-orm'
 
 //get all users
 export async function GET(req: Request, res: NextResponse) {
@@ -67,7 +68,10 @@ export async function POST(req: Request, res: NextResponse) {
     const newProfile = await db
       .insert(profile)
       .values({
-        userId: newuser[0]?.id,
+        userId: newuser?.[0]?.id as
+          | number
+          | SQL<unknown>
+          | Placeholder<string, any>,
       })
       .returning()
       .catch((err: any) => {
@@ -77,8 +81,11 @@ export async function POST(req: Request, res: NextResponse) {
     const newStudent = await db
       .insert(student)
       .values({
-        profileId: newProfile[0]?.id,
-        studentNumber: Number(studentNumber),
+        profileId: newProfile?.[0]?.id as
+          | number
+          | SQL<unknown>
+          | Placeholder<string, any>,
+        studentClassNumber: Number(studentNumber),
         classCode,
         level: Number(classCode.at(0)),
       })

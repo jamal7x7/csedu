@@ -1,0 +1,1 @@
+DROP INDEX IF EXISTS "Student_studentClassNumber_key";

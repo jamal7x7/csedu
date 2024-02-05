@@ -97,8 +97,8 @@ const UserClass = ({ form }: { form: UseFormProps }) => {
                   <TabsTrigger value='level2'>2 année</TabsTrigger>
                   <TabsTrigger value='level3'>3 année</TabsTrigger>
                 </TabsList>
-                {levelsAndClasses.map((level) => (
-                  <TabsContent value={level.levelName}>
+                {levelsAndClasses.map((level, i) => (
+                  <TabsContent key={i} value={level.levelName}>
                     <Card className={cn('bg-muted/10 border-0 shadow-none')}>
                       <CardHeader>
                         {/* <CardTitle>Account</CardTitle> */}
@@ -116,7 +116,7 @@ const UserClass = ({ form }: { form: UseFormProps }) => {
                               className='relative grid w-full grid-cols-4 '
                             >
                               {level.levelAndClass.map((c, i) => (
-                                <FormItem>
+                                <FormItem key={i}>
                                   <FormControl>
                                     <RadioGroupItem
                                       // onClick={() => console.log(c)}

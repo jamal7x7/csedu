@@ -9,5 +9,15 @@
     "postgres",
     "postgresql",
     "Tform"
-  ]
+  ],
+  "files.exclude": {
+    "node_modules": true,
+    ".eslintrc.json": true,
+    ".gitignore": true,
+    "tailwind-copy.config0": true,
+    "drizzle0": true,
+    "zArchives": true,
+    "app/favicon.ico": true,
+    "tailwind.config0.js": true
+  }
 }

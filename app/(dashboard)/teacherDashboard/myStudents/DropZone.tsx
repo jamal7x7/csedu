@@ -1,5 +1,7 @@
+import { Muted, Small } from '@/components/Typography/Typography'
+import { cn } from '@/lib/utils'
 import { AnimatePresence, motion } from 'framer-motion'
-import { FileText, Frown, X, XCircle } from 'lucide-react'
+import { FileText, Frown, Target, UploadCloud, X, XCircle } from 'lucide-react'
 import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import * as XLSX from 'xlsx'
@@ -10,13 +12,19 @@ const variants = {
   exit: { opacity: 0, x: 0, y: 0 },
 }
 
-function DropZone() {
+function DropZone({
+  setUpLoadedData,
+}: {
+  setUpLoadedData: (data: any[]) => void
+}) {
   const [fileNames, setFileNames] = useState<string[]>([])
   const [rejectedfiles, setRejectedfiles] = useState<any[]>([])
   const [acceptedRawFiles, setAcceptedRawFiles] = useState<any[]>([])
   console.log('🚀 ~ DropZone ~ acceptedRawFiles:', acceptedRawFiles)
 
   const [fileData, setFileData] = useState<any[]>([])
+  //   fileData.length > 0 ? setUpData(fileData) : setUpData([])
+  setUpLoadedData(fileData)
   const onDrop = useCallback((acceptedFiles: Blob[], fileRejections: any[]) => {
     acceptedFiles?.forEach((file) => {
       setAcceptedRawFiles((prev) => [...prev, file])
@@ -58,7 +66,8 @@ function DropZone() {
       'text/csv': [],
       'text/html': ['.html', '.htm'],
     },
-    maxSize: 1024 * (24800 / 1024),
+    maxSize: 1024 * 100,
+    maxFiles: 4,
   })
 
   const handleRemoveRejectedFile = (index: number) => {
@@ -73,14 +82,37 @@ function DropZone() {
   return (
     <form>
       <div
-        className='h-24 bg-muted/40  rounded-xl flex justify-center items-center border-dashed border-2 '
+        className={cn(
+          'h-24 bg-muted/40  rounded-xl flex justify-center items-center border-dashed border-2 ',
+          isDragActive && 'bg-muted '
+        )}
         {...getRootProps()}
       >
         <input {...getInputProps()} />
         {isDragActive ? (
-          <p>Drop the files here ...</p>
+          <div className='flex items-center gap-x-2    cursor-crosshair'>
+            <div className='relative -left-6 -top-3'>
+              <Target className='absolute stroke-muted-foreground/70  animate-ping' />
+              <Target className=' absolute stroke-muted-foreground/70 animate-pulse ' />
+            </div>
+            <p className='text-xs text-muted-foreground'>
+              Drop the files here ...
+            </p>
+          </div>
         ) : (
-          <p>Drag 'n' drop some files here, or click to select files</p>
+          <>
+            <div className='flex  items-center  gap-x-4 hover:bg-muted-foreground/10 px-4 py-3 rounded-md cursor-pointer'>
+              <UploadCloud className='stroke-muted-foreground/70 ' />
+              <div className='flex flex-col items-start '>
+                <Small className=' text-muted-foreground'>
+                  Drag 'n' drop some files here, or click to select files
+                </Small>
+                <p className='text-xs text-muted-foreground/50'>
+                  up to 10 xlsx files, 10MB per file
+                </p>
+              </div>
+            </div>
+          </>
         )}
       </div>
       {/* {rejectedfiles.length < 0 && (
@@ -109,7 +141,9 @@ function DropZone() {
                 <FileText className='stroke-emerald-500 ' size={20} />
                 <div>
                   <p className=' '>{aFile.name}</p>{' '}
-                  {/* <p className=' text-rose-300'>{aFile.errors[0].message}</p> */}
+                  <Small className=' text-emerald-900/50 dark:text-emerald-300/50 '>
+                    {(aFile.size / 1024).toFixed(1) + ' KB'}
+                  </Small>
                 </div>
                 <button
                   type='button'
@@ -133,9 +167,11 @@ function DropZone() {
                 <FileText className='stroke-rose-500 ' size={20} />
                 <div>
                   <p className=' '>{rejectedFile.file.name}</p>{' '}
-                  <p className=' text-rose-300'>
-                    {rejectedFile.errors[0].message}
-                  </p>
+                  <Small className='text-rose-900/50 dark:text-rose-300/70'>
+                    {(rejectedFile.file.size / 1024).toFixed(1) +
+                      ' KB - ' +
+                      rejectedFile.errors[0].message}
+                  </Small>
                 </div>
                 <button
                   type='button'
@@ -148,9 +184,9 @@ function DropZone() {
             ))}
           </AnimatePresence>
         ) : (
-          <div className='text-center text-neutral-300 flex items-center justify-center gap-x-2'>
-            <Frown size={20} />
-            <p className=' text-sm'>No FIle Uploaded</p>
+          <div className='text-center col-span-3 text-neutral-300 flex items-center justify-center gap-x-2'>
+            <Frown className='stroke-muted-foreground/70' size={20} />
+            <p className='text-xs text-muted-foreground'>No FIle Uploaded</p>
           </div>
         )}
       </div>

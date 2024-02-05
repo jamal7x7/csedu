@@ -41,6 +41,15 @@ export const signUpSchema = z
 
 export type TSignUpSchema = z.infer<typeof signUpSchema>
 
+export const pairSignUpSchema = z.object({
+  pair1: z.string().min(1, { message: 'au moins un caractère' }),
+  pair2: z.string().min(1, { message: 'au moins un caractère' }),
+
+  pairpass: z.string().min(4, { message: 'au moins 4 caractères' }),
+})
+
+export type TPairSignUpSchema = z.infer<typeof pairSignUpSchema>
+
 export const loginSchema = z.object({
   username: z.string().min(1, { message: 'au moins un caractère' }),
   password: z.string().min(4, { message: 'au moins 4 caractères' }),
@@ -49,8 +58,14 @@ export const loginSchema = z.object({
 export type TLoginSchema = z.infer<typeof loginSchema>
 
 export const pairSignInSchema = z.object({
-  pair1: z.string().min(1, { message: 'au moins un caractère' }),
-  pair2: z.string().min(1, { message: 'au moins un caractère' }),
+  pair1: z.string({
+    required_error: 'Please select a name',
+  }),
+
+  pair2: z.string({
+    required_error: 'Please select a name.',
+  }),
+
   pairpass: z.string().min(4, { message: 'au moins 4 caractères' }),
 })
 

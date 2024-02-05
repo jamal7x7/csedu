@@ -63,8 +63,8 @@ export function LevelTabs(field: any) {
           <TabsTrigger value='level2'>2</TabsTrigger>
           <TabsTrigger value='level3'>3</TabsTrigger>
         </TabsList>
-        {levelsAndClasses.map((level) => (
-          <TabsContent value={level.levelName}>
+        {levelsAndClasses.map((level, i) => (
+          <TabsContent key={i} value={level.levelName}>
             <Card className={cn('bg-muted/10 border-0 shadow-none')}>
               <CardHeader>
                 {/* <CardTitle>Account</CardTitle> */}

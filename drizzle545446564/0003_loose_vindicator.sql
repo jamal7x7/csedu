@@ -1,0 +1,1 @@
+ALTER TABLE "Profile" ALTER COLUMN "birthDate" SET DEFAULT 'DD-MM-YYYY';

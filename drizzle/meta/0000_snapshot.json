@@ -1,5 +1,5 @@
 {
-  "id": "03946304-5a73-4c86-a369-27ba118a891d",
+  "id": "4a9c9740-4181-48dd-b829-42991f908375",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -653,8 +653,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "Pair": {
-      "name": "Pair",
+    "Grade": {
+      "name": "Grade",
       "schema": "",
       "columns": {
         "id": {
@@ -663,52 +663,95 @@
           "primaryKey": true,
           "notNull": true
         },
-        "pairname": {
-          "name": "pairname",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "pairpass": {
-          "name": "pairpass",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'0000'"
-        },
-        "score": {
-          "name": "score",
+        "studentId": {
+          "name": "studentId",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false,
-          "default": 0
-        },
-        "createdAt": {
-          "name": "createdAt",
-          "type": "timestamp(3)",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "now()"
-        },
-        "updatedAt": {
-          "name": "updatedAt",
-          "type": "timestamp(3)",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "now()"
+          "notNull": false
         }
       },
       "indexes": {
-        "Pair_pairname_key": {
-          "name": "Pair_pairname_key",
+        "Grade_studentId_key": {
+          "name": "Grade_studentId_key",
           "columns": [
-            "pairname"
+            "studentId"
           ],
           "isUnique": true
         }
       },
-      "foreignKeys": {},
+      "foreignKeys": {
+        "Grade_studentId_Student_id_fk": {
+          "name": "Grade_studentId_Student_id_fk",
+          "tableFrom": "Grade",
+          "tableTo": "Student",
+          "columnsFrom": [
+            "studentId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        }
+      },
       "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "GradesToTests": {
+      "name": "GradesToTests",
+      "schema": "",
+      "columns": {
+        "gradeId": {
+          "name": "gradeId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "testId": {
+          "name": "testId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "GradesToTests_gradeId_Grade_id_fk": {
+          "name": "GradesToTests_gradeId_Grade_id_fk",
+          "tableFrom": "GradesToTests",
+          "tableTo": "Grade",
+          "columnsFrom": [
+            "gradeId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        },
+        "GradesToTests_testId_Test_id_fk": {
+          "name": "GradesToTests_testId_Test_id_fk",
+          "tableFrom": "GradesToTests",
+          "tableTo": "Test",
+          "columnsFrom": [
+            "testId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "GradesToTests_gradeId_testId_pk": {
+          "name": "GradesToTests_gradeId_testId_pk",
+          "columns": [
+            "gradeId",
+            "testId"
+          ]
+        }
+      },
       "uniqueConstraints": {}
     },
     "Profile": {
@@ -732,6 +775,13 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
+        },
+        "birthDate": {
+          "name": "birthDate",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'DD-MM-YYYY'"
         }
       },
       "indexes": {
@@ -754,7 +804,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "restrict",
+          "onDelete": "no action",
           "onUpdate": "cascade"
         }
       },
@@ -835,7 +885,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "restrict",
+          "onDelete": "no action",
           "onUpdate": "cascade"
         }
       },
@@ -889,6 +939,46 @@
           "onUpdate": "cascade"
         }
       },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "Test": {
+      "name": "Test",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "testName": {
+          "name": "testName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "grade": {
+          "name": "grade",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "coefficient": {
+          "name": "coefficient",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -946,13 +1036,6 @@
           "notNull": false,
           "default": 0
         },
-        "pairId": {
-          "name": "pairId",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "default": 0
-        },
         "createdAt": {
           "name": "createdAt",
           "type": "timestamp(3)",
@@ -984,21 +1067,7 @@
           "isUnique": true
         }
       },
-      "foreignKeys": {
-        "User_pairId_Pair_id_fk": {
-          "name": "User_pairId_Pair_id_fk",
-          "tableFrom": "User",
-          "tableTo": "Pair",
-          "columnsFrom": [
-            "pairId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "restrict",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     }

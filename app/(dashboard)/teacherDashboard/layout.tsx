@@ -42,8 +42,8 @@ const sidebarNavItems = [
     href: '/teacherDashboard/myStudents',
   },
   {
-    title: 'Level 3',
-    href: '/teacherDashboard/levels/3',
+    title: 'Tasks',
+    href: '/teacherDashboard/tasks',
   },
 ]
 

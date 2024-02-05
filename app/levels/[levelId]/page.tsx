@@ -81,7 +81,7 @@ export default async function Page({ params }: any) {
       <div className='flex flex-col gap-8  w-full sm:w-1/2 mt-24'>
         <h1>Niveau {params.levelId}</h1>
 
-        {session?.user.role == 'ADMIN' ? (
+        {session?.user?.role == 'ADMIN' ? (
           <AddChapterLinkForm
             allChapters={allChapters}
             levelId={params.levelId}

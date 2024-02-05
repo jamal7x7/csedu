@@ -9,6 +9,7 @@ import {
   boolean,
   varchar,
   uniqueIndex,
+  primaryKey,
 } from 'drizzle-orm/pg-core'
 
 import { relations, sql } from 'drizzle-orm'
@@ -23,36 +24,35 @@ export const role = pgEnum('Role', [
 export type User = typeof user.$inferSelect
 export type Profile = typeof profile.$inferSelect
 export type Student = typeof student.$inferSelect
-export type Pair = typeof pair.$inferSelect
+// export type Pair = typeof pair.$inferSelect
 
-export const pair = pgTable(
-  'Pair',
-  {
-    id: serial('id').primaryKey().notNull(),
-    pairname: text('pairname'),
-    pairpass: text('pairpass').notNull().default('0000'),
+// export const pair = pgTable(
+//   'Pair',
+//   {
+//     id: serial('id').primaryKey().notNull(),
+//     pairname: text('pairname'),
+//     pairpass: text('pairpass').notNull().default('0000'),
 
-    score: integer('score').default(0),
-    createdAt: timestamp('createdAt', {
-      precision: 3,
-      mode: 'string',
-    }).defaultNow(),
-    updatedAt: timestamp('updatedAt', {
-      precision: 3,
-      mode: 'string',
-    }).defaultNow(),
-  },
-  (table) => {
-    return {
-      pairnameKey: uniqueIndex('Pair_pairname_key').on(table.pairname),
-    }
-  }
-)
+//     score: integer('score').default(0),
+//     createdAt: timestamp('createdAt', {
+//       precision: 3,
+//       mode: 'string',
+//     }).defaultNow(),
+//     updatedAt: timestamp('updatedAt', {
+//       precision: 3,
+//       mode: 'string',
+//     }).defaultNow(),
+//   },
+//   (table) => {
+//     return {
+//       pairnameKey: uniqueIndex('Pair_pairname_key').on(table.pairname),
+//     }
+//   }
+// )
 
-export const PairRelations = relations(pair, ({ one, many }) => ({
-  //   role: one(role),
-  user: many(user),
-}))
+// export const PairRelations = relations(pair, ({ one, many }) => ({
+//   user: many(user),
+// }))
 
 export const user = pgTable(
   'User',
@@ -66,13 +66,13 @@ export const user = pgTable(
     password: text('password').notNull(),
     score: integer('score').default(0),
 
-    pairId: integer('pairId')
-      // .notNull()
-      .default(0)
-      .references(() => pair.id, {
-        onDelete: 'restrict',
-        onUpdate: 'cascade',
-      }),
+    // pairId: integer('pairId')
+    // .notNull()
+    // .default(0)
+    // .references(() => pair.id, {
+    //   onDelete: 'restrict',
+    //   onUpdate: 'cascade',
+    // }),
 
     createdAt: timestamp('createdAt', {
       precision: 3,
@@ -93,7 +93,7 @@ export const user = pgTable(
 
 export const userRelations = relations(user, ({ one }) => ({
   //   role: one(role),
-  pair: one(pair, { fields: [user.pairId], references: [pair.id] }),
+  // pair: one(pair, { fields: [user.pairId], references: [pair.id] }),
   profile: one(profile, {
     fields: [user.id],
     references: [profile.userId],
@@ -106,8 +106,12 @@ export const profile = pgTable(
     id: serial('id').primaryKey().notNull(),
     userId: integer('userId')
       .notNull()
-      .references(() => user.id, { onDelete: 'restrict', onUpdate: 'cascade' }),
+      .references(() => user.id, {
+        // onDelete: 'restrict',
+        onUpdate: 'cascade',
+      }),
     bio: text('bio'),
+    birthDate: text('birthDate').default('dd-mm-yyyy').notNull(),
   },
 
   (table) => {
@@ -117,20 +121,29 @@ export const profile = pgTable(
   }
 )
 
+export const profileRelations = relations(profile, ({ one }) => ({
+  //   role: one(role),
+  user: one(user, { fields: [profile.userId], references: [user.id] }),
+  student: one(student, {
+    fields: [profile.id],
+    references: [student.profileId],
+  }),
+}))
+
 export const student = pgTable(
   'Student',
   {
     id: serial('id').primaryKey().notNull(),
     level: integer('level'),
     classCode: text('classCode'),
-    studentNumber: integer('studentNumber'),
+    studentClassNumber: integer('studentClassNumber'),
     massarNumber: text('massarNumber'),
     group: text('group'),
 
     profileId: integer('profileId')
       .notNull()
       .references(() => profile.id, {
-        onDelete: 'restrict',
+        // onDelete: 'restrict',
         onUpdate: 'cascade',
       }),
   },
@@ -143,6 +156,94 @@ export const student = pgTable(
     }
   }
 )
+
+export const studentRelations = relations(student, ({ one }) => ({
+  grade: one(grade, {
+    fields: [student.id],
+    references: [grade.studentId],
+  }),
+}))
+
+export const grade = pgTable(
+  'Grade',
+  {
+    id: serial('id').primaryKey(),
+
+    studentId: integer('studentId')
+      // .notNull()
+      .references(() => student.id, {
+        // onDelete: 'restrict',
+        onUpdate: 'cascade',
+      }),
+  },
+  (table) => {
+    return {
+      studentIdKey: uniqueIndex('Grade_studentId_key').on(table.studentId),
+      // grades_testsIdKey: uniqueIndex('Grade_grades_tests_key').on(
+      //   table.grades_testsId
+      // ),
+    }
+  }
+)
+
+export const gradeRelations = relations(grade, ({ one, many }) => ({
+  student: one(student, {
+    fields: [grade.studentId],
+    references: [student.id],
+  }),
+  tests: many(gradesToTests),
+}))
+
+export const gradesToTests = pgTable(
+  'GradesToTests',
+  {
+    // id: serial('id').primaryKey().notNull(),
+
+    gradeId: integer('gradeId')
+      .notNull()
+      .references(() => grade.id, {
+        // onDelete: 'restrict',
+        onUpdate: 'cascade',
+      }),
+    testId: integer('testId')
+      .notNull()
+      .references(() => test.id, {
+        // onDelete: 'restrict',
+        onUpdate: 'cascade',
+      }),
+  },
+  (table) => {
+    return {
+      pk: primaryKey({ columns: [table.gradeId, table.testId] }),
+      // gradeIdKey: uniqueIndex('Grade_grades_tests_key').on(table.gradeId),
+      // testIdKey: uniqueIndex('Test_grades_tests_key').on(table.testId),
+    }
+  }
+)
+
+export const gradesToTestsRelations = relations(gradesToTests, ({ one }) => ({
+  grade: one(grade, {
+    fields: [gradesToTests.gradeId],
+    references: [grade.id],
+  }),
+  test: one(test, {
+    fields: [gradesToTests.testId],
+    references: [test.id],
+  }),
+}))
+
+export const test = pgTable('Test', {
+  id: serial('id').primaryKey(),
+
+  testName: text('testName'),
+  grade: integer('grade'),
+  type: text('type'),
+  coefficient: integer('coefficient'),
+})
+
+export const testRelations = relations(test, ({ many }) => ({
+  grades: many(gradesToTests),
+}))
 
 export const teacher = pgTable(
   'Teacher',
