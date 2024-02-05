@@ -49,14 +49,17 @@ export const pairSignUpAction = async (values: TPairSignUpSchema) => {
   }
 
   const validPair1 = validatedFields.data?.pair1 as string
+  console.log('🚀 ~ pairSignUpAction ~ validPair1:', validPair1)
   const validPair2 = validatedFields.data?.pair2 as string
+  console.log('🚀 ~ pairSignUpAction ~ validPair2:', validPair2)
   const validPairpass = validatedFields.data?.pairpass as string
 
   // console.log('🚀 ~ pairSignUpAction ~ pairName:', pairName)
 
-  const student1: Student | undefined = await db.query.student.findFirst({
-    where: (student, { eq }) => eq(student.id, Number(validPair1)),
+  const user1 = await db.query.user.findFirst({
+    where: eq(user.id, Number(validPair1)),
   })
+  console.log('🚀 ~ pairSignUpAction ~ student1:', user1)
   // let profile1: any = {}
   // if (student1) {
   //   profile1 = await db.query.profile.findFirst({
@@ -70,9 +73,10 @@ export const pairSignUpAction = async (values: TPairSignUpSchema) => {
   //   })
   // }
 
-  const student2: Student | undefined = await db.query.student.findFirst({
-    where: (student, { eq }) => eq(student.id, Number(validPair2)),
+  const user2 = await db.query.user.findFirst({
+    where: eq(user.id, Number(validPair2)),
   })
+  console.log('🚀 ~ pairSignUpAction ~ student2:', user2)
   // let profile2: any = {}
   // if (student2) {
   //   profile2 = await db.query.profile.findFirst({
@@ -86,9 +90,8 @@ export const pairSignUpAction = async (values: TPairSignUpSchema) => {
   //   })
   // }
 
-  const pairName = [student1?.massarNumber, student2?.massarNumber]
-    .toSorted()
-    .join('_&_')
+  const pairName = [user1?.id, user2?.id].toSorted().join('_&_')
+  console.log('🚀 ~ pairSignUpAction ~ pairName:', pairName)
 
   const existing = await db.query.user.findFirst({
     where: (user, { eq }) => eq(user.username, pairName),
@@ -104,11 +107,11 @@ export const pairSignUpAction = async (values: TPairSignUpSchema) => {
     .flat()
   console.log('🚀 ~ up ~ up:', up)
 
-  if (student1?.massarNumber && up.includes(student1?.massarNumber)) {
-    return { error: student1?.massarNumber + ': est deja inscrit!' }
+  if (user1?.id && up.includes(user1.id.toString())) {
+    return { error: user1?.firstName + ': est deja inscrit!' }
   }
-  if (student2?.massarNumber && up.includes(student2?.massarNumber)) {
-    return { error: student2?.massarNumber + ': est deja inscrit!' }
+  if (user2?.id && up.includes(user2.id.toString())) {
+    return { error: user1?.firstName + ': est deja inscrit!' }
   }
 
   if (existing) return { error: 'already exists' }
@@ -131,7 +134,7 @@ export const pairSignUpAction = async (values: TPairSignUpSchema) => {
   return { success: 'sent!' }
 }
 
-export const getStudentsAction = async (classCode: string) => {
+export const getUsersAction = async (classCode: string) => {
   const allClassStudent = await db.query.student.findMany({
     where: eq(student.classCode, classCode),
   })

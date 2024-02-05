@@ -53,10 +53,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { getStudentsAction, pairSignUpAction } from '@/actions/signUpAction'
+import { getUsersAction, pairSignUpAction } from '@/actions/signUpAction'
 import { User } from '@/db/schema/user'
 import { z } from 'zod'
 import { PasswordInput } from '@/components/password-input'
+import { H2, H3, Muted } from '@/components/Typography/Typography'
 
 const PairSignInForm = () => {
   const router = useRouter()
@@ -72,6 +73,7 @@ const PairSignInForm = () => {
 
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
+  const [classCode, setClassCode] = useState<string>('1APIC-1')
   const [isPending, startTransition] = useTransition()
 
   // 2. Define a submit handler.
@@ -95,13 +97,12 @@ const PairSignInForm = () => {
     //   })
     // })
 
-    const pairName = [data.pair1, data.pair2].toSorted().join('_&_')
-
     pairSignUpAction(data).then((data) => {
       setError(data?.error)
       setSuccess(data?.success)
     })
 
+    const pairName = [data.pair1, data.pair2].toSorted().join('_&_')
     // const signInData = await signIn('credentials', {
     //   username: pairName,
     //   password: data.pairpass,
@@ -147,12 +148,15 @@ const PairSignInForm = () => {
   return (
     <div className='min-h-screen  flex flex-col items-center justify-center border '>
       <div className='w-full  sm:w-[28rem] flex flex-col items-center justify-center border p-10 rounded-xl  bg-muted/30'>
-        <h1 className=' font-black text-4xl mb-8 '>Inscrivez‑vous</h1>
+        {/* <h1 className=' font-black text-4xl mb-8 '>Inscrivez‑vous</h1> */}
+        <H2 className=' border-0 font-bold mb-4  '>Inscrivez‑vous</H2>
+        <Muted className=' border-0   mb-16 '>{classCode}</Muted>
+
         <div className='min-w-full'>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-              <Combobox pairname='pair1' form={form} />
-              <Combobox pairname='pair2' form={form} />
+              <Combobox pairname='pair1' classCode={classCode} form={form} />
+              <Combobox pairname='pair2' classCode={classCode} form={form} />
 
               <FormField
                 control={form.control}
@@ -210,6 +214,7 @@ export default PairSignInForm
 export function Combobox({
   form,
   pairname,
+  classCode,
 }: {
   form: UseFormReturn<
     {
@@ -221,6 +226,7 @@ export function Combobox({
     undefined
   >
   pairname: 'pair1' | 'pair2'
+  classCode: string
 }) {
   // console.log('🚀 ~ Combobox ~ form:', form)
   const [open, setOpen] = React.useState(false)
@@ -229,7 +235,7 @@ export function Combobox({
 
   useEffect(() => {
     const updateViews = async () => {
-      const users = await getStudentsAction('3APIC-1')
+      const users = await getUsersAction(classCode)
 
       // const classStudents: User[] | any[] = users.filter(
       //   (u) => u.profile.student.classCode === '3APIC-4'
@@ -273,11 +279,11 @@ export function Combobox({
                       studentsList.find((s) => s.id.toString() === field.value)
                         ?.profile?.student?.massarNumber
                     }
-                    -
+                    {/* -
                     {
                       studentsList.find((s) => s.id.toString() === field.value)
                         ?.profile?.student?.classCode
-                    }
+                    } */}
                   </span>
 
                   <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
