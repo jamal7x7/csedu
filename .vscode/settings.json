@@ -8,7 +8,8 @@
     "onnotice",
     "postgres",
     "postgresql",
-    "Tform"
+    "Tform",
+    "tuesday"
   ],
   "files.exclude": {
     "node_modules": true,

@@ -11,6 +11,8 @@ import { db } from '@/db'
 import { asc, eq, desc, Placeholder, SQL } from 'drizzle-orm'
 import { Profile, Student, profile, student, user } from '@/db/schema/user'
 import { hash } from 'bcrypt'
+import { getTemporalClassEvent } from '@/app/utils/getClassEvent'
+import { Temporal } from '@js-temporal/polyfill'
 
 export const signUpAction = async (values: TSignUpSchema) => {
   //   await wait(2000)
@@ -134,7 +136,8 @@ export const pairSignUpAction = async (values: TPairSignUpSchema) => {
   return { success: 'sent!' }
 }
 
-export const getUsersAction = async (classCode: string) => {
+export const getUsersAction = async (classCode: string | undefined) => {
+  if (classCode === undefined) return []
   const allClassStudent = await db.query.student.findMany({
     where: eq(student.classCode, classCode),
   })
@@ -150,6 +153,9 @@ export const getUsersAction = async (classCode: string) => {
       },
     },
   })
+
+  // const c = getTemporalClassEvent(Temporal.Now.plainDateTimeISO())
+  // const c = classCode
 
   const usersSorted = allUsers
     .filter((s) => s.profile.student.classCode === classCode)

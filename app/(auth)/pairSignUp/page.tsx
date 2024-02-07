@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState, useTransition } from 'react'
+import React, { useEffect, useMemo, useState, useTransition } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -40,6 +40,7 @@ import { DrawerDialogPair } from './DrawDialogPair'
 import { Check, ChevronsUpDown } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
+import { Temporal, Intl } from '@js-temporal/polyfill'
 
 import {
   Command,
@@ -59,7 +60,10 @@ import { z } from 'zod'
 import { PasswordInput } from '@/components/password-input'
 import { H2, H3, Muted } from '@/components/Typography/Typography'
 
-const PairSignInForm = () => {
+import { getTemporalClassEvent } from '@/app/utils/getClassEvent'
+import { TEducationEvent } from '@/types'
+
+const PairSignInForm = async () => {
   const router = useRouter()
   // 1. Define your form.
   const form = useForm<TPairSignInSchema>({
@@ -73,8 +77,29 @@ const PairSignInForm = () => {
 
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
-  const [classCode, setClassCode] = useState<string>('1APIC-1')
+  const [classCode, setClassCode] = useState<string | undefined>('')
   const [isPending, startTransition] = useTransition()
+
+  const cCode = useMemo(() => {
+    const now = Temporal.Now.plainDateTimeISO()
+    const x = getTemporalClassEvent(now)
+    // console.log('🚀 ~ cCode ~ x:', x)
+
+    setClassCode(x)
+    return x
+  }, [classCode])
+
+  useEffect(() => {
+    // const now = Temporal.Now.plainDateTimeISO()
+    // const updateViews = async () => {
+    //   const currentClassCode = await getTemporalClassEvent(now)
+    //   setClassCode(currentClassCode)
+    //   // console.log('🚀 ~ currentClassCode', currentClassCode)
+    //   // console.log('🚀 ~ classCode', classCode)
+    // }
+    // updateViews()
+    // setClassCode(cCode)
+  }, [classCode])
 
   // 2. Define a submit handler.
   const onSubmit = async (data: TPairSignUpSchema) => {
@@ -226,9 +251,9 @@ export function Combobox({
     undefined
   >
   pairname: 'pair1' | 'pair2'
-  classCode: string
+  classCode: string | undefined
 }) {
-  // console.log('🚀 ~ Combobox ~ form:', form)
+  // // // console.log('🚀 ~ Combobox ~ form:', form)
   const [open, setOpen] = React.useState(false)
   // const [value, setValue] = React.useState('')
   const [studentsList, setStudentsList] = useState<User[] | any[]>([])
@@ -245,7 +270,7 @@ export function Combobox({
     }
 
     updateViews()
-    // // console.log('🚀 ~ DrawerDialogPair ~ studentsList:', studentsList)
+    // // // // console.log('🚀 ~ DrawerDialogPair ~ studentsList:', studentsList)
   }, [])
 
   return (

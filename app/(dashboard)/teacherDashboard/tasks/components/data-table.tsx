@@ -27,7 +27,7 @@ import {
 
 import { DataTablePagination } from '../components/data-table-pagination'
 import { DataTableToolbar } from '../components/data-table-toolbar'
-import DropZone from './DropZone'
+import DropZone, { DrawerDialogDropZone } from './DropZone'
 import { useMemo } from 'react'
 import { TStudentsGradesSchema } from '../data/schema'
 
@@ -83,7 +83,6 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className='space-y-4 mb-8'>
-      <DropZone />
       {/* <DropZone setUpLoadedData={setUpLoadedData} /> */}
       <DataTableToolbar table={table} />
       {/* <div className='rounded-md border overflow-x-auto '> */}

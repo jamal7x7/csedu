@@ -18,6 +18,7 @@ import { addStudentsListfileAction } from '@/actions/fileActions'
 import { eq } from 'drizzle-orm'
 import { Suspense } from 'react'
 import { unstable_noStore as noStore } from 'next/cache'
+import { DrawerDialogDropZone } from './components/DropZone'
 // import dynamic from 'next/dynamic'
 
 // export const dynamic = 'force-dynamic'
@@ -168,13 +169,16 @@ export default async function TaskPage() {
       >
         <div className='flex items-center justify-between space-y-2'>
           <div>
-            <h2 className='text-2xl font-bold tracking-tight'>Welcome back!</h2>
+            <h2 className='text-2xl font-bold tracking-tight'>
+              List des Etudiants
+            </h2>
             <p className='text-muted-foreground'>
-              Here&apos;s a list of your tasks for this month!
+              Voici la List de vos etudiants
             </p>
           </div>
           <div className='flex items-center space-x-2'>
-            <UserNav />
+            {/* <UserNav /> */}
+            <DrawerDialogDropZone />
           </div>
         </div>
         {/* {list.map((dl, i) => ( */}
