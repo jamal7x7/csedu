@@ -9,6 +9,7 @@ import { DataTableViewOptions } from '@/app/(dashboard)/teacherDashboard/tasks/c
 
 import { priorities, statuses } from '../data/data'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
+import { DrawerDialogDropZone } from './DropZone'
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -20,7 +21,7 @@ export function DataTableToolbar<TData>({
   const isFiltered = table.getState().columnFilters.length > 0
 
   return (
-    <div className='flex items-center justify-between'>
+    <div className='flex items-center justify-between gap-2'>
       <div className='flex flex-1 items-center space-x-2'>
         <Input
           placeholder='Filtrer les Noms...'
@@ -58,6 +59,7 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       <DataTableViewOptions table={table} />
+      <DrawerDialogDropZone />
     </div>
   )
 }

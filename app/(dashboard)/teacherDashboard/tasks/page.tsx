@@ -178,7 +178,7 @@ export default async function TaskPage() {
           </div>
           <div className='flex items-center space-x-2'>
             {/* <UserNav /> */}
-            <DrawerDialogDropZone />
+            {/* <DrawerDialogDropZone /> */}
           </div>
         </div>
         {/* {list.map((dl, i) => ( */}

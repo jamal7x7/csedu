@@ -13,6 +13,7 @@ import {
 } from 'drizzle-orm/pg-core'
 
 import { relations, sql } from 'drizzle-orm'
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 
 export const role = pgEnum('Role', [
   'STUDENT',
@@ -282,3 +283,5 @@ export const admin = pgTable(
     }
   }
 )
+
+export const insertUserSchema = createInsertSchema(user)

@@ -2,7 +2,16 @@
 import { Muted, Small } from '@/components/Typography/Typography'
 import { cn } from '@/lib/utils'
 import { AnimatePresence, motion } from 'framer-motion'
-import { FileText, Frown, Target, UploadCloud, X, XCircle } from 'lucide-react'
+import {
+  FileText,
+  Frown,
+  Plus,
+  PlusIcon,
+  Target,
+  UploadCloud,
+  X,
+  XCircle,
+} from 'lucide-react'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import * as XLSX from 'xlsx'
@@ -332,13 +341,17 @@ export function DrawerDialogDropZone() {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant='outline' className='flex items-center gap-2'>
-            {' '}
-            <UploadCloud className='stroke-muted-foreground/70 ' />
+          <Button variant='default' className='h-8 px-2 lg:px-3'>
+            <PlusIcon className=' h-4 w-4' />
             Ajouter des etudiants
           </Button>
+          {/* <Button variant='outline' className='flex items-center gap-2'>
+            {' '}
+            <Plus className='stroke-muted-foreground/70 ' />
+            Ajouter des etudiants
+          </Button> */}
         </DialogTrigger>
-        <DialogContent className='sm:max-w-[725px]'>
+        <DialogContent className='sm:max-w-1/3 md:max-w-1/2 lg:max-w-1/2 xl:max-w-1/2'>
           <DialogHeader>
             <DialogTitle>Edit profile</DialogTitle>
             <DialogDescription>
