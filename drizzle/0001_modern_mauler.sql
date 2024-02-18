@@ -1,0 +1,1 @@
+ALTER TABLE "SClass" ALTER COLUMN "schoolYearId" DROP NOT NULL;

@@ -42,8 +42,8 @@ const sidebarNavItems = [
     href: '/teacherDashboard/myStudents',
   },
   {
-    title: 'Tasks',
-    href: '/teacherDashboard/tasks',
+    title: 'List',
+    href: '/teacherDashboard/studentList',
   },
 ]
 

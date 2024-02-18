@@ -9,7 +9,7 @@ import {
 } from '@/lib/types'
 import { db } from '@/db'
 import { asc, eq, desc, Placeholder, SQL } from 'drizzle-orm'
-import { Profile, Student, profile, student, user } from '@/db/schema/user'
+import { Profile, Student, profile, student, user } from '@/db/schema/users'
 import { hash } from 'bcrypt'
 import { getTemporalClassEvent } from '@/app/utils/getClassEvent'
 import { Temporal } from '@js-temporal/polyfill'
@@ -34,10 +34,10 @@ export const signUpAction = async (values: TSignUpSchema) => {
 }
 
 export const pairSignUpAction = async (values: TPairSignUpSchema) => {
-  console.log('🚀 ~ pairSignUpAction ~ values:', values)
+  // console.log('🚀 ~ pairSignUpAction ~ values:', values)
 
   const validatedFields = pairSignUpSchema.safeParse(values)
-  // console.log('🚀 ~ pairSignUpAction ~ validatedFields:', validatedFields)
+  // // console.log('🚀 ~ pairSignUpAction ~ validatedFields:', validatedFields)
 
   let zodErrors = {}
   if (!validatedFields.success) {
@@ -51,17 +51,17 @@ export const pairSignUpAction = async (values: TPairSignUpSchema) => {
   }
 
   const validPair1 = validatedFields.data?.pair1 as string
-  console.log('🚀 ~ pairSignUpAction ~ validPair1:', validPair1)
+  // console.log('🚀 ~ pairSignUpAction ~ validPair1:', validPair1)
   const validPair2 = validatedFields.data?.pair2 as string
-  console.log('🚀 ~ pairSignUpAction ~ validPair2:', validPair2)
+  // console.log('🚀 ~ pairSignUpAction ~ validPair2:', validPair2)
   const validPairpass = validatedFields.data?.pairpass as string
 
-  // console.log('🚀 ~ pairSignUpAction ~ pairName:', pairName)
+  // // console.log('🚀 ~ pairSignUpAction ~ pairName:', pairName)
 
   const user1 = await db.query.user.findFirst({
     where: eq(user.id, Number(validPair1)),
   })
-  console.log('🚀 ~ pairSignUpAction ~ student1:', user1)
+  // console.log('🚀 ~ pairSignUpAction ~ student1:', user1)
   // let profile1: any = {}
   // if (student1) {
   //   profile1 = await db.query.profile.findFirst({
@@ -78,7 +78,7 @@ export const pairSignUpAction = async (values: TPairSignUpSchema) => {
   const user2 = await db.query.user.findFirst({
     where: eq(user.id, Number(validPair2)),
   })
-  console.log('🚀 ~ pairSignUpAction ~ student2:', user2)
+  // console.log('🚀 ~ pairSignUpAction ~ student2:', user2)
   // let profile2: any = {}
   // if (student2) {
   //   profile2 = await db.query.profile.findFirst({
@@ -93,7 +93,7 @@ export const pairSignUpAction = async (values: TPairSignUpSchema) => {
   // }
 
   const pairName = [user1?.id, user2?.id].toSorted().join('_&_')
-  console.log('🚀 ~ pairSignUpAction ~ pairName:', pairName)
+  // console.log('🚀 ~ pairSignUpAction ~ pairName:', pairName)
 
   const existing = await db.query.user.findFirst({
     where: (user, { eq }) => eq(user.username, pairName),
@@ -107,7 +107,7 @@ export const pairSignUpAction = async (values: TPairSignUpSchema) => {
       return pair.username.split('_&_')
     })
     .flat()
-  console.log('🚀 ~ up ~ up:', up)
+  // console.log('🚀 ~ up ~ up:', up)
 
   if (user1?.id && up.includes(user1.id.toString())) {
     return { error: user1?.firstName + ': est deja inscrit!' }
@@ -131,7 +131,7 @@ export const pairSignUpAction = async (values: TPairSignUpSchema) => {
       // console.log('err: ', JSON.stringify(err, null, 2))
       zodErrors = { ...zodErrors, err: err }
     })
-  console.log('🚀 ~ pairSignUpAction ~ newuser:', newuser)
+  // console.log('🚀 ~ pairSignUpAction ~ newuser:', newuser)
 
   return { success: 'sent!' }
 }
@@ -174,7 +174,7 @@ export const getUsersAction = async (classCode: string | undefined) => {
     })
 
   // console.dir(usersSorted, { depth: null })
-  // console.log('🚀 ~ getStudentsAction ~ allClassStudent:', allClassStudent)
+  // // console.log('🚀 ~ getStudentsAction ~ allClassStudent:', allClassStudent)
   // return allClassStudent
 
   return usersSorted

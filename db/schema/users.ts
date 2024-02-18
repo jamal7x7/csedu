@@ -10,10 +10,14 @@ import {
   varchar,
   uniqueIndex,
   primaryKey,
+  date,
+  // pgTableCreator,
 } from 'drizzle-orm/pg-core'
 
 import { relations, sql } from 'drizzle-orm'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
+
+// const pgTable = pgTableCreator((name) => `people_${name}`)
 
 export const role = pgEnum('Role', [
   'STUDENT',
@@ -25,7 +29,7 @@ export const role = pgEnum('Role', [
 export type User = typeof user.$inferSelect
 export type Profile = typeof profile.$inferSelect
 export type Student = typeof student.$inferSelect
-// export type Pair = typeof pair.$inferSelect
+export type SchoolYear = typeof schoolYear.$inferSelect
 
 // export const pair = pgTable(
 //   'Pair',
@@ -66,15 +70,6 @@ export const user = pgTable(
     username: text('username').notNull(),
     password: text('password').notNull(),
     score: integer('score').default(0),
-
-    // pairId: integer('pairId')
-    // .notNull()
-    // .default(0)
-    // .references(() => pair.id, {
-    //   onDelete: 'restrict',
-    //   onUpdate: 'cascade',
-    // }),
-
     createdAt: timestamp('createdAt', {
       precision: 3,
       mode: 'string',
@@ -93,8 +88,6 @@ export const user = pgTable(
 )
 
 export const userRelations = relations(user, ({ one }) => ({
-  //   role: one(role),
-  // pair: one(pair, { fields: [user.pairId], references: [pair.id] }),
   profile: one(profile, {
     fields: [user.id],
     references: [profile.userId],
@@ -131,6 +124,77 @@ export const profileRelations = relations(profile, ({ one }) => ({
   }),
 }))
 
+export const school = pgTable('School', {
+  id: serial('id').primaryKey().notNull(),
+  establishmentCode: text('establishmentCode'),
+  schoolName: text('schoolName'),
+  academy: text('academy'),
+  delegation: text('delegation'),
+  teachers: text('teachers'),
+  subjects: text('subjects'),
+  semester: text('semester'),
+})
+
+export const schoolYear = pgTable('SchoolYear', {
+  id: serial('id').primaryKey().notNull(),
+  startDate: text('startDate'),
+  endDate: text('endDate'),
+  name: text('name'),
+})
+
+export const schoolYearsRelations = relations(schoolYear, ({ many }) => ({
+  terms: many(term),
+}))
+
+export const term = pgTable('Term', {
+  id: serial('id').primaryKey().notNull(),
+  schoolYearId: integer('schoolYearId')
+    .notNull()
+    .references(() => schoolYear.id, {
+      // onDelete: 'restrict',
+      onUpdate: 'cascade',
+    }),
+  startDate: text('startDate'),
+  endDate: text('endDate'),
+  termNumber: text('termNumber'),
+})
+
+export const termsRelations = relations(term, ({ one }) => ({
+  schoolYear: one(schoolYear, {
+    fields: [term.schoolYearId],
+    references: [schoolYear.id],
+  }),
+}))
+
+export const sClass = pgTable('SClass', {
+  id: serial('id').primaryKey().notNull(),
+  level: integer('level'),
+  classCode: text('classCode'),
+  schoolYearId: integer('schoolYearId')
+    .notNull()
+    .references(() => schoolYear.id, {
+      // onDelete: 'restrict',
+      onUpdate: 'cascade',
+    }),
+})
+
+export const sClassesRelations = relations(sClass, ({ one, many }) => ({
+  students: many(student),
+  schoolYear: one(schoolYear, {
+    fields: [sClass.schoolYearId],
+    references: [schoolYear.id],
+  }),
+}))
+
+export const subject = pgTable('Subject', {
+  id: serial('id').primaryKey().notNull(),
+  name: integer('level'),
+})
+
+export const subjectsRelations = relations(subject, ({ many }) => ({
+  teachers: many(teacher),
+}))
+
 export const student = pgTable(
   'Student',
   {
@@ -147,6 +211,12 @@ export const student = pgTable(
         // onDelete: 'restrict',
         onUpdate: 'cascade',
       }),
+    sClassId: integer('sClassId')
+      // .notNull()
+      .references(() => sClass.id, {
+        // onDelete: 'restrict',
+        onUpdate: 'cascade',
+      }),
   },
   (table) => {
     return {
@@ -154,6 +224,7 @@ export const student = pgTable(
         table.massarNumber
       ),
       profileIdKey: uniqueIndex('Student_profileId_key').on(table.profileId),
+      sClassIdKey: uniqueIndex('Student_sClassId_key').on(table.sClassId),
     }
   }
 )
@@ -162,6 +233,10 @@ export const studentRelations = relations(student, ({ one }) => ({
   grade: one(grade, {
     fields: [student.id],
     references: [grade.studentId],
+  }),
+  studentClass: one(sClass, {
+    fields: [student.sClassId],
+    references: [sClass.id],
   }),
 }))
 
@@ -257,6 +332,12 @@ export const teacher = pgTable(
         onDelete: 'restrict',
         onUpdate: 'cascade',
       }),
+    subjectId: integer('subjectId')
+      // .notNull()
+      .references(() => subject.id, {
+        // onDelete: 'restrict',
+        onUpdate: 'cascade',
+      }),
   },
   (table) => {
     return {
@@ -265,6 +346,12 @@ export const teacher = pgTable(
   }
 )
 
+export const teachersRelations = relations(teacher, ({ one }) => ({
+  subjects: one(subject, {
+    fields: [teacher.subjectId],
+    references: [subject.id],
+  }),
+}))
 export const admin = pgTable(
   'Admin',
   {

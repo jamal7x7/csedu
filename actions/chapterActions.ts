@@ -2,9 +2,9 @@
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 
-import { Chapter, section } from '@/db/schema/unit'
+import { Chapter, section } from '@/db/schema/units'
 import { db } from '@/db'
-import { block, chapter } from '@/db/schema/unit'
+import { block, chapter, unit } from '@/db/schema/units'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
@@ -55,10 +55,22 @@ export const addChapterAction = async (levelId: string, data: ChapterTitle) => {
   const prevChapters = await db.query.chapter?.findMany({
     where: eq(chapter.level, Number(levelId)),
   })
+  const prevUnits = await db.query.unit?.findMany({
+    where: eq(unit.level, Number(levelId)),
+  })
+
+  const newUnit = await db
+    .insert(unit)
+    .values({
+      name: validTitle,
+      order: prevChapters.length + 1,
+    })
+    .returning({ id: unit.id })
 
   const addedChapter = await db
     .insert(chapter)
     .values({
+      unitId: newUnit?.[0]?.id,
       title: validTitle,
       level: validLevel,
       order: prevChapters.length + 1,

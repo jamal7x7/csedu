@@ -5,43 +5,15 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1706435307909,
-      "tag": "0000_groovy_ultron",
+      "when": 1707819574445,
+      "tag": "0000_lush_marauders",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "5",
-      "when": 1706866998531,
-      "tag": "0001_large_rhino",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1706867098020,
-      "tag": "0002_mean_mathemanic",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1706867574652,
-      "tag": "0003_futuristic_meltdown",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "5",
-      "when": 1706899451792,
-      "tag": "0004_slim_madame_hydra",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "5",
-      "when": 1706899568799,
-      "tag": "0005_aspiring_the_fury",
+      "when": 1708278518470,
+      "tag": "0001_modern_mauler",
       "breakpoints": true
     }
   ]

@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX IF NOT EXISTS "Student_classesId_key" ON "Student" ("classesId");

@@ -77,14 +77,14 @@ function DropZone() {
         return {
           classCode: u[4].I as string,
           title: u[1].F as string,
-          academyYear: u[6].D as string,
+          sYear: u[6].D as string,
           establishmentCode: u[2].C as string,
           schoolName: u[3].O as string,
           academy: u[3].D as string,
           delegation: u[3].I as string,
           teacherName: u[4].O as string,
           subject: u[5].O as string,
-          semestre: u[5].D as string,
+          semester: u[5].D as string,
           studentsGradesTableHeader: [
             u[8].B, //id
             u[8].C, //studentMassarNumber
@@ -207,7 +207,7 @@ function DropZone() {
     <>
       <form
         onSubmit={(e) => handleUploadedFiles(e)}
-        // method='POST'
+        // method='POST'∫∫
         className='flex flex-col gap-y-4'
       >
         <div
@@ -343,12 +343,12 @@ export function DrawerDialogDropZone() {
         <DialogTrigger asChild>
           <Button variant='default' className='h-8 px-2 lg:px-3'>
             <PlusIcon className=' h-4 w-4' />
-            Ajouter des etudiants
+            Ajouter des étudiants
           </Button>
           {/* <Button variant='outline' className='flex items-center gap-2'>
             {' '}
             <Plus className='stroke-muted-foreground/70 ' />
-            Ajouter des etudiants
+            Ajouter des étudiants
           </Button> */}
         </DialogTrigger>
         <DialogContent className='sm:max-w-1/3 md:max-w-1/2 lg:max-w-1/2 xl:max-w-1/2'>

@@ -9,9 +9,12 @@ import {
   boolean,
   varchar,
   uniqueIndex,
+  // pgTableCreator,
 } from 'drizzle-orm/pg-core'
 
 import { relations, sql } from 'drizzle-orm'
+
+// const pgTable = pgTableCreator((name) => `things_${name}`)
 
 export const quizType = pgEnum('QuizType', ['MULTI', 'YESNO', 'TEXT'])
 export const blockType = pgEnum('BlockType', [
@@ -53,9 +56,12 @@ export const chapter = pgTable('Chapter', {
   order: integer('order'),
 
   unitId: integer('unitId')
-    .default(1)
+    // .default(1)
     .notNull()
-    .references(() => unit.id, { onDelete: 'restrict', onUpdate: 'cascade' }),
+    .references(() => unit.id, {
+      // onDelete: 'restrict',
+      onUpdate: 'cascade',
+    }),
 
   title: text('title').default('Title of Chapter').notNull(),
   subtitle: text('subtitle').default('Subtitle'),
@@ -152,9 +158,9 @@ export const option = pgTable('Option', {
 export const assessment = pgTable('Assessment', {
   id: serial('id').primaryKey().notNull(),
   sectionId: integer('sectionId')
-    .notNull()
+    // .notNull()
     .references(() => section.id, {
-      onDelete: 'restrict',
+      // onDelete: 'restrict',
       onUpdate: 'cascade',
     }),
   type: quizType('type').default('TEXT'),

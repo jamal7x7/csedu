@@ -1,6 +1,6 @@
 {
-  "id": "d539e228-b900-4377-a3e0-709779c2926d",
-  "prevId": "4a9c9740-4181-48dd-b829-42991f908375",
+  "id": "240e1893-2f93-4428-8a6f-49929b18d5be",
+  "prevId": "ee733f9b-b5dd-48ed-afa7-ab74e5f8d57d",
   "version": "5",
   "dialect": "pg",
   "tables": {
@@ -18,7 +18,7 @@
           "name": "sectionId",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "type": {
           "name": "type",
@@ -65,7 +65,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "restrict",
+          "onDelete": "no action",
           "onUpdate": "cascade"
         }
       },
@@ -167,8 +167,7 @@
           "name": "unitId",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true,
-          "default": 1
+          "notNull": true
         },
         "title": {
           "name": "title",
@@ -231,7 +230,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "restrict",
+          "onDelete": "no action",
           "onUpdate": "cascade"
         }
       },
@@ -781,7 +780,7 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "'DD-MM-YYYY'"
+          "default": "'dd-mm-yyyy'"
         }
       },
       "indexes": {
@@ -811,6 +810,146 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
+    "SClass": {
+      "name": "SClass",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "level": {
+          "name": "level",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "classCode": {
+          "name": "classCode",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "schoolYearId": {
+          "name": "schoolYearId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "SClass_schoolYearId_SchoolYear_id_fk": {
+          "name": "SClass_schoolYearId_SchoolYear_id_fk",
+          "tableFrom": "SClass",
+          "tableTo": "SchoolYear",
+          "columnsFrom": [
+            "schoolYearId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "School": {
+      "name": "School",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "establishmentCode": {
+          "name": "establishmentCode",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "schoolName": {
+          "name": "schoolName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "academy": {
+          "name": "academy",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "delegation": {
+          "name": "delegation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "teachers": {
+          "name": "teachers",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "subjects": {
+          "name": "subjects",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "semester": {
+          "name": "semester",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "SchoolYear": {
+      "name": "SchoolYear",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "startDate": {
+          "name": "startDate",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "endDate": {
+          "name": "endDate",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "Student": {
       "name": "Student",
       "schema": "",
@@ -833,8 +972,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "StudentClassNumber": {
-          "name": "StudentClassNumber",
+        "studentClassNumber": {
+          "name": "studentClassNumber",
           "type": "integer",
           "primaryKey": false,
           "notNull": false
@@ -856,6 +995,12 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true
+        },
+        "sClassId": {
+          "name": "sClassId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {
@@ -870,6 +1015,13 @@
           "name": "Student_profileId_key",
           "columns": [
             "profileId"
+          ],
+          "isUnique": true
+        },
+        "Student_sClassId_key": {
+          "name": "Student_sClassId_key",
+          "columns": [
+            "sClassId"
           ],
           "isUnique": true
         }
@@ -887,8 +1039,43 @@
           ],
           "onDelete": "no action",
           "onUpdate": "cascade"
+        },
+        "Student_sClassId_SClass_id_fk": {
+          "name": "Student_sClassId_SClass_id_fk",
+          "tableFrom": "Student",
+          "tableTo": "SClass",
+          "columnsFrom": [
+            "sClassId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
         }
       },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "Subject": {
+      "name": "Subject",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "level": {
+          "name": "level",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -913,6 +1100,12 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true
+        },
+        "subjectId": {
+          "name": "subjectId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {
@@ -936,6 +1129,73 @@
             "id"
           ],
           "onDelete": "restrict",
+          "onUpdate": "cascade"
+        },
+        "Teacher_subjectId_Subject_id_fk": {
+          "name": "Teacher_subjectId_Subject_id_fk",
+          "tableFrom": "Teacher",
+          "tableTo": "Subject",
+          "columnsFrom": [
+            "subjectId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "Term": {
+      "name": "Term",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "schoolYearId": {
+          "name": "schoolYearId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "startDate": {
+          "name": "startDate",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "endDate": {
+          "name": "endDate",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "termNumber": {
+          "name": "termNumber",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "Term_schoolYearId_SchoolYear_id_fk": {
+          "name": "Term_schoolYearId_SchoolYear_id_fk",
+          "tableFrom": "Term",
+          "tableTo": "SchoolYear",
+          "columnsFrom": [
+            "schoolYearId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
           "onUpdate": "cascade"
         }
       },

@@ -38,7 +38,7 @@ import { addChapterAction } from '@/actions/chapterActions'
 import { Skeleton } from './ui/skeleton'
 import { H1, H3 } from './Typography/Typography'
 import ChapterLink from './ChapterLink'
-import { Chapter } from '@/db/schema/unit'
+import { Chapter } from '@/db/schema/units'
 
 const AddChapterLinkForm = ({
   allChapters,

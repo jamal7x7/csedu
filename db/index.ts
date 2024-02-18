@@ -3,13 +3,13 @@ import { migrate } from 'drizzle-orm/postgres-js/migrator'
 import postgres from 'postgres'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 
-import * as user from '@/db/schema/user'
-import * as unit from '@/db/schema/unit'
+import * as users from '@/db/schema/users'
+import * as units from '@/db/schema/units'
 import { DrizzleTypeError } from 'drizzle-orm'
 import { env } from 'process'
 // import { env } from '~/env.mjs'
 
-const schema = { ...user, ...unit }
+const schema = { ...users, ...units }
 const connectionString = process.env.DATABASE_URL || ''
 
 // for migrations

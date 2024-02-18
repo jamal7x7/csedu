@@ -55,7 +55,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { getUsersAction, pairSignUpAction } from '@/actions/signUpAction'
-import { User } from '@/db/schema/user'
+import { User } from '@/db/schema/users'
 import { z } from 'zod'
 import { PasswordInput } from '@/components/password-input'
 import { H2, H3, Muted } from '@/components/Typography/Typography'

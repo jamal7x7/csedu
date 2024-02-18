@@ -25,7 +25,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useEffect, useState } from 'react'
 import { getStudentsAction } from '@/actions/signUpAction'
-import { Student, User } from '@/db/schema/user'
+import { Student, User } from '@/db/schema/users'
 import { ScrollArea } from '@/components/ui/scroll-area'
 
 export function DrawerDialogPair() {

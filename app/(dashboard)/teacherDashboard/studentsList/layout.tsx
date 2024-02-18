@@ -25,7 +25,7 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
   const [onOff, setOnOff] = useCycle(false, true)
   return (
     // <ScrollArea>
-    <div className='  flex flex-col  p-12'>{children}</div>
+    <div className=' mt-20 flex flex-col  p-12 '>{children}</div>
     // <ScrollBar orientation='horizontal' />
     // </ScrollArea>
   )

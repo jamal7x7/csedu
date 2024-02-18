@@ -1,5 +1,5 @@
-'use client'
-import React from 'react'
+"use client";
+import React from "react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -8,21 +8,21 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu'
-import Link from 'next/link'
-import { DarkLightMode } from './darkLightMode'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
+} from "@/components/ui/navigation-menu";
+import Link from "next/link";
+import { DarkLightMode } from "./darkLightMode";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 const LoginLogout = () => {
   //   const session = await getServerSession(authOptions)
   return (
     <div>
-      {' '}
+      {" "}
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <Link href='/login' legacyBehavior passHref>
+            <Link href="/login" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Se Connecter
               </NavigationMenuLink>
@@ -30,11 +30,11 @@ const LoginLogout = () => {
           </NavigationMenuItem>
 
           <NavigationMenuItem>
-            <Link href='/addnewstudent' legacyBehavior passHref>
+            <Link href="/addnewstudent" legacyBehavior passHref>
               <NavigationMenuLink
                 className={
                   navigationMenuTriggerStyle() +
-                  'bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground'
+                  "bg-primary text-primary-foreground hover:bg-primary/90  hover:text-primary-foreground"
                 }
               >
                 S &apos;inscrire
@@ -44,11 +44,11 @@ const LoginLogout = () => {
 
           <NavigationMenuItem>
             {/* <Button onClick={() => signOut()}></Button> */}
-            <Link href='/login' legacyBehavior passHref>
+            <Link href="/login" legacyBehavior passHref>
               <NavigationMenuLink
                 className={
                   navigationMenuTriggerStyle() +
-                  'bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground'
+                  "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground"
                 }
               >
                 Logout
@@ -59,7 +59,7 @@ const LoginLogout = () => {
         </NavigationMenuList>
       </NavigationMenu>
     </div>
-  )
-}
+  );
+};
 
-export default LoginLogout
+export default LoginLogout;

@@ -2,7 +2,7 @@ import React, { Suspense } from 'react'
 
 import { Skeleton } from '@/components/ui/skeleton'
 import { Link } from '@nextui-org/react'
-import { Chapter } from '@/db/schema/unit'
+import { Chapter } from '@/db/schema/units'
 
 const ChapterLink = ({
   levelId,

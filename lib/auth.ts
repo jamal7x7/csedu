@@ -8,7 +8,7 @@ import { DrizzleAdapter } from '@auth/drizzle-adapter'
 // import db from './db'
 import { db } from '@/db'
 import { compare } from 'bcrypt'
-import { User, user } from '@/db/schema/user'
+import { User, user } from '@/db/schema/users'
 import { Adapter } from 'next-auth/adapters'
 
 export const authOptions: NextAuthOptions = {

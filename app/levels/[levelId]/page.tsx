@@ -13,7 +13,7 @@ import AddChapterLinkForm from '@/components/AddChapterLinkForm'
 import { Suspense } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
 import ChapterLink from '@/components/ChapterLink'
-import { chapter } from '@/db/schema/unit'
+import { chapter } from '@/db/schema/units'
 import { eq } from 'drizzle-orm'
 
 let levelTitles = [

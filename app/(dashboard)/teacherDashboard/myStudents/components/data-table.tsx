@@ -25,11 +25,15 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import { DataTablePagination } from '../components/data-table-pagination'
-import { DataTableToolbar } from '../components/data-table-toolbar'
+import { DataTablePagination } from './data-table-pagination'
+import { DataTableToolbar } from './data-table-toolbar'
 import DropZone, { DrawerDialogDropZone } from './DropZone'
 import { useMemo } from 'react'
-import { TStudentsGradesSchema } from '../data/schema'
+import {
+  TStudentsGradesSchema,
+  TStudentsGradesWithInfoSchema,
+} from '../data/schema'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -84,6 +88,7 @@ export function DataTable<TData, TValue>({
   return (
     <div className='space-y-4 mb-8'>
       {/* <DropZone setUpLoadedData={setUpLoadedData} /> */}
+
       <DataTableToolbar table={table} />
       {/* <div className='rounded-md border overflow-x-auto '> */}
       <Table className=' StickyHeader'>

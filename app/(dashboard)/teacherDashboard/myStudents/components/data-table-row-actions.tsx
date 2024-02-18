@@ -19,7 +19,11 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 import { labels } from '../data/data'
-import { studentsGradesSchema, taskSchema } from '../data/schema'
+import {
+  studentsGradesSchema,
+  studentsGradesWithInfoSchema,
+  taskSchema,
+} from '../data/schema'
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>

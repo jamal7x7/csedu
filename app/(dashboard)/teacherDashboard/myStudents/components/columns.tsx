@@ -6,7 +6,11 @@ import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 
 import { labels, priorities, statuses, assessments } from '../data/data'
-import { Task, TStudentsGradesSchema } from '../data/schema'
+import {
+  Task,
+  TStudentsGradesSchema,
+  TStudentsGradesWithInfoSchema,
+} from '../data/schema'
 import { DataTableColumnHeader } from './data-table-column-header'
 import { DataTableRowActions } from './data-table-row-actions'
 

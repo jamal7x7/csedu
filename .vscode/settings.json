@@ -1,6 +1,8 @@
 {
   "cSpell.words": [
     "addnewuser",
+    "Classe",
+    "Étudiants",
     "formdata",
     "jamal",
     "newmac",
@@ -8,8 +10,10 @@
     "onnotice",
     "postgres",
     "postgresql",
+    "prénom",
     "Tform",
-    "tuesday"
+    "tuesday",
+    "YESNO"
   ],
   "files.exclude": {
     ".eslintrc.json": true,
@@ -19,6 +23,11 @@
     "zArchives": true,
     "app/favicon.ico": true,
     "tailwind.config0.js": true,
-    "node_modules": true
+    "node_modules": true,
+    "drizzle098097": true,
+    "drizzle545446564": true,
+    "drizzle878797987": true,
+    "drizzle686788": true,
+    "drizzle7377294723": true
   }
 }

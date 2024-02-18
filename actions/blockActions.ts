@@ -2,13 +2,13 @@
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 
-import { Chapter, section, block } from '@/db/schema/unit'
+import { Chapter, section, block } from '@/db/schema/units'
 import { db } from '@/db'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { formBlockSchema, formSchema, TformSchema } from '@/lib/types'
+import { formBlockSchema } from '@/lib/types'
 import { useOptimistic } from 'react'
 
 import { and, count, eq } from 'drizzle-orm'

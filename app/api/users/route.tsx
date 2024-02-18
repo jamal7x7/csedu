@@ -4,7 +4,7 @@ import fs from 'fs'
 import { signUpSchema, TSignUpSchema } from '@/lib/types'
 import { ZodError } from 'zod'
 import { db } from '@/db'
-import { profile, student, user, User } from '@/db/schema/user'
+import { profile, student, user, User } from '@/db/schema/users'
 
 import { hash } from 'bcrypt'
 import { Placeholder, SQL } from 'drizzle-orm'

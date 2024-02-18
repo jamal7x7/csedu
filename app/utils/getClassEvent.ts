@@ -1,4 +1,4 @@
-import { sectionRelations } from '../../db/schema/unit'
+import { sectionRelations } from '../../db/schema/units'
 import { Temporal, Intl, toTemporalInstant } from '@js-temporal/polyfill'
 // Date.prototype.toTemporalInstant = toTemporalInstant
 import {
@@ -18,9 +18,9 @@ const classEvents: TEducationEvent[] = [
     type: 'official',
     eventSchedule: [
       {
-        dayOfWeek: 2,
+        dayOfWeek: 5,
         startTime: '09:00:00',
-        endTime: '10:00:00',
+        endTime: '18:00:00',
         repeatFrequency: 'P1W',
       },
     ],
@@ -199,7 +199,7 @@ const classEvents: TEducationEvent[] = [
     eventSchedule: [
       {
         dayOfWeek: 3,
-        startTime: '08:00:00',
+        startTime: '07:00:00',
         endTime: '09:00:00',
         repeatFrequency: 'P1W',
       },

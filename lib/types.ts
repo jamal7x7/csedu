@@ -1,6 +1,6 @@
 import * as z from 'zod'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
-import { chapter } from '@/db/schema/unit'
+import { chapter } from '@/db/schema/units'
 
 export const signUpSchema = z
   .object({

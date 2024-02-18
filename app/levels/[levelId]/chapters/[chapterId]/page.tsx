@@ -36,7 +36,7 @@ import AddBlockForm from '@/components/AddBlockForm'
 
 // import * as schema from '@/db/schema'
 // import { drizzle } from 'drizzle-orm/postgres-js'
-import { chapter } from '@/db/schema/unit'
+import { chapter } from '@/db/schema/units'
 import { db } from '@/db'
 import { eq, ne, isNull, and } from 'drizzle-orm'
 import { DoorClosed, GripVertical, Plus, X } from 'lucide-react'
