@@ -1,27 +1,27 @@
 import { promises as fs } from 'fs'
 import path from 'path'
+import { db } from '@/db'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import { z } from 'zod'
-import { db } from '@/db'
 
 import { columns } from './components/columns'
 import { DataTable } from './components/data-table'
 import { UserNav } from './components/user-nav'
 import {
-  taskSchema,
-  studentsGradesSchema,
   TStudentsGradesSchema,
   TStudentsGradesWithInfoSchema,
+  studentsGradesSchema,
+  taskSchema,
 } from './data/schema'
 
 import { addStudentsListfileAction } from '@/actions/fileActions'
 import { getUsersAction } from '@/actions/signUpAction'
-import { eq } from 'drizzle-orm'
-import { Suspense } from 'react'
-import { unstable_noStore as noStore } from 'next/cache'
-import { DrawerDialogDropZone } from './components/DropZone'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { eq } from 'drizzle-orm'
+import { unstable_noStore as noStore } from 'next/cache'
+import { Suspense } from 'react'
+import { DrawerDialogDropZone } from './components/DropZone'
 // import dynamic from 'next/dynamic'
 
 // export const dynamic = 'force-dynamic'
@@ -226,9 +226,10 @@ export default async function TaskPage() {
   // const list = await getTasks()
 
   const students: TStudentsGradesSchema[] = await getStudentsList()
+  console.log('🚀 ~ students:', students)
   const studentsWithInfo: TStudentsGradesWithInfoSchema[] =
     await getStudentsWithInfoList()
-  // console.log('🚀 ~ TaskPage ~ studentsWithInfo:', studentsWithInfo)
+  console.log('🚀 ~ TaskPage ~ studentsWithInfo:', studentsWithInfo)
   const l = studentsWithInfo?.map((s) => s.studentsGradesTable)
 
   return (
@@ -275,12 +276,13 @@ export default async function TaskPage() {
           >
             <TabsList className='w-full justify-start sticky top-2 z-10'>
               <TabsTrigger value='all'>All</TabsTrigger>
-              {studentsWithInfo &&
-                studentsWithInfo.map((d, i) => (
-                  <TabsTrigger key={'tab_' + i} value={d.classCode ?? 'all'}>
-                    {d.classCode}
-                  </TabsTrigger>
-                ))}
+              {/* {[{ classCode: '2APIC3' }].map((d) => ( */}
+
+              {l.map((d) => (
+                <TabsTrigger key={d.classCode} value={d.classCode ?? 'all'}>
+                  {d.classCode}
+                </TabsTrigger>
+              ))}
             </TabsList>
 
             <TabsContent className='p-1 w-full' value={'all'}>

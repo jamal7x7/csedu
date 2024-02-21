@@ -15,6 +15,13 @@
       "when": 1708278518470,
       "tag": "0001_modern_mauler",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1708504445802,
+      "tag": "0002_tranquil_sabretooth",
+      "breakpoints": true
     }
   ]
 }
