@@ -120,10 +120,10 @@ export const addStudentsListfileAction = async (data: any[]) => {
 
 	let zodErrors = {}
 	if (!validatedFields.success) {
-		validatedFields.error.issues.forEach((issue) => {
+		for (const issue of validatedFields.error.issues) {
 			zodErrors = { ...zodErrors, [issue.path[0]]: issue.message }
 			console.log(zodErrors)
-		})
+		}
 
 		// return values
 		return { error: "error with fields" }
@@ -214,6 +214,7 @@ export const addStudentsListfileAction = async (data: any[]) => {
 						| SQL<unknown>
 						| Placeholder<string, any>,
 					classCode: classCode,
+					level: Number(classCode?.at(0)),
 				})
 				.returning()
 

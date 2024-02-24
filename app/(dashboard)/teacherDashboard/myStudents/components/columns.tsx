@@ -5,11 +5,11 @@ import { ColumnDef } from '@tanstack/react-table'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 
-import { labels, priorities, statuses, assessments } from '../data/data'
+import { assessments, labels, priorities, statuses } from '../data/data'
 import {
-  Task,
   TStudentsGradesSchema,
   TStudentsGradesWithInfoSchema,
+  Task,
 } from '../data/schema'
 import { DataTableColumnHeader } from './data-table-column-header'
 import { DataTableRowActions } from './data-table-row-actions'
@@ -50,7 +50,7 @@ export const columns: ColumnDef<TStudentsGradesSchema>[] = [
     id: 'studentClassNumber',
     accessorKey: 'studentClassNumber',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Numéro' />
+      <DataTableColumnHeader column={column} title='N°' />
     ),
     cell: ({ row }) => {
       return (
@@ -73,10 +73,10 @@ export const columns: ColumnDef<TStudentsGradesSchema>[] = [
 
       return (
         <div className='flex space-x-2'>
-          {label?.label == 'excellent' && (
+          {label?.label === 'excellent' && (
             <Badge variant={'success'}>{label.label}</Badge>
           )}
-          {label?.label == 'low' && (
+          {label?.label === 'low' && (
             <Badge variant={'destructive'}>{label.label}</Badge>
           )}
           <span className='max-w-[500px] truncate font-medium'>

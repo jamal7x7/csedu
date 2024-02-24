@@ -1,6 +1,5 @@
 'use client'
 
-import * as React from 'react'
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -15,6 +14,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import * as React from 'react'
 
 import {
   Table,
@@ -25,15 +25,15 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import { DataTablePagination } from './data-table-pagination'
-import { DataTableToolbar } from './data-table-toolbar'
-import DropZone, { DrawerDialogDropZone } from './DropZone'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useMemo } from 'react'
 import {
   TStudentsGradesSchema,
   TStudentsGradesWithInfoSchema,
 } from '../data/schema'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import DropZone, { DrawerDialogDropZone } from './DropZone'
+import { DataTablePagination } from './data-table-pagination'
+import { DataTableToolbar } from './data-table-toolbar'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -86,13 +86,13 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div className='space-y-4 mb-8'>
+    <div className='space-y-4 mb-8  '>
       {/* <DropZone setUpLoadedData={setUpLoadedData} /> */}
 
       <DataTableToolbar table={table} />
       {/* <div className='rounded-md border overflow-x-auto '> */}
       <Table className=' StickyHeader'>
-        <TableHeader className='    '>
+        <TableHeader className='  '>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow
               key={headerGroup.id}
@@ -106,7 +106,7 @@ export function DataTable<TData, TValue>({
                   // >
                   <TableHead
                     // className='border-[1px] border-muted-foreground/15 [&:has([role=checkbox])]:!pr-4  bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/70 drop-shadow-[0_10px_10px_rgba(0,0,0,1)] '
-                    className='border-[1px] border-muted-foreground/15 [&:has([role=checkbox])]:!pr-4  bg-background backdrop-blur supports-[backdrop-filter]:bg-background/90  drop-shadow-[0_1px_1px_rgba(0,0,0,0.15)] dark:drop-shadow-[0_1px_1px_rgba(200,200,200,0.15)]'
+                    className='border-[1px] border-muted-foreground/15 [&:has([role=checkbox])]:!pr-4  bg-background backdrop-blur supports-[backdrop-filter]:bg-background/90  drop-shadow-[0_2px_2px_rgba(0,0,0,0.15)] dark:drop-shadow-[0_2px_2px_rgba(200,200,200,0.15)]'
                     key={header.id}
                     colSpan={header.colSpan}
                   >

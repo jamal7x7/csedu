@@ -89,7 +89,7 @@ export const assessments = [
     label: 'High',
     value: 'high',
     start: 14,
-    end: 20,
+    end: 21,
     icon: ArrowUpIcon,
   },
 ]

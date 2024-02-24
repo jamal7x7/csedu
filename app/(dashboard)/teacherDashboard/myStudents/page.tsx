@@ -164,6 +164,90 @@ async function getStudentsWithInfoList() {
   return infoList
 }
 
+async function getClasses() {
+  noStore()
+  const classes = await db.query.sClass.findMany({})
+
+  return classes
+}
+
+async function getStudents() {
+  noStore()
+  const classes = await db.query.sClass.findMany({
+    // where: (sClass, { eq }) => eq(sClass.classCode, classCode),
+    with: {
+      students: {
+        with: {
+          profile: {
+            with: {
+              user: true,
+            },
+          },
+          grade: {
+            with: {
+              tests: {
+                with: {
+                  test: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  })
+
+  const infoList: TStudentsGradesWithInfoSchema[] = classes?.map(
+    (c) =>
+      ({
+        id: c?.id?.toString() ?? '0',
+        classCode: c.classCode ?? '---',
+        level: c.level ?? '---',
+        // title: '',
+        // academyYear: '',
+        // establishmentCode: '',
+        // schoolName: '',
+        // academy: '',
+        // delegation: '',
+        // teacherName: '',
+        // subject: '',
+        // semester: '',
+        // studentsGradesTableHeader: [''],
+        studentsGradesTable: c?.students
+          ?.map(
+            (s) =>
+              ({
+                id: s.profile?.user?.id?.toString() ?? '',
+                studentName: s.profile?.user?.firstName ?? '',
+                classCode: s.classCode ?? '',
+                birthDate: s.profile?.birthDate ?? '',
+                studentClassNumber: s?.studentClassNumber ?? 0,
+                studentMassarNumber: s?.massarNumber ?? '',
+                test1: s?.grade?.tests?.[0]?.test?.grade ?? 0,
+                test2: s?.grade?.tests?.[1]?.test?.grade ?? 0,
+                test3: s?.grade?.tests?.[2]?.test?.grade ?? 0,
+                integratedActivities: s?.grade?.tests?.[3]?.test?.grade ?? 0,
+                label: 'test',
+              } as TStudentsGradesSchema)
+          )
+          .toSorted((a, b) => {
+            if (
+              a.studentClassNumber === undefined ||
+              b.studentClassNumber === undefined
+            ) {
+              return 0
+            }
+
+            return a.studentClassNumber - b.studentClassNumber
+          }),
+      } as TStudentsGradesWithInfoSchema)
+  )
+
+  console.log('🚀 ~ getStudentsWithInfoList ~ l:', infoList)
+
+  return infoList
+}
+
 // database read for Users .
 
 async function getStudentsList2() {
@@ -225,31 +309,21 @@ async function getTasks() {
 export default async function TaskPage() {
   // const list = await getTasks()
 
-  const students: TStudentsGradesSchema[] = await getStudentsList()
-  console.log('🚀 ~ students:', students)
+  const Classes = await getClasses()
+
+  const students = await getStudents()
+
   const studentsWithInfo: TStudentsGradesWithInfoSchema[] =
     await getStudentsWithInfoList()
-  console.log('🚀 ~ TaskPage ~ studentsWithInfo:', studentsWithInfo)
-  const l = studentsWithInfo?.map((s) => s.studentsGradesTable)
+
+  const AllStudentsList = students?.flatMap((s) => s.studentsGradesTable)
+  const studentsOfClassList = (c: string) =>
+    students
+      ?.filter((si) => si.classCode === c)
+      .flatMap((s) => s.studentsGradesTable)
 
   return (
     <>
-      {/* <div className='md:hidden'>
-        <Image
-          src='/examples/tasks-light.png'
-          width={1280}
-          height={998}
-          alt='Playground'
-          className='block dark:hidden'
-        />
-        <Image
-          src='/examples/tasks-dark.png'
-          width={1280}
-          height={998}
-          alt='Playground'
-          className='hidden dark:block'
-        />
-      </div> */}
       <div
         // className='h-full p-8'
         className='flex-col flex-1 hidden mb-8 space-y-8 md:flex'
@@ -257,10 +331,10 @@ export default async function TaskPage() {
         <div className='flex items-center justify-between space-y-2'>
           <div>
             <h2 className='text-2xl font-bold tracking-tight'>
-              List des Étudiants
+              Liste des élèves
             </h2>
             <p className='text-muted-foreground'>
-              Voici la List de vos étudiants
+              Voici la Liste de vos élèves
             </p>
           </div>
           <div className='flex items-center space-x-2'>
@@ -270,29 +344,66 @@ export default async function TaskPage() {
         </div>
         {/* {list.map((dl, i) => ( */}
         <Suspense fallback={'wait...'}>
-          <Tabs
-            className='flex flex-col gap-2 items-start'
-            defaultValue='students'
-          >
-            <TabsList className='w-full justify-start sticky top-2 z-10'>
-              <TabsTrigger value='all'>All</TabsTrigger>
-              {/* {[{ classCode: '2APIC3' }].map((d) => ( */}
+          <div className='w-full '>
+            <Tabs
+              className='flex flex-col gap-8 items-start '
+              defaultValue='all'
+            >
+              {/* <TabsList className='w-full justify-start sticky top-0 z-20'> */}
+              <TabsList className='h-12 border-muted  inline-flex items-center text-muted-foreground w-full justify-start rounded-none border-b bg-transparent p-0'>
+                <div className='flex items-center justify-between w-full '>
+                  <div>
+                    <TabsTrigger
+                      className='h-12  inline-flex items-center justify-center whitespace-nowrap py-1 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background relative rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none '
+                      value='all'
+                    >
+                      Tous
+                    </TabsTrigger>
+                    {/* {[{ classCode: '2APIC3' }].map((d) => ( */}
 
-              {l.map((d) => (
-                <TabsTrigger key={d.classCode} value={d.classCode ?? 'all'}>
-                  {d.classCode}
-                </TabsTrigger>
+                    {Classes.toSorted((a, b) => {
+                      if (a.classCode < b.classCode) {
+                        return -1
+                      }
+                      if (a.classCode > b.classCode) {
+                        return 1
+                      }
+                      return 0
+                    }).map((d) => (
+                      <TabsTrigger
+                        className='h-12  inline-flex items-center justify-center whitespace-nowrap py-1 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background relative rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none'
+                        key={d.classCode}
+                        value={d.classCode ?? ''}
+                      >
+                        {d.classCode &&
+                          `${
+                            d.classCode[0] + (d.classCode[4] === 'G' ? 'G' : '')
+                          }/${d.classCode[6]}`}
+                      </TabsTrigger>
+                    ))}
+                  </div>
+                  <DrawerDialogDropZone />
+                </div>
+              </TabsList>
+
+              <TabsContent className='p-1 w-full' value={'all'}>
+                <DataTable data={AllStudentsList} columns={columns} />
+              </TabsContent>
+
+              {Classes.map((d) => (
+                <TabsContent
+                  className='p-1 w-full'
+                  value={d.classCode ?? ''}
+                  key={d.classCode}
+                >
+                  <DataTable
+                    data={d?.classCode && studentsOfClassList(d?.classCode)}
+                    columns={columns}
+                  />
+                </TabsContent>
               ))}
-            </TabsList>
-
-            <TabsContent className='p-1 w-full' value={'all'}>
-              <DataTable
-                // key={i}
-                data={students}
-                columns={columns}
-              />
-            </TabsContent>
-          </Tabs>
+            </Tabs>
+          </div>
         </Suspense>
         {/* ))} */}
       </div>

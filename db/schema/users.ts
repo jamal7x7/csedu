@@ -228,8 +228,13 @@ export const student = pgTable(
 		}
 	},
 )
+// رقم التلميذ	النسب بالفرنسية	الإسم بالفرنسية	النسب بالعربية	الإسم بالعربية	الجنس	تاريخ الإزدياد	مكان الإزدياد بالعربية	مكان الإزدياد بالفرنسية	العنوان	رقم الهاتف	شركة الهاتف
 
 export const studentRelations = relations(student, ({ one }) => ({
+	profile: one(profile, {
+		fields: [student.profileId],
+		references: [profile.id],
+	}),
 	grade: one(grade, {
 		fields: [student.id],
 		references: [grade.studentId],
@@ -338,6 +343,7 @@ export const teacher = pgTable(
 				// onDelete: 'restrict',
 				onUpdate: "cascade",
 			}),
+		//PPR	Nom et Prénom	Sexe	CIN	Date de naissance	Fonction	Date recrutement	Fiche enseignant
 	},
 	(table) => {
 		return {

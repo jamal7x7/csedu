@@ -1,5 +1,6 @@
 'use client'
 import { Muted, Small } from '@/components/Typography/Typography'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
@@ -19,7 +20,6 @@ import {
   TStudentsGradesSchema,
   TStudentsGradesWithInfoSchema,
 } from '../data/schema'
-import { Button } from '@/components/ui/button'
 
 import { useMediaQuery } from '@/hooks/use-media-query'
 
@@ -44,11 +44,11 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
+import { deleteAllTitleAction } from '@/actions/actions'
 import {
   addStudentsListfileAction,
   deleteStudentsListfileAction,
 } from '@/actions/fileActions'
-import { deleteAllTitleAction } from '@/actions/actions'
 
 const variants = {
   hidden: { opacity: 0, x: 100, y: 20 },
@@ -340,10 +340,11 @@ export function DrawerDialogDropZone() {
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
+        {/* <Small>Ajouter des élèves</Small> */}
         <DialogTrigger asChild>
-          <Button variant='default' className='h-8 px-2 lg:px-3'>
+          <Button variant='ghost' className=' px-2 lg:px-3'>
             <PlusIcon className=' h-4 w-4' />
-            Ajouter des étudiants
+            {/* Ajouter des étudiants */}
           </Button>
           {/* <Button variant='outline' className='flex items-center gap-2'>
             {' '}
