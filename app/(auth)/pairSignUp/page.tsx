@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useEffect, useMemo, useState, useTransition } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import React, { useEffect, useMemo, useState, useTransition } from 'react'
 
 import { ToastAction } from '@/components/ui/toast'
 import { useToast } from '@/components/ui/use-toast'
@@ -18,8 +18,6 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { UseFormReturn, useForm } from 'react-hook-form'
 import {
   TLoginSchema,
   TPairSignInSchema,
@@ -27,21 +25,26 @@ import {
   loginSchema,
   pairSignInSchema,
 } from '@/lib/types'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { UseFormReturn, useForm } from 'react-hook-form'
 
-import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { loginAction, pairSignInAction } from '@/actions/loginAction'
 import FormError from '@/components/form-error'
 import FormSuccuss from '@/components/form-success'
-import { loginAction, pairSignInAction } from '@/actions/loginAction'
+import { signIn } from 'next-auth/react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import { DrawerDialogPair } from './DrawDialogPair'
 
 import { Check, ChevronsUpDown } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
-import { Temporal, Intl } from '@js-temporal/polyfill'
+import { Intl, Temporal } from '@js-temporal/polyfill'
 
+import { getUsersAction, pairSignUpAction } from '@/actions/signUpAction'
+import { H2, H3, Muted } from '@/components/Typography/Typography'
+import { PasswordInput } from '@/components/password-input'
 import {
   Command,
   CommandEmpty,
@@ -54,11 +57,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { getUsersAction, pairSignUpAction } from '@/actions/signUpAction'
 import { User } from '@/db/schema/users'
 import { z } from 'zod'
-import { PasswordInput } from '@/components/password-input'
-import { H2, H3, Muted } from '@/components/Typography/Typography'
 
 import { getTemporalClassEvent } from '@/app/utils/getClassEvent'
 import { TEducationEvent } from '@/types'
@@ -83,11 +83,10 @@ const PairSignInForm = async () => {
   const cCode = useMemo(() => {
     const now = Temporal.Now.plainDateTimeISO()
     const x = getTemporalClassEvent(now)
-    // console.log('🚀 ~ cCode ~ x:', x)
 
     setClassCode(x)
     return x
-  }, [classCode])
+  }, [])
 
   useEffect(() => {
     // const now = Temporal.Now.plainDateTimeISO()
@@ -99,7 +98,7 @@ const PairSignInForm = async () => {
     // }
     // updateViews()
     // setClassCode(cCode)
-  }, [classCode])
+  }, [])
 
   // 2. Define a submit handler.
   const onSubmit = async (data: TPairSignUpSchema) => {
@@ -271,7 +270,7 @@ export function Combobox({
 
     updateViews()
     // // // // console.log('🚀 ~ DrawerDialogPair ~ studentsList:', studentsList)
-  }, [])
+  }, [classCode])
 
   return (
     <FormField
@@ -280,7 +279,7 @@ export function Combobox({
       render={({ field }) => (
         <FormItem>
           <FormLabel htmlFor={pairname}>
-            {pairname == 'pair1' ? 'Binôme 1' : 'Binôme 2'}
+            {pairname === 'pair1' ? 'Binôme 1' : 'Binôme 2'}
           </FormLabel>
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>

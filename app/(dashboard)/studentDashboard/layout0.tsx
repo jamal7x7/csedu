@@ -2,12 +2,12 @@
 // import { Metadata } from 'next'
 import Image from 'next/image'
 
-import { Separator } from '@/components/ui/separator'
-import { SidebarNav } from '@/components/sidebar-nav'
 import { showSidebar } from '@/app/utils/adminEditSwitchAtom'
-import { useAtom } from 'jotai'
 import { SidebarToggle } from '@/components/SidebarToggle'
+import { SidebarNav } from '@/components/sidebar-nav'
+import { Separator } from '@/components/ui/separator'
 import { AnimatePresence, motion, useCycle } from 'framer-motion'
+import { useAtom } from 'jotai'
 
 // export const metadata: Metadata = {
 //   title: 'Teacher Dashboard',
@@ -122,7 +122,7 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
           }}
           transition={{ type: 'tween', stiffness: 100, duration: 0.2 }}
           layout
-          className='col-span-2 flex justify-center items-center w-full'
+          className='col-span-2 flex  justify-center items-center w-full'
         >
           {children}
         </motion.div>
@@ -134,4 +134,15 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
       {/* </div> */}
     </>
   )
+}
+
+
+function Small({ children }: { children: React.ReactNode }) {
+  const xl1 = useCycle(0, 1,  2, 3, 4, 5, 6, 7, 8) 
+  for (let i = 0; i < 10; i++) { 
+    
+  }
+  for (let i = 0; i < 10; i++) {}
+  //let l1 = 123456789012345
+  //hello there?  
 }

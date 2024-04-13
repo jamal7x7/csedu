@@ -8,12 +8,8 @@ import getServerSideProps from '@/components/client-info'
 
 import { ModeToggle } from '@/components/modeToggle'
 
-import { Resume } from './resume/page'
-import { Separator } from '@/components/ui/separator'
 import Quiz from '@/app/quiz/page'
-import { Def, DefContent } from '@/components/chapterBlocks/Def'
-import ChapterTitle from '@/components/chapterBlocks/ChapterTitle'
-import Intro from '@/components/chapterBlocks/Intro'
+import AddBlockForm from '@/components/AddBlockForm'
 import {
   H1,
   H2,
@@ -23,22 +19,26 @@ import {
   Muted,
   P,
 } from '@/components/Typography/Typography'
-import Figure from '@/components/chapterBlocks/Figure'
+import ChapterTitle from '@/components/chapterBlocks/ChapterTitle'
+import { Def, DefContent } from '@/components/chapterBlocks/Def'
 import { Exemple, ExempleContent } from '@/components/chapterBlocks/Exemple'
-import StepperClickableSteps from '@/components/chapterBlocks/steps'
+import Figure from '@/components/chapterBlocks/Figure'
+import Intro from '@/components/chapterBlocks/Intro'
 import NumberedSteps, {
   NumStepItem,
   NumSteps,
 } from '@/components/chapterBlocks/numbered-steps'
-import { db as olddb } from '@/lib/db'
+import StepperClickableSteps from '@/components/chapterBlocks/steps'
 import Toc from '@/components/toc'
-import AddBlockForm from '@/components/AddBlockForm'
+import { Separator } from '@/components/ui/separator'
+import { db as olddb } from '@/lib/db'
+import { Resume } from './resume/page'
 
+import { db } from '@/db'
 // import * as schema from '@/db/schema'
 // import { drizzle } from 'drizzle-orm/postgres-js'
 import { chapter } from '@/db/schema/units'
-import { db } from '@/db'
-import { eq, ne, isNull, and } from 'drizzle-orm'
+import { and, eq, isNull, ne } from 'drizzle-orm'
 import { DoorClosed, GripVertical, Plus, X } from 'lucide-react'
 
 // const ddb = drizzle(user, { schema })
@@ -425,7 +425,7 @@ export default async function Page({
         <ChapterTitle
           chapterNumber={chapterTitle?.order}
           chapterTitle={chapterTitle?.title}
-        ></ChapterTitle>
+        />
         {/* <pre>{JSON.stringify(res, null, 2)}</pre> */}
         {/* {chapterTitle.map((r) => (
           <pre>{JSON.stringify(r, null, 4)}</pre>

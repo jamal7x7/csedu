@@ -1,324 +1,324 @@
-import { sectionRelations } from '../../db/schema/units'
-import { Temporal, Intl, toTemporalInstant } from '@js-temporal/polyfill'
 // Date.prototype.toTemporalInstant = toTemporalInstant
 import {
-  TEducationEvent,
-  TEducationEventType,
-  TPeriodicEventSchedule,
-  TClassCode,
-} from '@/types'
+	TClassCode,
+	TEducationEvent,
+	TEducationEventType,
+	TPeriodicEventSchedule,
+} from "@/types"
+import { Intl, Temporal, toTemporalInstant } from "@js-temporal/polyfill"
+import { sectionRelations } from "../../db/schema/units"
 
 //A CS class runs throughout 2024. The class occurs weekly, every Wednesday at 7pm.
 
 const classEvents: TEducationEvent[] = [
-  {
-    id: '1APIC-1',
-    name: '1APIC-1',
-    description: 'Description for 1APIC-1',
-    type: 'official',
-    eventSchedule: [
-      {
-        dayOfWeek: 5,
-        startTime: '09:00:00',
-        endTime: '18:00:00',
-        repeatFrequency: 'P1W',
-      },
-    ],
-    startDate: '2023-01-04',
-    endDate: '2024-12-25',
-    color: '#000000',
-    textColor: '#FFFFFF',
-  },
-  {
-    id: '1APIC2',
-    name: '1APIC2',
-    description: 'Description for Class-2',
-    type: 'supplementary',
-    eventSchedule: [
-      {
-        dayOfWeek: 3,
-        startTime: '19:00:00',
-        endTime: '20:00:00',
-        repeatFrequency: 'P1W',
-      },
-    ],
-    startDate: '2023-01-04',
-    endDate: '2024-12-25',
-    color: '#000000',
-    textColor: '#FFFFFF',
-  },
-  {
-    id: '1APIC3',
-    name: '1APIC3',
-    description: 'Description for Class-3',
-    type: 'official',
-    eventSchedule: [
-      {
-        dayOfWeek: 3,
-        startTime: '19:00:00',
-        endTime: '20:00:00',
-        repeatFrequency: 'P1W',
-      },
-    ],
-    startDate: '2023-01-04',
-    endDate: '2024-12-25',
-    color: '#000000',
-    textColor: '#FFFFFF',
-  },
-  {
-    id: '1APIC4',
-    name: '1APIC4',
-    description: 'Description for Class-4',
-    type: 'supplementary',
-    eventSchedule: [
-      {
-        dayOfWeek: 3,
-        startTime: '19:00:00',
-        endTime: '20:00:00',
-        repeatFrequency: 'P1W',
-      },
-    ],
-    startDate: '2023-01-04',
-    endDate: '2024-12-25',
-    color: '#000000',
-    textColor: '#FFFFFF',
-  },
-  {
-    id: '1APIC5',
-    name: '1APIC5',
-    description: 'Description for Class-5',
-    type: 'official',
-    eventSchedule: [
-      {
-        dayOfWeek: 3,
-        startTime: '19:00:00',
-        endTime: '20:00:00',
-        repeatFrequency: 'P1W',
-      },
-    ],
-    startDate: '2023-01-04',
-    endDate: '2024-12-25',
-    color: '#000000',
-    textColor: '#FFFFFF',
-  },
-  {
-    id: '2APIC-1',
-    name: '2APIC-1',
-    description: 'Description for Class-6',
-    type: 'supplementary',
-    eventSchedule: [
-      {
-        dayOfWeek: 2,
-        startTime: '16:30:00',
-        endTime: '17:30:00',
-        repeatFrequency: 'P1W',
-      },
-    ],
-    startDate: '2023-01-04',
-    endDate: '2024-12-25',
-    color: '#000000',
-    textColor: '#FFFFFF',
-  },
-  {
-    id: '2APIC2',
-    name: '2APIC2',
-    description: 'Description for Class-7',
-    type: 'official',
-    eventSchedule: [
-      {
-        dayOfWeek: 3,
-        startTime: '19:00:00',
-        endTime: '20:00:00',
-        repeatFrequency: 'P1W',
-      },
-    ],
-    startDate: '2023-01-04',
-    endDate: '2024-12-25',
-    color: '#000000',
-    textColor: '#FFFFFF',
-  },
-  {
-    id: '2APIC3',
-    name: '2APIC3',
-    description: 'Description for Class-8',
-    type: 'supplementary',
-    eventSchedule: [
-      {
-        dayOfWeek: 3,
-        startTime: '19:00:00',
-        endTime: '20:00:00',
-        repeatFrequency: 'P1W',
-      },
-    ],
-    startDate: '2023-01-04',
-    endDate: '2024-12-25',
-    color: '#000000',
-    textColor: '#FFFFFF',
-  },
-  {
-    id: '2APIC-4',
-    name: '2APIC-4',
-    description: 'Description for Class-9',
-    type: 'official',
-    eventSchedule: [
-      {
-        dayOfWeek: 2,
-        startTime: '15:30:00',
-        endTime: '16:30:00',
-        repeatFrequency: 'P1W',
-      },
-    ],
-    startDate: '2023-01-04',
-    endDate: '2024-12-25',
-    color: '#000000',
-    textColor: '#FFFFFF',
-  },
-  {
-    id: '2APIC5',
-    name: '2APIC5',
-    description: 'Description for Class-10',
-    type: 'supplementary',
-    eventSchedule: [
-      {
-        dayOfWeek: 3,
-        startTime: '19:00:00',
-        endTime: '20:00:00',
-        repeatFrequency: 'P1W',
-      },
-    ],
-    startDate: '2023-01-04',
-    endDate: '2024-12-25',
-    color: '#000000',
-    textColor: '#FFFFFF',
-  },
-  {
-    id: '3APIC-1',
-    name: '3APIC-1',
-    description: 'Description for Class-10',
-    type: 'supplementary',
-    eventSchedule: [
-      {
-        dayOfWeek: 3,
-        startTime: '07:00:00',
-        endTime: '09:00:00',
-        repeatFrequency: 'P1W',
-      },
-    ],
-    startDate: '2023-01-04',
-    endDate: '2024-12-25',
-    color: '#000000',
-    textColor: '#FFFFFF',
-  },
-  {
-    id: '3APIC2',
-    name: '3APIC2',
-    description: 'Description for Class-10',
-    type: 'supplementary',
-    eventSchedule: [
-      {
-        dayOfWeek: 3,
-        startTime: '19:00:00',
-        endTime: '20:00:00',
-        repeatFrequency: 'P1W',
-      },
-    ],
-    startDate: '2023-01-04',
-    endDate: '2024-12-25',
-    color: '#000000',
-    textColor: '#FFFFFF',
-  },
-  {
-    id: '3APIC3',
-    name: '3APIC3',
-    description: 'Description for Class-10',
-    type: 'supplementary',
-    eventSchedule: [
-      {
-        dayOfWeek: 3,
-        startTime: '19:00:00',
-        endTime: '20:00:00',
-        repeatFrequency: 'P1W',
-      },
-    ],
-    startDate: '2023-01-04',
-    endDate: '2024-12-25',
-    color: '#000000',
-    textColor: '#FFFFFF',
-  },
-  {
-    id: '3ASG1',
-    name: '3ASG1',
-    description: 'Description for Class-10',
-    type: 'supplementary',
-    eventSchedule: [
-      {
-        dayOfWeek: 3,
-        startTime: '19:00:00',
-        endTime: '20:00:00',
-        repeatFrequency: 'P1W',
-      },
-    ],
-    startDate: '2023-01-04',
-    endDate: '2024-12-25',
-    color: '#000000',
-    textColor: '#FFFFFF',
-  },
-  {
-    id: '3ASG2',
-    name: '3ASG2',
-    description: 'Description for Class-10',
-    type: 'supplementary',
-    eventSchedule: [
-      {
-        dayOfWeek: 3,
-        startTime: '19:00:00',
-        endTime: '20:00:00',
-        repeatFrequency: 'P1W',
-      },
-    ],
-    startDate: '2023-01-04',
-    endDate: '2024-12-25',
-    color: '#000000',
-    textColor: '#FFFFFF',
-  },
+	{
+		id: "1APIC-1",
+		name: "1APIC-1",
+		description: "Description for 1APIC-1",
+		type: "official",
+		eventSchedule: [
+			{
+				dayOfWeek: 2,
+				startTime: "07:00:00",
+				endTime: "18:00:00",
+				repeatFrequency: "P1W",
+			},
+		],
+		startDate: "2023-01-04",
+		endDate: "2024-12-25",
+		color: "#000000",
+		textColor: "#FFFFFF",
+	},
+	{
+		id: "1APIC2",
+		name: "1APIC2",
+		description: "Description for Class-2",
+		type: "supplementary",
+		eventSchedule: [
+			{
+				dayOfWeek: 3,
+				startTime: "19:00:00",
+				endTime: "20:00:00",
+				repeatFrequency: "P1W",
+			},
+		],
+		startDate: "2023-01-04",
+		endDate: "2024-12-25",
+		color: "#000000",
+		textColor: "#FFFFFF",
+	},
+	{
+		id: "1APIC3",
+		name: "1APIC3",
+		description: "Description for Class-3",
+		type: "official",
+		eventSchedule: [
+			{
+				dayOfWeek: 3,
+				startTime: "19:00:00",
+				endTime: "20:00:00",
+				repeatFrequency: "P1W",
+			},
+		],
+		startDate: "2023-01-04",
+		endDate: "2024-12-25",
+		color: "#000000",
+		textColor: "#FFFFFF",
+	},
+	{
+		id: "1APIC4",
+		name: "1APIC4",
+		description: "Description for Class-4",
+		type: "supplementary",
+		eventSchedule: [
+			{
+				dayOfWeek: 3,
+				startTime: "19:00:00",
+				endTime: "20:00:00",
+				repeatFrequency: "P1W",
+			},
+		],
+		startDate: "2023-01-04",
+		endDate: "2024-12-25",
+		color: "#000000",
+		textColor: "#FFFFFF",
+	},
+	{
+		id: "1APIC5",
+		name: "1APIC5",
+		description: "Description for Class-5",
+		type: "official",
+		eventSchedule: [
+			{
+				dayOfWeek: 3,
+				startTime: "19:00:00",
+				endTime: "20:00:00",
+				repeatFrequency: "P1W",
+			},
+		],
+		startDate: "2023-01-04",
+		endDate: "2024-12-25",
+		color: "#000000",
+		textColor: "#FFFFFF",
+	},
+	{
+		id: "2APIC-1",
+		name: "2APIC-1",
+		description: "Description for Class-6",
+		type: "supplementary",
+		eventSchedule: [
+			{
+				dayOfWeek: 2,
+				startTime: "16:30:00",
+				endTime: "17:30:00",
+				repeatFrequency: "P1W",
+			},
+		],
+		startDate: "2023-01-04",
+		endDate: "2024-12-25",
+		color: "#000000",
+		textColor: "#FFFFFF",
+	},
+	{
+		id: "2APIC2",
+		name: "2APIC2",
+		description: "Description for Class-7",
+		type: "official",
+		eventSchedule: [
+			{
+				dayOfWeek: 3,
+				startTime: "19:00:00",
+				endTime: "20:00:00",
+				repeatFrequency: "P1W",
+			},
+		],
+		startDate: "2023-01-04",
+		endDate: "2024-12-25",
+		color: "#000000",
+		textColor: "#FFFFFF",
+	},
+	{
+		id: "2APIC3",
+		name: "2APIC3",
+		description: "Description for Class-8",
+		type: "supplementary",
+		eventSchedule: [
+			{
+				dayOfWeek: 3,
+				startTime: "19:00:00",
+				endTime: "20:00:00",
+				repeatFrequency: "P1W",
+			},
+		],
+		startDate: "2023-01-04",
+		endDate: "2024-12-25",
+		color: "#000000",
+		textColor: "#FFFFFF",
+	},
+	{
+		id: "2APIC-4",
+		name: "2APIC-4",
+		description: "Description for Class-9",
+		type: "official",
+		eventSchedule: [
+			{
+				dayOfWeek: 2,
+				startTime: "15:30:00",
+				endTime: "16:30:00",
+				repeatFrequency: "P1W",
+			},
+		],
+		startDate: "2023-01-04",
+		endDate: "2024-12-25",
+		color: "#000000",
+		textColor: "#FFFFFF",
+	},
+	{
+		id: "2APIC5",
+		name: "2APIC5",
+		description: "Description for Class-10",
+		type: "supplementary",
+		eventSchedule: [
+			{
+				dayOfWeek: 3,
+				startTime: "19:00:00",
+				endTime: "20:00:00",
+				repeatFrequency: "P1W",
+			},
+		],
+		startDate: "2023-01-04",
+		endDate: "2024-12-25",
+		color: "#000000",
+		textColor: "#FFFFFF",
+	},
+	{
+		id: "3APIC-1",
+		name: "3APIC-1",
+		description: "Description for Class-10",
+		type: "supplementary",
+		eventSchedule: [
+			{
+				dayOfWeek: 3,
+				startTime: "07:00:00",
+				endTime: "09:00:00",
+				repeatFrequency: "P1W",
+			},
+		],
+		startDate: "2023-01-04",
+		endDate: "2024-12-25",
+		color: "#000000",
+		textColor: "#FFFFFF",
+	},
+	{
+		id: "3APIC2",
+		name: "3APIC2",
+		description: "Description for Class-10",
+		type: "supplementary",
+		eventSchedule: [
+			{
+				dayOfWeek: 3,
+				startTime: "19:00:00",
+				endTime: "20:00:00",
+				repeatFrequency: "P1W",
+			},
+		],
+		startDate: "2023-01-04",
+		endDate: "2024-12-25",
+		color: "#000000",
+		textColor: "#FFFFFF",
+	},
+	{
+		id: "3APIC3",
+		name: "3APIC3",
+		description: "Description for Class-10",
+		type: "supplementary",
+		eventSchedule: [
+			{
+				dayOfWeek: 3,
+				startTime: "19:00:00",
+				endTime: "20:00:00",
+				repeatFrequency: "P1W",
+			},
+		],
+		startDate: "2023-01-04",
+		endDate: "2024-12-25",
+		color: "#000000",
+		textColor: "#FFFFFF",
+	},
+	{
+		id: "3ASG1",
+		name: "3ASG1",
+		description: "Description for Class-10",
+		type: "supplementary",
+		eventSchedule: [
+			{
+				dayOfWeek: 3,
+				startTime: "19:00:00",
+				endTime: "20:00:00",
+				repeatFrequency: "P1W",
+			},
+		],
+		startDate: "2023-01-04",
+		endDate: "2024-12-25",
+		color: "#000000",
+		textColor: "#FFFFFF",
+	},
+	{
+		id: "3ASG2",
+		name: "3ASG2",
+		description: "Description for Class-10",
+		type: "supplementary",
+		eventSchedule: [
+			{
+				dayOfWeek: 3,
+				startTime: "19:00:00",
+				endTime: "20:00:00",
+				repeatFrequency: "P1W",
+			},
+		],
+		startDate: "2023-01-04",
+		endDate: "2024-12-25",
+		color: "#000000",
+		textColor: "#FFFFFF",
+	},
 ]
 
 export default classEvents
 
 export const getClassEvent = (classCode: TClassCode) => {
-  const classEvent = classEvents.find((event) => event.id === classCode)
+	const classEvent = classEvents.find((event) => event.id === classCode)
 
-  return classEvent
+	return classEvent
 }
 export const getTemporalClassEvent = (now: Temporal.PlainDateTime) => {
-  const { PlainTime, Now } = Temporal
-  // Get the current time
-  const currentTime = now.toPlainTime()
-  const dayOfWeek = now.dayOfWeek
+	const { PlainTime, Now } = Temporal
+	// Get the current time
+	const currentTime = now.toPlainTime()
+	const dayOfWeek = now.dayOfWeek
 
-  const compare = Temporal.PlainTime.compare
-  function inRange(
-    pt: Temporal.PlainTime,
-    start: Temporal.PlainTime,
-    end: Temporal.PlainTime
-  ) {
-    return compare(pt, start) >= 0 && compare(pt, end) < 0
-  }
+	const compare = Temporal.PlainTime.compare
+	function inRange(
+		pt: Temporal.PlainTime,
+		start: Temporal.PlainTime,
+		end: Temporal.PlainTime,
+	) {
+		return compare(pt, start) >= 0 && compare(pt, end) < 0
+	}
 
-  const classCode = classEvents.find((event) =>
-    event.eventSchedule.find((schedule) => {
-      return (
-        schedule.dayOfWeek === dayOfWeek &&
-        inRange(
-          currentTime,
-          PlainTime.from(schedule.startTime),
-          PlainTime.from(schedule.endTime)
-        )
-      )
-    })
-  )?.name as TClassCode
+	const classCode = classEvents.find((event) =>
+		event.eventSchedule.find((schedule) => {
+			return (
+				schedule.dayOfWeek === dayOfWeek &&
+				inRange(
+					currentTime,
+					PlainTime.from(schedule.startTime),
+					PlainTime.from(schedule.endTime),
+				)
+			)
+		}),
+	)?.name as TClassCode
 
-  return classCode
+	return classCode
 }
 
 // /**

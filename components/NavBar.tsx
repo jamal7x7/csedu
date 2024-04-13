@@ -1,28 +1,28 @@
-import * as React from 'react'
 import Link from 'next/link'
+import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 // import { Icons } from "@/components/icons"
 
-import { ModeToggle } from '@/components/modeToggle'
 import { DarkLightMode } from '@/components/darkLightMode'
+import { ModeToggle } from '@/components/modeToggle'
 
 // import { getSession, signOut, useSession } from 'next-auth/react'
 
-import { Button } from './ui/button'
-import LoginLogout from './LoginLogout'
-import { AdminEditSwitch } from './AdminEditSwitch'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
 import { deleteAllTitleAction } from '@/actions/actions'
+import { authOptions } from '@/lib/auth'
+import { getServerSession } from 'next-auth'
+import { AdminEditSwitch } from './AdminEditSwitch'
+import LoginLogout from './LoginLogout'
 import { SidebarToggle } from './SidebarToggle'
-import { Separator } from './ui/separator'
 import { Small } from './Typography/Typography'
+import { Button } from './ui/button'
+import { Separator } from './ui/separator'
 
 export const NavBar = async (params: any) => {
   const session = await getServerSession(authOptions)
   let isLoggedIn = session?.user
-  const isAdmin = session?.user.role == ('ADMIN' || 'TEACHER')
+  const isAdmin = session?.user?.role == ('ADMIN' || 'TEACHER')
   // const isStudent = session?.user.role == 'STUDENT'
 
   return (
@@ -36,7 +36,7 @@ export const NavBar = async (params: any) => {
           {/* <Separator className='mx-4' orientation='vertical' /> */}
           {isLoggedIn && isAdmin && (
             <>
-              <Link className=' mx-4    ' href='/teacherDashboard/mainDashView'>
+              <Link className=' mx-4 ' href='/teacherDashboard/mainDashView'>
                 <Small className='font-semibold hover:text-foreground'>
                   Dashboard
                 </Small>
@@ -44,15 +44,21 @@ export const NavBar = async (params: any) => {
               <Link
                 className=' mx-4    '
                 href={
-                  '/studentDashboard/levels/' +
-                  params.levelId +
-                  '/chapters/1/test'
-
-                  // t.number
+                  `/studentDashboard/levels/${params.levelId}/chapters/1/test`
                 }
               >
                 <Small className='font-semibold hover:text-foreground'>
                   Test
+                </Small>
+              </Link>
+              <Link
+                className=' mx-4    '
+                href={
+                  "/logo"
+                }
+              >
+                <Small className='font-semibold hover:text-foreground'>
+                  Logo
                 </Small>
               </Link>
             </>
@@ -67,9 +73,18 @@ export const NavBar = async (params: any) => {
               <Link
                 className=' mx-4    '
                 href={
-                  '/studentDashboard/levels/' +
-                  params.levelId +
-                  '/chapters/1/test'
+                  "/levels"
+                }
+              >
+                <Small className='font-semibold hover:text-foreground'>
+                  Activités 
+
+                </Small>
+              </Link>
+              {/* <Link
+                className=' mx-4    '
+                href={
+                  `/studentDashboard/levels/${params.levelId}/chapters/1/test`
 
                   // t.number
                 }
@@ -77,12 +92,12 @@ export const NavBar = async (params: any) => {
                 <Small className='font-semibold hover:text-foreground'>
                   Test
                 </Small>
-              </Link>
+              </Link> */}
             </>
           )}
         </div>
         <div className='flex justify-between gap-2 sm:pr-2 md:pr-8 lg:pr-12'>
-          {isLoggedIn && session?.user.role == ('ADMIN' || 'TEACHER') && (
+          {isLoggedIn && session?.user?.role == ('ADMIN' || 'TEACHER') && (
             <AdminEditSwitch
               levelId={params.levelId}
               // chapterId={params.chapterId}
@@ -93,7 +108,7 @@ export const NavBar = async (params: any) => {
           <DarkLightMode />
         </div>
       </div>
-      <div className='fixed scroll-watcher h-[1px] w-full top-[52px] z-50 bg-slate-400 dark:bg-slate-500/50 origin-left'></div>
+      <div className='fixed scroll-watcher h-[1px] w-full top-[52px] z-50 bg-slate-400 dark:bg-slate-500/50 origin-left' />
     </header>
   )
 }

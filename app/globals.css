@@ -424,6 +424,15 @@ th {
   top: 0;
   background-color: red;
 } */
+.table-container {
+  /* border: 1px solid lightgray; */
+  /* overflow-x: scroll; */
+  /* width: 100%; */
+  /* max-width: 960px; */
+  /* position: sticky; */
+  /* top: 0px; */
+  /* background-color: #0000ff; */
+}
 
 table.StickyHeader {
   text-align: left;
@@ -453,4 +462,25 @@ th {
   position: sticky;
   top: 0px; /* Don't forget this, required for the stickiness */
   /* box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4); */
+}
+
+.SideBarHandle__line__up {
+  /* --text-tertiary: #ffffff88; */
+  /* background: var(--text-tertiary); */
+  transform: translateY(0.15rem) rotate(0deg) translateZ(0px);
+}
+.SideBarHandle__line__up:hover {
+  /* --text-tertiary: #ffffff88; */
+  /* background: var(--text-tertiary); */
+  transform: translateY(0.15rem) rotate(15deg) translateZ(0px);
+}
+.SideBarHandle__line__down {
+  /* --text-tertiary: #ffffff88; */
+  /* background: var(--text-tertiary); */
+  transform: translateY(-0.15rem) rotate(0deg) translateZ(0px);
+}
+.SideBarHandle__line__down:hover {
+  /* --text-tertiary: #ffffff88; */
+  /* background: var(--text-tertiary); */
+  transform: translateY(-0.15rem) rotate(-15deg) translateZ(0px);
 }

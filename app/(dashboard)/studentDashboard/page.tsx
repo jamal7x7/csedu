@@ -3,25 +3,52 @@
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '@/lib/auth'
-import LoginLogout from '@/components/LoginLogout'
-import Levels from '@/app/levels/page'
-import { H1, Small } from '@/components/Typography/Typography'
 import TimeTable from '@/app/(dashboard)/teacherDashboard/mainDashView/timeTable'
+import Levels from '@/app/levels/page'
+import LoginLogout from '@/components/LoginLogout'
+import { H1, Small } from '@/components/Typography/Typography'
+import { db } from '@/db'
+import { authOptions } from '@/lib/auth'
+import { getServerSession } from 'next-auth/next'
+
+const getNameFromPairUsername = async (username: string | undefined) => {
+  if (!username) return
+  const session = await getServerSession(authOptions)
+  if(session?.user?.role==='ADMIN') return // <--- to avoid number type error 'NaN'!!!
+  
+  const split = username?.split('_&_')
+
+    const allUsers = await db.query.user.findMany({
+      where: (user, { eq, or }) =>
+        or(eq(user.id, Number(split?.[0])), eq(user.id, Number(split?.[1]))),
+
+      with: {
+        profile: {
+          with: {
+            student: true,
+          },
+        },
+      },
+    })
+
+  return allUsers
+}
 
 export default async function Dashboard() {
   const session = await getServerSession(authOptions)
   // console.log('session from student Dashboard: ', session)
+  
+  const loggedPair = await getNameFromPairUsername(session?.user?.username)
+  console.log('🚀 ~ Dashboard ~ getNameFromPairUsername:', loggedPair)
 
   return (
     <main className='flex min-h-screen flex-col items-center justify-between  w-full mt-16'>
       <div className='flex flex-col gap-8  w-full'>
         {session?.user ? (
           <>
-            <div className='p-12 bg-slate-900 flex  items-center justify-center '>
-              <TimeTable />
-            </div>
+            {/* <div className='p-12 bg-slate-900 flex  items-center justify-center '> */}
+            {/* <TimeTable /> */}
+            {/* </div> */}
             <div className='p-12 flex  items-center justify-center '>
               <div className='  flex flex-shrink-0 h-20 w-20 items-center justify-center rounded-full dark:bg-slate-800 bg-slate-100  md:h-[72px] md:w-[72px]'>
                 {/* <p className='font-bold text-4xl'>2</p> */}
@@ -29,10 +56,18 @@ export default async function Dashboard() {
 
               <div className='p-4 flex flex-col items-start justify-between'>
                 <Small>
-                  Bien venue{' [' + session?.user.role + '] '}
-                  <b> {session?.user.username}</b>
+                  Bien venue
+                  <b>
+                    {' '}
+                    {`${
+                      loggedPair?.[0]?.firstName?.split(' ')?.toReversed()?.[0]
+                    } et ${
+                      loggedPair?.[1]?.firstName?.split(' ')?.toReversed()?.[0]
+                    }`}
+                  </b>
+                  {/* {` [${session?.user?.role}] `} */}
                 </Small>
-                <H1 className='  '>Mon Compte</H1>
+                <H1 className='  '>Notre Compte</H1>
                 {/* <h1 className=' font-black text-4xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>Le Réseau Informatique</h1> */}
               </div>
             </div>

@@ -328,7 +328,7 @@ export default async function TaskPage() {
         // className='h-full p-8'
         className='flex-col flex-1 hidden mb-8 space-y-8 md:flex'
       >
-        <div className='flex items-center justify-between space-y-2'>
+        {/* <div className='flex items-center justify-between space-y-2'>
           <div>
             <h2 className='text-2xl font-bold tracking-tight'>
               Liste des élèves
@@ -338,10 +338,10 @@ export default async function TaskPage() {
             </p>
           </div>
           <div className='flex items-center space-x-2'>
-            {/* <UserNav /> */}
-            {/* <DrawerDialogDropZone /> */}
+            <UserNav />
+            <DrawerDialogDropZone />
           </div>
-        </div>
+        </div> */}
         {/* {list.map((dl, i) => ( */}
         <Suspense fallback={'wait...'}>
           <div className='w-full '>
@@ -352,7 +352,7 @@ export default async function TaskPage() {
               {/* <TabsList className='w-full justify-start sticky top-0 z-20'> */}
               <TabsList className='h-12 border-muted  inline-flex items-center text-muted-foreground w-full justify-start rounded-none border-b bg-transparent p-0'>
                 <div className='flex items-center justify-between w-full '>
-                  <div>
+                  <div className=' text-nowrap overflow-scroll'>
                     <TabsTrigger
                       className='h-12  inline-flex items-center justify-center whitespace-nowrap py-1 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background relative rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none '
                       value='all'
@@ -362,6 +362,7 @@ export default async function TaskPage() {
                     {/* {[{ classCode: '2APIC3' }].map((d) => ( */}
 
                     {Classes.toSorted((a, b) => {
+                      if(a.classCode && b.classCode) {
                       if (a.classCode < b.classCode) {
                         return -1
                       }
@@ -369,7 +370,7 @@ export default async function TaskPage() {
                         return 1
                       }
                       return 0
-                    }).map((d) => (
+                    }}).map((d) => (
                       <TabsTrigger
                         className='h-12  inline-flex items-center justify-center whitespace-nowrap py-1 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background relative rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none'
                         key={d.classCode}
@@ -386,13 +387,18 @@ export default async function TaskPage() {
                 </div>
               </TabsList>
 
-              <TabsContent className='p-1 w-full' value={'all'}>
+              <TabsContent
+                // className='p-1 w-full text-ellipsis text-nowrap overflow-scroll '
+                className='p-1 w-full   '
+                value={'all'}
+              >
                 <DataTable data={AllStudentsList} columns={columns} />
               </TabsContent>
 
               {Classes.map((d) => (
                 <TabsContent
-                  className='p-1 w-full'
+                  // className='p-1 w-full  text-ellipsis text-nowrap overflow-scroll'
+                  className='p-1 w-full '
                   value={d.classCode ?? ''}
                   key={d.classCode}
                 >

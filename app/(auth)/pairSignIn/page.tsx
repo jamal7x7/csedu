@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useState, useTransition } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import React, { useState, useTransition } from 'react'
 
 import { ToastAction } from '@/components/ui/toast'
 import { useToast } from '@/components/ui/use-toast'
@@ -18,8 +18,6 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
 import {
   TLoginSchema,
   TPairSignInSchema,
@@ -28,14 +26,16 @@ import {
   pairSignInSchema,
   pairSignUpSchema,
 } from '@/lib/types'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
 
-import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { loginAction, pairSignInAction } from '@/actions/loginAction'
 import FormError from '@/components/form-error'
 import FormSuccuss from '@/components/form-success'
-import { loginAction, pairSignInAction } from '@/actions/loginAction'
-import Link from 'next/link'
 import { PasswordInput } from '@/components/password-input'
+import { signIn } from 'next-auth/react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Combobox } from '../pairSignUp/page'
 
 const PairSignInForm = () => {
@@ -93,7 +93,7 @@ const PairSignInForm = () => {
       toast({
         variant: 'success',
         title: 'OK!',
-        description: 'Bien Venue ' + data.pair1 + '&' + data.pair2,
+        description: `Bien Venue ${data.pair1}&${data.pair2}`,
         action: <ToastAction altText='Goto schedule to undo'>Ok</ToastAction>,
       })
     } else {

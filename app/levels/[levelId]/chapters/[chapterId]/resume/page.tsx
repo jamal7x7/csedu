@@ -10,9 +10,10 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { BookOpenText } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { BookOpenText } from 'lucide-react'
 
+import { Badge } from '@/components/ui/badge'
 import {
   Card,
   CardContent,
@@ -21,7 +22,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 
 export function Resume() {
   return (
@@ -34,7 +34,7 @@ export function Resume() {
         </div>
       </DialogTrigger>
       <DialogContent className=' container h-5/6 sm:max-w-[4250px] w-2/3 '>
-        <div className='absolute rounded-md inset-0 h-full w-full bg-muted/30 bg-[linear-gradient(to_right,#80808022_1px,transparent_1px),linear-gradient(to_bottom,#80808022_1px,transparent_1px)] bg-[size:24px_24px]'></div>
+        <div className='absolute rounded-md inset-0 h-full w-full bg-muted/30 bg-[linear-gradient(to_right,#80808022_1px,transparent_1px),linear-gradient(to_bottom,#80808022_1px,transparent_1px)] bg-[size:24px_24px]' />
 
         {/* <DialogHeader>
           <DialogTitle>Le Resume du cours</DialogTitle>
@@ -112,7 +112,7 @@ export function Resume() {
               <div className='flex flex-col items-start justify-between 2xl:px-24 pt-8 ml-20  w-full '>
                 <Badge variant='outline'>
                   <p className='flex items-center text-sm uppercase font-bold text-default-600'>
-                    <div className='w-2 h-2 mr-2 rounded-full bg-slate-400'></div>
+                    <div className='w-2 h-2 mr-2 rounded-full bg-slate-400' />
                     Exemple
                   </p>
                 </Badge>

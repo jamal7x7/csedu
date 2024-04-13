@@ -5,18 +5,18 @@ import { PlusCircle } from 'lucide-react'
 import Link from 'next/link'
 // import AddChapter from '@/components/AddChapter'
 
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '@/lib/auth'
-import { db } from '@/db'
-import { AdminEditSwitch } from '@/components/AdminEditSwitch'
 import AddChapterLinkForm from '@/components/AddChapterLinkForm'
-import { Suspense } from 'react'
-import { Skeleton } from '@/components/ui/skeleton'
+import { AdminEditSwitch } from '@/components/AdminEditSwitch'
 import ChapterLink from '@/components/ChapterLink'
+import { Skeleton } from '@/components/ui/skeleton'
+import { db } from '@/db'
 import { chapter } from '@/db/schema/units'
+import { authOptions } from '@/lib/auth'
 import { eq } from 'drizzle-orm'
+import { getServerSession } from 'next-auth/next'
+import { Suspense } from 'react'
 
-let levelTitles = [
+const levelTitles = [
   {
     id: 1,
     title: 'Le systeme informatiue',
@@ -81,7 +81,7 @@ export default async function Page({ params }: any) {
       <div className='flex flex-col gap-8  w-full sm:w-1/2 mt-24'>
         <h1>Niveau {params.levelId}</h1>
 
-        {session?.user?.role == 'ADMIN' ? (
+        {session?.user?.role === 'ADMIN' ? (
           <AddChapterLinkForm
             allChapters={allChapters}
             levelId={params.levelId}

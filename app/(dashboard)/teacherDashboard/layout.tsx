@@ -2,12 +2,12 @@
 // import { Metadata } from 'next'
 import Image from 'next/image'
 
-import { Separator } from '@/components/ui/separator'
-import { SidebarNav } from '@/components/sidebar-nav'
 import { showSidebar } from '@/app/utils/adminEditSwitchAtom'
-import { useAtom } from 'jotai'
 import { SidebarToggle } from '@/components/SidebarToggle'
+import { SidebarNav } from '@/components/sidebar-nav'
+import { Separator } from '@/components/ui/separator'
 import { AnimatePresence, motion, useCycle } from 'framer-motion'
+import { useAtom } from 'jotai'
 
 import { ImperativePanelGroupHandle } from 'react-resizable-panels'
 
@@ -17,6 +17,14 @@ import {
   ResizablePanelGroup,
 } from '@/components/ui/resizable'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+import {
+  BookUser,
+  CalendarDays,
+  Home,
+  LibrarySquare,
+  List,
+  Plus,
+} from 'lucide-react'
 import { useEffect, useRef } from 'react'
 
 // export const metadata: Metadata = {
@@ -28,22 +36,27 @@ const sidebarNavItems = [
   {
     title: 'Main',
     href: '/teacherDashboard/mainDashView',
+    icon: <Home className='stroke-inherit' />,
   },
   {
     title: 'All Levels',
-    href: '/levels',
+    href: '/teacherDashboard/myLevels',
+    icon: <LibrarySquare className='stroke-inherit' />,
   },
   {
     title: 'My Time Table',
     href: '/teacherDashboard/myTimeTable',
+    icon: <CalendarDays className='stroke-inherit' />,
   },
   {
     title: 'Mes Élèves',
     href: '/teacherDashboard/myStudents',
+    icon: <BookUser className='stroke-inherit' />,
   },
   {
     title: 'List',
     href: '/teacherDashboard/studentList',
+    icon: <List className='stroke-inherit' />,
   },
 ]
 
@@ -92,7 +105,7 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
             defaultSize={15}
             className=''
           >
-            <div className='top-8   p-4 min-h-full   mt-16  '>
+            <div className='top-8   min-h-full p-0  '>
               <SidebarNav items={sidebarNavItems} />
             </div>
           </ResizablePanel>
@@ -103,11 +116,11 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
       <ResizablePanel
         id='center'
         order={2}
-        defaultSize={85}
+        // defaultSize={85}
         // className='overflow-y-auto'
       >
         {/* <ScrollArea> */}
-        <div className='flex    justify-center left-0 top-0 overflow-scroll h-full '>
+        <div className='flex justify-center left-0 top-0 overflow-scroll h-full '>
           {children}
         </div>
         {/* </ScrollArea> */}

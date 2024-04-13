@@ -49,6 +49,12 @@ export const columns: ColumnDef<TStudentsGradesSchema>[] = [
   {
     id: 'studentClassNumber',
     accessorKey: 'studentClassNumber',
+
+    enableResizing: false, //disable resizing for just this column
+
+    size: 20, //starting column size
+    minSize: 20, //enforced during column resizing
+    maxSize: 50,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='N°' />
     ),
@@ -88,7 +94,8 @@ export const columns: ColumnDef<TStudentsGradesSchema>[] = [
   },
   {
     accessorKey: 'studentMassarNumber',
-
+    enableResizing: false, //enable resizing for  this column
+    size: 200, //starting column size
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Massar' />
     ),
@@ -104,8 +111,10 @@ export const columns: ColumnDef<TStudentsGradesSchema>[] = [
   },
   {
     accessorKey: 'birthDate',
+    enableResizing: false, //enable resizing for  this column
+    size: 100, //starting column size
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Date de naissance' />
+      <DataTableColumnHeader column={column} title='Naissance' />
     ),
     cell: ({ row }) => (
       <div className='w-[80px]'>{row.getValue('birthDate')}</div>
@@ -146,6 +155,7 @@ export const columns: ColumnDef<TStudentsGradesSchema>[] = [
   },
   {
     accessorKey: 'test2',
+
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Contrôle 2' />
     ),

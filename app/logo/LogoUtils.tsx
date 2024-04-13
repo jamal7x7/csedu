@@ -1,0 +1,18 @@
+export const keyWordsFr: string[] = [
+	"arc",
+	"av avance",
+	"cercle",
+	"etiquette",
+	"fixecap",
+	"fixex",
+	"fixexy",
+	"fixey",
+	"fpos fixeposition",
+	"le longueuretiquette",
+	"origine",
+	"point",
+	"re recule",
+	"td tournedroite",
+	"tg tournegauche",
+	"qd qualitedessin",
+]

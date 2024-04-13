@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useState, useTransition } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import React, { useState, useTransition } from 'react'
 
 import { ToastAction } from '@/components/ui/toast'
 import { useToast } from '@/components/ui/use-toast'
@@ -18,16 +18,16 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 
+import { TLoginSchema, loginSchema } from '@/lib/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { TLoginSchema, loginSchema } from '@/lib/types'
 
-import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { loginAction } from '@/actions/loginAction'
 import FormError from '@/components/form-error'
 import FormSuccuss from '@/components/form-success'
-import { loginAction } from '@/actions/loginAction'
+import { signIn } from 'next-auth/react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 // export const studentLoggedIn = { state: false }
 
@@ -91,8 +91,8 @@ const LoginForm = () => {
       router.refresh()
       toast({
         variant: 'success',
-        title: 'Oora!',
-        description: 'Bien Venue ' + data.username,
+        title: 'Bien Venue!',
+        description: `Bien Venue ${data.username}`,
         action: <ToastAction altText='Goto schedule to undo'>Ok</ToastAction>,
       })
     } else {
